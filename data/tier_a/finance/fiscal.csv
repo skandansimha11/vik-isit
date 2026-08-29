@@ -1,0 +1,13 @@
+period,gfd_pct_gdp,total_expenditure_rs_cr,revenue_receipts_rs_cr,non_debt_capital_receipts_rs_cr,nominal_gdp_rs_cr,target_pct,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,4.10,,,,,,Actual,"Economic Survey 2020-21 Statistical Appendix, Table 2.2 (Central Govt Receipts & Expenditure as % of GDP)",https://www.indiabudget.gov.in/economicsurvey/,Stat. Appendix Table 2.2,2021-01,"published GFD/GDP; component rupee figures pending (see GAPS)"
+FY2015-16,3.87,,,,,,Actual,"Economic Survey 2020-21 Statistical Appendix, Table 2.2",https://www.indiabudget.gov.in/economicsurvey/,Stat. Appendix Table 2.2,2021-01,"published ~3.9%"
+FY2016-17,3.48,,,,,,Actual,"Economic Survey 2021-22 Statistical Appendix, Table 2.2",https://www.indiabudget.gov.in/economicsurvey/,Stat. Appendix Table 2.2,2022-01,"published ~3.5%"
+FY2017-18,3.46,,,,,,Actual,"Economic Survey 2022-23 Statistical Appendix",https://www.indiabudget.gov.in/economicsurvey/,Stat. Appendix,2023-01,"published ~3.5%"
+FY2018-19,3.44,,,,,,Actual,"Economic Survey 2022-23 Statistical Appendix",https://www.indiabudget.gov.in/economicsurvey/,Stat. Appendix,2023-01,"published ~3.4%"
+FY2019-20,4.65,,,,,,Actual,"Union Budget 2021-22 Budget at a Glance",https://www.indiabudget.gov.in/,Budget at a Glance,2021-02,"published ~4.6%; pre-COVID growth slowdown"
+FY2020-21,9.17,,,,,,Actual,"Union Budget 2022-23 Budget at a Glance",https://www.indiabudget.gov.in/,Budget at a Glance,2022-02,"published ~9.2%; COVID fiscal response"
+FY2021-22,6.71,,,,,,Actual,"Union Budget 2023-24 Budget at a Glance",https://www.indiabudget.gov.in/,Budget at a Glance,2023-02,"published ~6.7%"
+FY2022-23,6.38,,,,,,Actual,"Union Budget 2024-25 Budget at a Glance",https://www.indiabudget.gov.in/,Budget at a Glance,2024-02,"published ~6.4%"
+FY2023-24,5.63,,,,,,Provisional,"Union Budget 2025-26 Budget at a Glance (Provisional Actuals)",https://www.indiabudget.gov.in/,Budget at a Glance,2025-02,"~5.6% PA; confirm against CGA year-end accounts"
+FY2024-25,4.80,,,,,4.90,Revised,"Union Budget 2025-26 Budget at a Glance (Revised Estimate)",https://www.indiabudget.gov.in/,Budget at a Glance,2025-02,"RE 4.8% (BE was 4.9%)"
+FY2025-26,4.40,,,,,4.40,BudgetEstimate,"Union Budget 2025-26 Budget at a Glance (Budget Estimate)",https://www.indiabudget.gov.in/,Budget at a Glance,2025-02,"BE 4.4%; replace with Provisional Actual once the FY2026-27 Budget publishes it"

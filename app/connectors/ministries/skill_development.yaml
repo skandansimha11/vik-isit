@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Skill Development & Labour"
+  code: "SKILL"
+  description: "Responsible for vocational skilling programs, employment generation, and labour welfare policy."
+
+kpis:
+  - name: "Youth Skilled Under PMKVY"
+    category: "skilling"
+    unit: "Million"
+    target_value: 15.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/skill_development/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Youth Skilled Under PMKVY (Million)"
+
+  - name: "Unemployment Rate"
+    category: "labour market"
+    unit: "%"
+    target_value: 4.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/skill_development/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Unemployment Rate (%)"
+
+  - name: "Formal Sector Jobs Created"
+    category: "employment"
+    unit: "Million"
+    target_value: 10.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/skill_development/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Formal Sector Jobs Created (Million)"

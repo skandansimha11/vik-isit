@@ -1,0 +1,68 @@
+ministry:
+  name: "Ministry of Railways"
+  code: "RAIL"
+  description: "Responsible for national rail infrastructure, passenger and freight operations, and rail safety."
+
+kpis:
+  - name: "Passenger Traffic"
+    category: "operations"
+    unit: "Million"
+    target_value: 8500.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/railways/traffic_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Passenger Traffic (Million)"
+
+  - name: "Freight Loading"
+    category: "operations"
+    unit: "Million Tonnes"
+    target_value: 1700.0
+    period: "FY 2025-26"
+    source:
+      type: excel
+      location: "data/railways/freight_report.xlsx"
+      sheet_name: "Freight"
+      key_column: "Head"
+      value_column: "Amount (Million Tonnes)"
+      key_match: "Freight Loading"
+
+  - name: "On-Time Performance"
+    category: "service quality"
+    unit: "%"
+    target_value: 90.0
+    period: "FY 2025-26"
+    source:
+      type: pdf
+      location: "data/railways/performance_report.pdf"
+      page: 0
+      table_index: 0
+      key_column: "Item"
+      value_column: "Value (%)"
+      key_match: "On-Time Performance"
+
+  - name: "Track Electrification"
+    category: "infrastructure"
+    unit: "%"
+    target_value: 100.0
+    period: "FY 2025-26"
+    source:
+      type: web
+      location: "data/railways/rail_dashboard.html"
+      table_index: 0
+      key_column: "Indicator"
+      value_column: "Value"
+      key_match: "Track Electrification"
+
+  - name: "Railways Revenue"
+    category: "fiscal performance"
+    unit: "₹ Cr"
+    target_value: 260000.0
+    period: "FY 2025-26"
+    source:
+      type: web
+      location: "data/railways/rail_dashboard.html"
+      selector: "#railways-revenue"
+      metric_label: "Railways Revenue"

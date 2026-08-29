@@ -1,0 +1,13 @@
+period,atc_loss_pct,acs_arr_gap_rs_kwh,discom_accumulated_losses_rs_000cr,discom_annual_pl_rs_cr,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,25.7,0.60,380,-58000,Actual,"PFC — Report on Performance of Power Utilities 2014-15",https://www.pfcindia.com/,"Report on Performance of Power Utilities — AT&C, ACS-ARR, P/L",2016-06,"AT&C = (Energy Input - Energy Realised) / Energy Input x 100; ACS-ARR on subsidy-received basis"
+FY2015-16,23.0,0.55,320,-52000,Actual,"PFC — Report on Performance of Power Utilities 2015-16",https://www.pfcindia.com/,PFC Report,2017-06,"UDAY scheme launched Nov-2015; states took over discom debt"
+FY2016-17,20.8,0.42,270,-38000,Actual,"PFC — Report on Performance of Power Utilities 2016-17",https://www.pfcindia.com/,PFC Report,2018-06,""
+FY2017-18,18.7,0.30,310,-27000,Actual,"PFC — Report on Performance of Power Utilities 2017-18",https://www.pfcindia.com/,PFC Report,2019-06,"best UDAY-era AT&C print"
+FY2018-19,20.5,0.50,370,-49000,Actual,"PFC — Report on Performance of Power Utilities 2018-19",https://www.pfcindia.com/,PFC Report,2020-06,"gains partly reversed"
+FY2019-20,21.5,0.72,440,-61000,Actual,"PFC — Report on Performance of Power Utilities 2019-20",https://www.pfcindia.com/,PFC Report,2021-06,""
+FY2020-21,22.3,0.69,500,-58000,Actual,"PFC — Report on Performance of Power Utilities 2020-21",https://www.pfcindia.com/,PFC Report,2022-06,"COVID; Atmanirbhar liquidity package"
+FY2021-22,16.4,0.40,540,-40000,Actual,"PFC — Report on Performance of Power Utilities 2021-22",https://www.pfcindia.com/,PFC Report,2023-06,"methodological break + LPS rules + RBSM scheme — treat pre/post as not strictly comparable"
+FY2022-23,15.4,0.28,580,-27000,Actual,"PFC — Report on Performance of Power Utilities 2022-23 (15.1-15.4%)",https://www.pfcindia.com/,PFC Report,2024-06,""
+FY2023-24,16.1,0.28,650,-38000,Actual,"PFC — Report on Performance of Power Utilities 2023-24 (AT&C rose to ~16.1%; 'widening losses')",https://www.pfcindia.com/,PFC Report,2025-07,"national AT&C rose from ~15.1% (FY23) to ~16.1% (FY24) per PFC 2023-24 report"
+FY2024-25,15.8,0.25,680,-32000,Estimated,"PFC — Report on Performance of Power Utilities (awaiting)",https://www.pfcindia.com/,PFC Report,2025-12,"estimated pending PFC FY2024-25 report"
+FY2025-26,15.5,0.22,700,-30000,Estimated,"PFC / Ministry of Power monitoring (YTD)",https://www.pfcindia.com/,PFC / MoP,2026-07,"estimated"

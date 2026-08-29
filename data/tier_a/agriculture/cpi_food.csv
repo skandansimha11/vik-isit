@@ -1,0 +1,13 @@
+period,cpi_food_inflation_pct,cpi_food_index_avg,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,6.40,,Actual,"MoSPI — CPI (Consumer Food Price Index / Food & Beverages), annual average YoY; RBI DBIE",https://www.mospi.gov.in/,CPI monthly press releases (FY average),2015-04,"annual = average of the 12 monthly YoY CFPI prints for the fiscal year"
+FY2015-16,4.90,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2016-04,""
+FY2016-17,4.40,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2017-04,""
+FY2017-18,2.20,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2018-04,"low food inflation year"
+FY2018-19,0.70,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2019-04,"near-zero / several months of food deflation"
+FY2019-20,6.00,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2020-04,"onion/vegetable price spikes"
+FY2020-21,7.30,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2021-04,"COVID supply disruptions"
+FY2021-22,3.80,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2022-04,""
+FY2022-23,6.60,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2023-04,"cereal + milk inflation"
+FY2023-24,7.50,,Actual,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2024-04,"vegetables, pulses, spices"
+FY2024-25,7.30,,Provisional,"MoSPI CPI; RBI DBIE",https://www.mospi.gov.in/,CPI press releases,2025-04,"high vegetable prices H1 FY25; sharp cooling H2 — confirm FY average"
+FY2025-26,0.80,,Estimated,"MoSPI CPI monthly press releases (YTD)",https://www.mospi.gov.in/,CPI press releases (YTD),2026-07,"CPI-Food turned negative from ~mid-2025 (Oct-Dec 2025 prints -2.7% to -3.9%); RBI cut FY26 headline CPI forecast to ~2%. FY average estimated near zero — confirm."

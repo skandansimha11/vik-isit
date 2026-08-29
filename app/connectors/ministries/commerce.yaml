@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Commerce & Industry"
+  code: "CI"
+  description: "Responsible for trade policy, industrial development, foreign investment, and export promotion."
+
+kpis:
+  - name: "Merchandise Exports"
+    category: "trade"
+    unit: "$ Billion"
+    target_value: 480.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/commerce/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Merchandise Exports ($ Billion)"
+
+  - name: "Ease of Doing Business Score"
+    category: "industrial policy"
+    unit: "index"
+    target_value: 75.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/commerce/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Ease of Doing Business Score (index)"
+
+  - name: "Foreign Direct Investment Inflows"
+    category: "investment"
+    unit: "$ Billion"
+    target_value: 70.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/commerce/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Foreign Direct Investment Inflows ($ Billion)"

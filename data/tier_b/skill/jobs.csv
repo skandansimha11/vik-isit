@@ -1,0 +1,10 @@
+period,epfo_net_additions_lakh,age_18_28_share_pct,revision,source_doc,source_url,page_ref,published_on,note
+FY2017-18,,,Estimated,"EPFO payroll series begins Sep 2017 — no full-year figure","https://www.epfindia.gov.in/","EPFO net payroll additions",2018-05,"series start; partial year only"
+FY2018-19,61.1,66.0,Actual,"EPFO Payroll Estimates — net new subscribers FY2018-19","https://www.epfindia.gov.in/","EPFO monthly payroll press releases (aggregated)",2019-05,"proxy for formal job creation; also captures formalisation + rejoiners"
+FY2019-20,78.6,64.0,Actual,"EPFO Payroll Estimates — FY2019-20","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2020-06,""
+FY2020-21,77.1,61.0,Actual,"EPFO Payroll Estimates — FY2020-21","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2021-06,"held up despite the pandemic — partly reflects formalisation"
+FY2021-22,122.0,63.0,Actual,"EPFO Payroll Estimates — FY2021-22","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2022-06,"sharp rise"
+FY2022-23,138.7,62.0,Actual,"EPFO Payroll Estimates — FY2022-23","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2023-06,"highest in the series"
+FY2023-24,131.5,61.0,Provisional,"EPFO Payroll Estimates — FY2023-24 (provisional; subject to revision as records update)","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2024-06,"EPFO revises these figures upward for several months afterward"
+FY2024-25,135.0,61.0,Estimated,"EPFO Payroll Estimates — FY2024-25 (provisional)","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2025-06,"provisional"
+FY2025-26,138.0,61.0,Estimated,"EPFO Payroll Estimates — YTD","https://www.epfindia.gov.in/","EPFO monthly payroll (aggregated)",2026-07,"estimated"

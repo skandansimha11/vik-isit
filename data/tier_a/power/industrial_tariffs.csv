@@ -1,0 +1,13 @@
+period,national_avg_rs_kwh,maharashtra_rs_kwh,gujarat_rs_kwh,tamil_nadu_rs_kwh,uttar_pradesh_rs_kwh,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,6.88,9.30,6.40,6.90,7.10,Estimated,"CEA — All India Electricity Statistics (General Review); State ERC tariff orders",https://cea.nic.in/,"Average rate of electricity — industrial category",2016-03,"average billing rate for HT/LT industrial consumers. Not a single centrally-published series; compiled from CEA + SERC orders (GAPS). Maharashtra is among the highest, Gujarat among the most competitive."
+FY2015-16,7.02,9.45,6.50,7.05,7.30,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2017-03,""
+FY2016-17,7.10,9.55,6.60,7.20,7.55,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2018-03,""
+FY2017-18,7.18,9.65,6.70,7.35,7.70,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2019-03,""
+FY2018-19,7.28,9.75,6.75,7.55,7.85,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2020-03,""
+FY2019-20,7.40,9.85,6.85,7.75,8.00,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2021-03,""
+FY2020-21,7.45,9.80,6.85,7.85,8.05,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2022-03,"few tariff hikes during COVID"
+FY2021-22,7.58,9.95,6.95,7.95,8.15,Estimated,"CEA General Review; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2023-03,""
+FY2022-23,7.75,10.15,7.10,8.10,8.30,Estimated,"CEA General Review; PFC report; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2024-03,""
+FY2023-24,7.90,10.30,7.20,8.20,8.45,Estimated,"CEA General Review; PFC report; SERC tariff orders",https://cea.nic.in/,Average rate — industrial,2024-12,"RDSS-linked graded tariff revisions"
+FY2024-25,8.05,10.45,7.30,8.35,8.60,Estimated,"CEA / SERC tariff orders (provisional)",https://cea.nic.in/,Average rate — industrial,2025-06,"provisional"
+FY2025-26,8.18,10.60,7.40,8.45,8.75,Estimated,"CEA / SERC tariff orders (YTD)",https://cea.nic.in/,Average rate — industrial,2026-07,"estimated"

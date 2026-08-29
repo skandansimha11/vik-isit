@@ -1,0 +1,13 @@
+period,avg_freight_speed_kmph,congested_route_share_pct,electrified_route_pct,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,24.0,40.0,37.0,Actual,"Indian Railways Year Book 2014-15 (Operating Statistics) + Annual Report",https://indianrailways.gov.in/,Year Book — Speed of trains; sections at/over 100% line capacity,2016-03,"secondary = share of route-km running at or above 100% sectional line capacity"
+FY2015-16,24.2,42.0,40.0,Actual,"Indian Railways Year Book 2015-16",https://indianrailways.gov.in/,Year Book — Operating Statistics,2017-03,""
+FY2016-17,24.0,44.0,43.0,Actual,"Indian Railways Year Book 2016-17",https://indianrailways.gov.in/,Year Book — Operating Statistics,2018-03,""
+FY2017-18,23.9,47.0,48.0,Actual,"Indian Railways Year Book 2017-18",https://indianrailways.gov.in/,Year Book — Operating Statistics,2019-03,""
+FY2018-19,23.6,50.0,55.0,Actual,"Indian Railways Year Book 2018-19",https://indianrailways.gov.in/,Year Book — Operating Statistics,2020-03,""
+FY2019-20,23.8,52.0,63.0,Actual,"Indian Railways Year Book 2019-20",https://indianrailways.gov.in/,Year Book — Operating Statistics,2021-03,""
+FY2020-21,45.6,28.0,71.0,Actual,"Indian Railways / PIB (COVID year — near-empty network raised freight speeds sharply)",https://indianrailways.gov.in/,PIB / Year Book,2022-03,"COVID outlier — do not read as structural"
+FY2021-22,36.2,44.0,80.0,Actual,"Indian Railways Year Book 2021-22 / FOIS",https://indianrailways.gov.in/,Year Book / FOIS,2022-06,""
+FY2022-23,34.5,46.0,85.0,Provisional,"Indian Railways / FOIS / PIB",https://fois.indianrail.gov.in/,FOIS operating data,2023-06,""
+FY2023-24,34.0,45.0,93.0,Provisional,"Indian Railways / FOIS / PIB (DFC easing congestion)",https://fois.indianrail.gov.in/,FOIS operating data,2024-06,"confirm against Year Book"
+FY2024-25,33.5,42.0,97.0,Provisional,"Indian Railways / PIB (broad-gauge electrification near complete)",https://pib.gov.in/,PIB releases,2025-06,"provisional"
+FY2025-26,35.0,40.0,99.0,Estimated,"Indian Railways / PIB (YTD)",https://pib.gov.in/,PIB releases (YTD),2026-07,"estimated"

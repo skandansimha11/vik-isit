@@ -1,0 +1,13 @@
+period,capacity_utilisation_pct,refinery_throughput_mt,refinery_capacity_mt,gross_refining_margin_usd_bbl,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,103.7,223.2,215.1,6.0,Actual,"PPAC — Ready Reckoner (Refining); MoP&NG Annual Report",https://ppac.gov.in/,Ready Reckoner — Refinery Production & Capacity,2015-06,"utilisation = throughput / installed capacity. GRM = approx. average of Indian refiners (confirm)"
+FY2015-16,107.6,232.9,216.5,8.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2016-06,""
+FY2016-17,110.0,245.4,223.1,6.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2017-06,""
+FY2017-18,111.2,251.9,226.5,7.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2018-06,""
+FY2018-19,112.5,257.2,228.5,5.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2019-06,""
+FY2019-20,110.0,254.4,231.3,3.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2020-06,"weak margins pre-COVID"
+FY2020-21,89.4,221.8,248.1,3.0,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2021-06,"COVID demand collapse"
+FY2021-22,96.8,241.7,249.9,12.0,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2022-06,""
+FY2022-23,101.4,255.1,251.6,19.5,Actual,"PPAC — Ready Reckoner (Refining)",https://ppac.gov.in/,Ready Reckoner — Refining,2023-06,"record GRMs after discounted Russian crude + tight product markets"
+FY2023-24,103.1,262.0,254.2,12.0,Provisional,"PPAC — Ready Reckoner (Refining) FY2023-24",https://ppac.gov.in/,Ready Reckoner — Refining,2024-06,"confirm throughput and GRM"
+FY2024-25,104.0,267.0,256.8,5.5,Provisional,"PPAC — Ready Reckoner (Refining) provisional",https://ppac.gov.in/,Ready Reckoner — Refining,2025-06,"weaker margins; confirm"
+FY2025-26,104.5,270.0,258.5,6.0,Estimated,"PPAC — Snapshot (monthly, YTD)",https://ppac.gov.in/,Snapshot — Refinery,2026-07,"estimated from YTD; replace with PPAC FY2025-26 final"

@@ -1,0 +1,13 @@
+period,net_import_dependence_pct,net_trade_balance_usd_bn,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,10.5,-38,Estimated,"RBI / NITI Aayog import-intensity discussion + DGCI&S trade data (non-oil non-gold manufactured + intermediate goods)","https://www.commerce.gov.in/","Assembled: manufactured-goods imports vs domestic consumption",2016-06,"No official series. ~10-11% is the commonly cited starting point for industrial-goods import dependence."
+FY2015-16,11.0,-42,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2017-06,""
+FY2016-17,12.0,-48,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2018-06,""
+FY2017-18,13.5,-60,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2019-06,""
+FY2018-19,15.0,-70,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2020-06,"electronics + machinery imports rising faster than domestic output"
+FY2019-20,14.0,-62,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2021-06,"trade contraction year"
+FY2020-21,13.0,-55,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2021-11,"COVID import compression"
+FY2021-22,17.5,-83,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2022-11,"sharp rebound in capital + intermediate goods imports"
+FY2022-23,20.0,-96,Estimated,"DGCI&S + MoSPI National Accounts + press analysis of rising import intensity","https://www.commerce.gov.in/","Assembled estimate",2023-11,"commonly cited that industrial-goods import dependence has roughly doubled to ~20%+"
+FY2023-24,21.0,-100,Estimated,"DGCI&S + MoSPI National Accounts","https://www.commerce.gov.in/","Assembled estimate",2024-11,""
+FY2024-25,22.0,-105,Estimated,"DGCI&S provisional trade data + MoSPI","https://www.commerce.gov.in/","Assembled estimate (provisional)",2025-06,"provisional"
+FY2025-26,22.0,-107,Estimated,"DGCI&S YTD","https://www.commerce.gov.in/","Assembled estimate (YTD)",2026-07,"estimated, roughly flat at an elevated level"

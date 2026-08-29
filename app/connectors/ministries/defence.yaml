@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Defence"
+  code: "DEF"
+  description: "Responsible for national security, armed forces, defence production, and border infrastructure."
+
+kpis:
+  - name: "Defence Indigenisation Rate"
+    category: "defence production"
+    unit: "%"
+    target_value: 75.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/defence/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Defence Indigenisation Rate (%)"
+
+  - name: "Defence Exports"
+    category: "defence production"
+    unit: "₹ Cr"
+    target_value: 30000.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/defence/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Defence Exports (Rs Cr)"
+
+  - name: "Border Road Infrastructure Completed"
+    category: "infrastructure"
+    unit: "km"
+    target_value: 5000.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/defence/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Border Road Infrastructure Completed (km)"

@@ -1,0 +1,68 @@
+ministry:
+  name: "Ministry of Finance"
+  code: "FIN"
+  description: "Responsible for fiscal policy, the union budget, taxation, and public expenditure."
+
+kpis:
+  - name: "Fiscal Deficit"
+    category: "fiscal performance"
+    unit: "% of GDP"
+    target_value: 4.5
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/finance/budget_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Fiscal Deficit (% of GDP)"
+
+  - name: "Gross Tax Revenue"
+    category: "revenue"
+    unit: "₹ Cr"
+    target_value: 2600000
+    period: "FY 2025-26"
+    source:
+      type: excel
+      location: "data/finance/revenue_report.xlsx"
+      sheet_name: "Revenue"
+      key_column: "Head"
+      value_column: "Amount (Cr)"
+      key_match: "Gross Tax Revenue"
+
+  - name: "Capital Expenditure"
+    category: "public investment"
+    unit: "₹ Cr"
+    target_value: 1150000
+    period: "FY 2025-26"
+    source:
+      type: pdf
+      location: "data/finance/budget_report.pdf"
+      page: 0
+      table_index: 0
+      key_column: "Item"
+      value_column: "Amount (Rs Cr)"
+      key_match: "Capital Expenditure"
+
+  - name: "Public Debt to GDP Ratio"
+    category: "fiscal performance"
+    unit: "%"
+    target_value: 55.0
+    period: "FY 2025-26"
+    source:
+      type: web
+      location: "data/finance/finmin_dashboard.html"
+      table_index: 0
+      key_column: "Indicator"
+      value_column: "Value"
+      key_match: "Public Debt to GDP Ratio"
+
+  - name: "Budget Utilization Rate"
+    category: "fiscal performance"
+    unit: "%"
+    target_value: 95.0
+    period: "FY 2025-26"
+    source:
+      type: web
+      location: "data/finance/finmin_dashboard.html"
+      selector: "#budget-utilization"
+      metric_label: "Budget Utilization Rate"

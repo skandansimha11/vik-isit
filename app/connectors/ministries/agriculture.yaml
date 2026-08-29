@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Agriculture & Farmers Welfare"
+  code: "AGRI"
+  description: "Responsible for agricultural policy, farmer income support, crop production, and rural credit."
+
+kpis:
+  - name: "Foodgrain Production"
+    category: "production"
+    unit: "Million Tonnes"
+    target_value: 350.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/agriculture/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Foodgrain Production (Million Tonnes)"
+
+  - name: "Agricultural Credit Disbursement"
+    category: "rural finance"
+    unit: "₹ Cr"
+    target_value: 2500000.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/agriculture/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Agricultural Credit Disbursement (Rs Cr)"
+
+  - name: "Farmers Covered Under PM-KISAN"
+    category: "farmer welfare"
+    unit: "Million"
+    target_value: 120.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/agriculture/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Farmers Covered Under PM-KISAN (Million)"

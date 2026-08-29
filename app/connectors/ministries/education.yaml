@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Education"
+  code: "EDU"
+  description: "Responsible for school and higher education policy, literacy programs, and academic infrastructure."
+
+kpis:
+  - name: "Gross Enrolment Ratio (Higher Education)"
+    category: "access"
+    unit: "%"
+    target_value: 50.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/education/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Gross Enrolment Ratio Higher Education (%)"
+
+  - name: "Literacy Rate"
+    category: "outcomes"
+    unit: "%"
+    target_value: 90.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/education/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Literacy Rate (%)"
+
+  - name: "Pupil-Teacher Ratio (Primary)"
+    category: "service quality"
+    unit: "students/teacher"
+    target_value: 30.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/education/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Pupil-Teacher Ratio Primary (ratio)"

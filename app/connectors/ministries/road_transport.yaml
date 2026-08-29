@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Road Transport & Highways"
+  code: "ROAD"
+  description: "Responsible for national highway construction, road safety, and surface transport infrastructure."
+
+kpis:
+  - name: "National Highway Construction Rate"
+    category: "infrastructure"
+    unit: "km/day"
+    target_value: 40.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/road_transport/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "National Highway Construction Rate (km per day)"
+
+  - name: "National Highway Network Length"
+    category: "infrastructure"
+    unit: "km"
+    target_value: 150000.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/road_transport/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "National Highway Network Length (km)"
+
+  - name: "Road Accident Fatalities"
+    category: "road safety"
+    unit: "Thousand"
+    target_value: 100.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/road_transport/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Road Accident Fatalities (Thousand)"

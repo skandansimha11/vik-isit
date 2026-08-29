@@ -1,0 +1,7 @@
+period,investment_realised_pct,investment_realised_rs_000cr,revision,source_doc,source_url,page_ref,published_on,note
+FY2020-21,3.0,0.3,Estimated,"DPIIT — PLI schemes notified FY21; PIB","https://dpiit.gov.in/","PLI progress review",2021-06,"most schemes only notified this year; near-zero realisation"
+FY2021-22,12.0,2.5,Estimated,"DPIIT PLI progress review + PIB","https://dpiit.gov.in/","PLI progress review",2022-06,"early ramp; concentrated in electronics"
+FY2022-23,30.0,6.2,Estimated,"DPIIT PLI progress review + PIB","https://dpiit.gov.in/","PLI progress review",2023-06,"cumulative investment realised vs cumulative commitment"
+FY2023-24,48.0,10.8,Provisional,"DPIIT / Ministry statements — cumulative PLI investment ~Rs 1.0-1.3 lakh crore","https://dpiit.gov.in/","PLI progress review; Parliament reply",2024-08,"~Rs 1.07 lakh crore actual investment reported cumulatively; value-addition varies sharply by sector"
+FY2024-25,60.0,15.2,Estimated,"DPIIT progress review (provisional)","https://dpiit.gov.in/","PLI progress review",2025-06,"provisional"
+FY2025-26,68.0,17.5,Estimated,"DPIIT YTD","https://dpiit.gov.in/","PLI progress review",2026-07,"estimated; electronics/pharma ahead, textiles & specialty steel lagging"

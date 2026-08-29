@@ -1,0 +1,13 @@
+period,manufacturing_gva_share_pct,iip_manufacturing_growth_pct,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,17.3,3.8,Estimated,"MoSPI National Accounts Statistics (GVA by economic activity, current prices) + IIP","https://www.mospi.gov.in/","GVA — manufacturing share; IIP manufacturing",2016-01,"manufacturing GVA share of total GVA, current prices"
+FY2015-16,17.5,2.8,Estimated,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2017-01,""
+FY2016-17,17.5,4.4,Estimated,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2018-01,""
+FY2017-18,17.1,4.6,Estimated,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2019-01,""
+FY2018-19,17.4,3.9,Estimated,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2020-01,""
+FY2019-20,16.4,-1.4,Estimated,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2021-01,"pre-COVID slowdown; IIP mfg contracted"
+FY2020-21,15.9,-9.6,Provisional,"MoSPI NAS 2021-22 First Revised Estimates + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2022-01,"COVID trough"
+FY2021-22,17.2,11.8,Provisional,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2023-01,"base-effect rebound"
+FY2022-23,17.1,4.7,Provisional,"MoSPI NAS + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2024-01,""
+FY2023-24,17.3,5.5,Provisional,"MoSPI NAS First Revised Estimates + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2025-01,"share broadly flat near 17% for a decade"
+FY2024-25,17.3,4.0,Estimated,"MoSPI Provisional Estimates + IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2025-05,"provisional"
+FY2025-26,17.4,4.5,Estimated,"MoSPI advance / YTD IIP","https://www.mospi.gov.in/","GVA share; IIP mfg",2026-07,"estimated"

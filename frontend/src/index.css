@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-base-900 font-sans text-base-300 antialiased;
+}
+
+::selection {
+  @apply bg-orange-500/30 text-white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-base-900;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-base-700;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-600;
+}
+
+.recharts-cartesian-axis-tick-value tspan {
+  fill: #8f8f8f;
+}

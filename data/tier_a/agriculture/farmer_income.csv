@@ -1,0 +1,13 @@
+period,agri_gva_constant_rs_cr,agri_workers_mn,real_income_index,revision,source_doc,source_url,page_ref,published_on,note
+FY2014-15,1615000,232.0,100.0,Estimated,"MoSPI National Accounts Statistics (GVA agriculture & allied, constant 2011-12 prices) + PLFS/Census workforce",https://www.mospi.gov.in/,NAS Statement — GVA by industry (constant prices),2022-05,"PROXY — real farm-SECTOR productivity (agri&allied GVA per worker, constant prices), indexed 2014=100. NOT household take-home income: NSS SAS 2013->2019 showed real income roughly flat, NABARD NAFIS 2016-17->2021-22 showed +22.9% real (favourable measure). Treat as a lower-confidence directional proxy."
+FY2015-16,1626000,231.0,101.2,Estimated,"MoSPI NAS + PLFS",https://www.mospi.gov.in/,NAS — GVA constant prices,2022-05,"drought year (+0.6% GVA)"
+FY2016-17,1740000,228.0,109.5,Estimated,"MoSPI NAS + PLFS",https://www.mospi.gov.in/,NAS — GVA constant prices,2022-05,"good monsoon (+6.8% GVA)"
+FY2017-18,1840000,222.0,119.0,Estimated,"MoSPI NAS + PLFS 2017-18",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2017-18,2022-05,"PLFS series begins; agri employment ~44%"
+FY2018-19,1875000,225.0,119.7,Estimated,"MoSPI NAS + PLFS 2018-19",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2018-19,2022-05,""
+FY2019-20,2050000,240.0,122.7,Estimated,"MoSPI NAS + PLFS 2019-20",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2019-20,2022-05,"COVID reverse migration begins to raise the agri workforce"
+FY2020-21,2140000,258.0,119.2,Estimated,"MoSPI NAS + PLFS 2020-21",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2020-21,2022-11,"workforce swelled -> per-worker income dips despite GVA growth"
+FY2021-22,2210000,263.0,120.7,Estimated,"MoSPI NAS + PLFS 2021-22 + NABARD NAFIS 2021-22",https://www.mospi.gov.in/,NAS + PLFS + NAFIS,2023-08,""
+FY2022-23,2320000,265.0,125.8,Estimated,"MoSPI NAS + PLFS 2022-23",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2022-23,2023-10,""
+FY2023-24,2350000,266.0,126.9,Estimated,"MoSPI NAS (2nd Advance) + PLFS 2023-24",https://www.mospi.gov.in/,NAS + PLFS Annual Report 2023-24,2024-09,"provisional GVA"
+FY2024-25,2470000,262.0,135.5,Estimated,"MoSPI NAS (Advance Estimates) + PLFS",https://www.mospi.gov.in/,NAS Advance Estimates,2025-02,"estimated; strong farm-sector growth year"
+FY2025-26,2560000,260.0,141.5,Estimated,"MoSPI NAS (First Advance Estimates)",https://www.mospi.gov.in/,NAS FAE,2026-01,"estimated; replace with NAS PE and PLFS 2025-26"

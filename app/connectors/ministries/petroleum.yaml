@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Petroleum & Natural Gas"
+  code: "PETRO"
+  description: "Responsible for exploration, production, and distribution policy for oil, gas, and petroleum products."
+
+kpis:
+  - name: "Crude Oil Production"
+    category: "production"
+    unit: "Million Tonnes"
+    target_value: 35.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/petroleum/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Crude Oil Production (Million Tonnes)"
+
+  - name: "Natural Gas Production"
+    category: "production"
+    unit: "BCM"
+    target_value: 40.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/petroleum/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Natural Gas Production (BCM)"
+
+  - name: "LPG Coverage"
+    category: "distribution"
+    unit: "%"
+    target_value: 100.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/petroleum/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "LPG Coverage (%)"

@@ -1,0 +1,41 @@
+ministry:
+  name: "Ministry of Power"
+  code: "POW"
+  description: "Responsible for electricity generation, transmission, distribution policy, and renewable energy capacity."
+
+kpis:
+  - name: "Installed Renewable Energy Capacity"
+    category: "energy transition"
+    unit: "GW"
+    target_value: 500.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/power/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Installed Renewable Energy Capacity (GW)"
+
+  - name: "Per Capita Electricity Consumption"
+    category: "electrification"
+    unit: "kWh"
+    target_value: 1500.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/power/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Per Capita Electricity Consumption (kWh)"
+
+  - name: "Transmission & Distribution Losses"
+    category: "grid efficiency"
+    unit: "%"
+    target_value: 12.0
+    period: "FY 2025-26"
+    source:
+      type: csv
+      location: "data/power/kpi_summary.csv"
+      key_column: "Metric"
+      value_column: "Value"
+      key_match: "Transmission & Distribution Losses (%)"

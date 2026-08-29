@@ -198,7 +198,10 @@ def _call_claude(ministry: Ministry) -> dict:
     try:
         data = json.loads(text)
         headline = str(data["headline"])
-        time_period_judged = str(data["time_period_judged"])
+        # MinistryInsight.time_period_judged is String(100) — SQLite silently accepts an
+        # overflow, but a strict DB (Postgres) would reject the insert outright. Claude's
+        # instructed to keep this short/concrete, but LLM output isn't guaranteed, so guard it.
+        time_period_judged = str(data["time_period_judged"])[:100]
         evidence = [str(b) for b in data["key_evidence"]]
         caveats = [str(c) for c in data["important_caveats"]]
         proxy_disclosure = data.get("proxy_disclosure")

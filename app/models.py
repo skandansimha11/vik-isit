@@ -294,7 +294,7 @@ class MinistryInsight(Base):
     # bullets/inference above are kept for backward compatibility with the
     # existing frontend (bullets == evidence, inference folds in headline +
     # forward_implications); the fields below carry the full structure. -----
-    headline: Mapped[str] = mapped_column(String(20), default="")  # Good | Mediocre | Poor | Mixed
+    headline: Mapped[str] = mapped_column(String(20), default="")  # Strong | Satisfactory | Mediocre | Weak | Poor (app.scoring.SCORE_BANDS)
     time_period_judged: Mapped[str] = mapped_column(String(100), default="")
     caveats: Mapped[list] = mapped_column(JSON, default=list)
     proxy_disclosure: Mapped[str | None] = mapped_column(Text, nullable=True)

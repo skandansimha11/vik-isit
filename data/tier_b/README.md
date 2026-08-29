@@ -27,7 +27,7 @@ dashboard series from them.
 | `road/highway_pace.csv` | National Highway Built per Day |
 | `road/modal_share.csv` | Freight Still Moving by Road (proxy) |
 
-Generated (do not hand-edit): `GAPS.md`.
+Generated (do not hand-edit): `GAPS.md`, `SOURCES.md`, `.source_state.json`.
 
 ## Row format
 
@@ -48,9 +48,22 @@ against the cited primary document before treating the number as definitive.
 
 ## Refreshing
 
+1. `python -m app.check_sources --tier b` — reports which of these 15 KPIs are
+   behind the latest official release (run with no `--tier` flag to check both
+   tiers at once). Writes `SOURCES.md`. A
+   [scheduled GitHub Actions workflow](../../.github/workflows/check-data-freshness.yml)
+   runs this weekly and opens a tracking issue when something needs attention.
+2. Open the CSV(s) for the KPI, add/replace rows from the cited `source_doc`,
+   set `revision` honestly, update `published_on`.
+3. Recompute:
+
 ```bash
 python -m app.tier_b_pipeline               # recompute all 15
 python -m app.tier_b_pipeline --ministry EDU
 ```
 
-`POST /sync` (the "Sync Live Data" button) runs this for you.
+`POST /sync` (the "Sync Live Data" button) runs step 3 for you.
+
+No Tier-B source currently has an auto-fetcher — see
+[`data/tier_a/README.md`](../tier_a/README.md#automation---whats-real-vs-best-effort)
+for why that's a deliberate choice, not a gap.

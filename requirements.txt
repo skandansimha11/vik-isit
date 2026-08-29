@@ -1,6 +1,7 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 sqlalchemy==2.0.36
+psycopg2-binary==2.9.9  # Postgres driver — used only when DATABASE_URL is postgresql://... (e.g. Render deploy); sqlite:/// locally needs no driver.
 pydantic==2.10.4
 pydantic-settings==2.7.1
 anthropic==0.125.0

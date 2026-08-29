@@ -296,7 +296,7 @@ class TestCheckSources:
         import app.check_sources as cs
 
         monkeypatch.setattr(cs, "_probe", lambda url: {"ok": False, "status": None, "fingerprint": None})
-        rows = cs.run(fetch=False)
+        rows = cs.run(fetch=False, tiers="a")
         assert len(rows) == 15
         for r in rows:
             assert "action" in r
@@ -309,7 +309,7 @@ class TestCheckSources:
 
         monkeypatch.setattr(cs, "_probe", lambda url: {"ok": True, "status": 200, "fingerprint": "x"})
         # pretend it's 2030 -> everything is stale
-        rows = cs.run(fetch=False, today=_dt.date(2030, 6, 1))
+        rows = cs.run(fetch=False, tiers="a", today=_dt.date(2030, 6, 1))
         assert any("UPDATE" in r["action"] for r in rows)
 
 

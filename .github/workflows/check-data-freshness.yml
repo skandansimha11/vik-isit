@@ -1,0 +1,121 @@
+name: Check data freshness
+
+# Runs app.check_sources against all 30 KPIs (Tier-A + Tier-B) on a schedule.
+# This only ever DETECTS staleness and writes the human-readable SOURCES.md
+# reports — it never writes a KPI value into the curated CSVs itself (see
+# data/tier_a/README.md and data/tier_b/README.md for why: most sources here
+# are PDF/HTML bulletins with layouts that break scrapers silently, so
+# auto-writing risks a wrong number landing on the dashboard unflagged).
+#
+# When something needs attention, it opens/updates a tracking issue with the
+# full report so it's visible without anyone needing to run the command
+# locally.
+
+on:
+  schedule:
+    # Every Monday 03:00 UTC. Cheap to run weekly even though most KPIs
+    # publish monthly/annually — this just checks, it doesn't fetch data.
+    - cron: "0 3 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run freshness check (both tiers, + Tier-A best-effort fetchers)
+        id: check
+        env:
+          DATA_GOV_IN_API_KEY: ${{ secrets.DATA_GOV_IN_API_KEY }}
+        run: python -m app.check_sources --fetch | tee check_sources_output.txt
+        continue-on-error: true
+
+      - name: Commit regenerated SOURCES.md reports
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh data-source freshness report [skip ci]"
+          file_pattern: "data/tier_a/SOURCES.md data/tier_b/SOURCES.md"
+
+      - name: Open/update tracking issue if something needs attention
+        if: steps.check.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const report = fs.readFileSync("check_sources_output.txt", "utf8");
+            const title = "Data freshness: KPI sources need attention";
+            const body = [
+              "Automated weekly check found one or more KPIs behind their expected publish schedule.",
+              "",
+              "```",
+              report.trim(),
+              "```",
+              "",
+              "See `data/tier_a/SOURCES.md` / `data/tier_b/SOURCES.md` for the full report, and each",
+              "tier's README for the manual-update workflow (open the source, add a CSV row, run the",
+              "pipeline / click Sync Live Data).",
+            ].join("\n");
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: ["data-freshness"],
+            });
+            const existing = issues.find((i) => i.title === title);
+
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ["data-freshness"],
+              });
+            }
+
+      - name: Close tracking issue if everything is fresh again
+        if: steps.check.outcome == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = "Data freshness: KPI sources need attention";
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "open",
+              labels: ["data-freshness"],
+            });
+            for (const issue of issues.filter((i) => i.title === title)) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: "All curated KPI sources are up to date again — closing.",
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: "closed",
+              });
+            }

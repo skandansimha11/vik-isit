@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from app.claude_service import chat_reply, get_or_generate_insights
+from app.config import settings
 from app.database import Base, engine, get_db, sync_schema
 from app.models import KPI, Event, KPISeriesPoint, Ministry
 from app.pipeline.sync_service import sync_all, sync_ministry
@@ -47,7 +48,10 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    # Local-dev origins are always allowed; add your deployed frontend's URL
+    # (e.g. https://your-app.vercel.app) via the CORS_ORIGINS env var on the
+    # backend host — comma-separated if you have more than one (prod + preview).
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", *settings.cors_origin_list],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -306,7 +306,10 @@ class TestInsightGeneration:
 
         assert cached is False
         assert len(insight.bullets) == 3
-        assert insight.headline == "Mediocre"
+        # headline is the deterministic Ministry Performance Score label (app.scoring),
+        # not whatever Claude returned — it always wins so the badge never disagrees
+        # with the score shown elsewhere in the dashboard.
+        assert insight.headline == ministry.score_label
         assert insight.time_period_judged == "FY2015-16 to FY2024-25"
         assert insight.caveats
         assert insight.data_quality_flag == "HIGH"
@@ -443,7 +446,9 @@ class TestTarkaChatbot:
         result = tarka.answer_performance_question(ministry, "Is Finance performing well?")
 
         assert result["headline"] not in ("Yes", "No")
-        assert result["headline"] == "Mediocre"
+        # same deterministic-override contract as the insights engine (see
+        # claude_service._call_claude / tarka_chatbot._with_deterministic_headline).
+        assert result["headline"] == ministry.score_label
         assert result["time_period_judged"]
         assert result["caveats"]
 

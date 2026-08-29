@@ -57,15 +57,32 @@ share a `period`, the one with the firmer revision wins.
 
 ## Refreshing
 
-1. `python -m app.check_sources` — reports which KPIs' data is behind the latest
+1. `python -m app.check_sources` — reports which KPIs (across **both** tiers by
+   default; pass `--tier a` to check only these 15) are behind the latest
    official release and whether each source URL is reachable / changed. Writes
-   `SOURCES.md`.
+   `SOURCES.md`. A [scheduled GitHub Actions workflow](../../.github/workflows/check-data-freshness.yml)
+   runs this weekly and opens a tracking issue when something needs attention
+   — it only ever detects staleness, it never writes a KPI value itself (see
+   "Automation" below).
 2. Open the CSV(s) for the KPI, add/replace rows from the cited `source_doc`,
    set `revision` honestly, update `published_on`.
 3. `python -m app.tier_a_pipeline` — recomputes every KPI, rewrites the series,
    appends an audited history row where a value changed, regenerates `GAPS.md`.
 
 `POST /sync` (the "Sync Live Data" button) runs step 3 for you.
+
+## Automation — what's real vs. best-effort
+
+`python -m app.check_sources --fetch` also runs the handful of auto-fetchers in
+`app/connectors/tier_a/fetchers/` (PPAC oil-import-dependence, MoSPI CPI via a
+`DATA_GOV_IN_API_KEY`, PIB rail freight). **These currently only detect and
+report a possible new figure — none of them write to the CSVs yet.** That's
+deliberate: these sources are PDF/HTML bulletins whose layout changes without
+notice, and a scraper that silently writes a mis-parsed number is worse than
+one that does nothing. Turning one of these into a real auto-write (append a
+`Provisional` row, never touch `Actual`/`Revised` rows) is a reasonable next
+step for a source with a genuinely stable feed — CPI via data.gov.in is the
+best current candidate.
 
 ## Provenance / accuracy note
 

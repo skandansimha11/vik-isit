@@ -144,3 +144,35 @@ class TestRefresh:
             assert body["aspirational_target"] == 60.0
         finally:
             main.app.dependency_overrides.clear()
+
+
+class TestCheckSources:
+    """Mirrors TestCheckSources in test_tier_a_pipeline.py — same tool, Tier-B slice."""
+
+    def test_runs_offline(self, monkeypatch):
+        import app.check_sources as cs
+
+        monkeypatch.setattr(cs, "_probe", lambda url: {"ok": False, "status": None, "fingerprint": None})
+        rows = cs.run(fetch=False, tiers="b")
+        assert len(rows) == 15
+        for r in rows:
+            assert r["tier"] == "Tier-B"
+            assert "action" in r
+            assert r["source_reachable"] is False
+
+    def test_flags_stale_data(self, monkeypatch):
+        import datetime as _dt
+
+        import app.check_sources as cs
+
+        monkeypatch.setattr(cs, "_probe", lambda url: {"ok": True, "status": 200, "fingerprint": "x"})
+        rows = cs.run(fetch=False, tiers="b", today=_dt.date(2030, 6, 1))
+        assert any("UPDATE" in r["action"] for r in rows)
+
+    def test_default_covers_both_tiers(self, monkeypatch):
+        import app.check_sources as cs
+
+        monkeypatch.setattr(cs, "_probe", lambda url: {"ok": False, "status": None, "fingerprint": None})
+        rows = cs.run(fetch=False)  # tiers="ab" by default
+        assert len(rows) == 30
+        assert {r["tier"] for r in rows} == {"Tier-A", "Tier-B"}

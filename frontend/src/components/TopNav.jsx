@@ -117,7 +117,10 @@ export default function TopNav() {
           </NavLink>
         </nav>
 
-        <SyncButton />
+        {/* Dev-only: recomputes KPIs from the curated CSVs. Hidden in production builds
+            (Vite's import.meta.env.DEV is false once `vite build` runs, e.g. on Vercel) —
+            a public showcase shouldn't invite visitors to poke at the sync pipeline. */}
+        {import.meta.env.DEV && <SyncButton />}
       </div>
     </header>
   );

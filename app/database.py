@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import JSON, String, Text, create_engine, inspect, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 from app.config import settings
@@ -50,3 +50,47 @@ def sync_schema() -> None:
                 conn.execute(
                     text(f'ALTER TABLE "{table.name}" ADD COLUMN "{column.name}" {col_type}{default_sql}')
                 )
+
+
+_EM_DASH = "—"
+
+
+def _strip_em_dash(value):
+    if isinstance(value, str):
+        return value.replace(f" {_EM_DASH} ", ", ").replace(_EM_DASH, "-")
+    if isinstance(value, list):
+        return [_strip_em_dash(v) for v in value]
+    if isinstance(value, dict):
+        return {k: _strip_em_dash(v) for k, v in value.items()}
+    return value
+
+
+def scrub_stored_em_dashes() -> int:
+    """Best-effort, idempotent: rewrite any em dash already stored in a text or
+    JSON column. The source constants and AI output no longer produce them, but
+    rows seeded before that change still contain them (KPI plain-notes, ministry
+    descriptions, cached insight text). Runs on startup next to sync_schema();
+    a cheap no-op once the data is clean. Never fails the boot."""
+    from app import models  # noqa: F401  ensure every table is registered on Base
+
+    changed = 0
+    try:
+        with SessionLocal() as db:
+            for mapper in Base.registry.mappers:
+                cols = [c.key for c in mapper.columns if isinstance(c.type, (String, Text, JSON))]
+                if not cols:
+                    continue
+                for row in db.query(mapper.class_).all():
+                    touched = False
+                    for col in cols:
+                        old = getattr(row, col)
+                        new = _strip_em_dash(old)
+                        if new != old:
+                            setattr(row, col, new)
+                            touched = True
+                    changed += touched
+            if changed:
+                db.commit()
+    except Exception:  # noqa: BLE001 - cosmetic cleanup must never block startup
+        return 0
+    return changed

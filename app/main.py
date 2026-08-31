@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session, selectinload
 
 from app.claude_service import chat_reply, get_or_generate_insights
 from app.config import settings
-from app.database import Base, engine, get_db, sync_schema
+from app.database import Base, engine, get_db, scrub_stored_em_dashes, sync_schema
 from app.models import KPI, Event, KPISeriesPoint, Ministry
 from app.pipeline.sync_service import sync_all, sync_ministry
 from app.schemas import (
@@ -39,6 +39,7 @@ from app.tarka_chatbot import (
 
 Base.metadata.create_all(bind=engine)
 sync_schema()
+scrub_stored_em_dashes()
 
 app = FastAPI(
     title="vik-isit API",

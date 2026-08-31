@@ -98,11 +98,18 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
     }
 
     if (percentMode && canPercent) {
-      const transformed = rawPoints.map((p) => ({
-        ...p,
-        value: p.value != null ? Math.round((p.value / kpi.target_value) * 1000) / 10 : null,
-        target_value: 100,
-      }));
+      // Direction-aware, mirroring the backend's KPI.progress_pct (app/models.py):
+      // higher-is-better -> value/target (100% = at target, >100% = beating it).
+      // lower-is-better  -> target/value (100% = at target, >100% = beating it too —
+      // e.g. Fiscal Deficit at 4.0 vs a 4.3 target is "108% of target", not "93%").
+      // A naive value/target for a lower-is-better KPI would show >100% while the
+      // metric is actually WORSE than target, which reads backwards next to every
+      // other chart where >100% means better.
+      const transformed = rawPoints.map((p) => {
+        if (p.value == null) return { ...p, value: null, target_value: 100 };
+        const ratio = kpi.higher_is_better ? p.value / kpi.target_value : kpi.target_value / p.value;
+        return { ...p, value: Math.round(ratio * 1000) / 10, target_value: 100 };
+      });
       return { points: transformed, unit: "% of target", secondaryUnit: kpi.secondary_unit };
     }
 

@@ -37,7 +37,6 @@ export default function InsightsPanel({ ministryId }) {
         <div>
           <InsightBody
             headline={data.headline}
-            dataQualityFlag={data.data_quality_flag}
             timePeriodJudged={data.time_period_judged}
             bullets={data.bullets}
             caveats={data.caveats}

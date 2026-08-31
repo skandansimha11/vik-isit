@@ -12,7 +12,6 @@ function toTarkaMessage(answer, label) {
     bullets: answer.evidence,
     caveats: answer.caveats,
     timePeriodJudged: answer.time_period_judged,
-    dataQualityFlag: answer.data_quality_flag,
     proxyDisclosure: answer.proxy_disclosure,
     comparativeContext: answer.comparative_context,
     forwardImplications: answer.forward_implications,
@@ -204,7 +203,6 @@ export default function ChatWidget({ ministryId = null, ministryName = null, kpi
                 {m.label && <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-cyan-400">{m.label}</p>}
                 <InsightBody
                   headline={m.headline}
-                  dataQualityFlag={m.dataQualityFlag}
                   timePeriodJudged={m.timePeriodJudged}
                   bullets={m.bullets}
                   caveats={m.caveats}

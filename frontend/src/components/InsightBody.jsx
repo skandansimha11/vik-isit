@@ -10,15 +10,8 @@ const HEADLINE_ICON = {
   Mixed: "↔️",
 };
 
-const QUALITY_STYLE = {
-  HIGH: "border-positive/30 bg-positive/10 text-positive",
-  MEDIUM: "border-orange-500/30 bg-orange-500/10 text-orange-400",
-  LOW: "border-negative/30 bg-negative/10 text-negative",
-};
-
 export default function InsightBody({
   headline,
-  dataQualityFlag,
   timePeriodJudged,
   bullets = [],
   caveats = [],
@@ -29,20 +22,11 @@ export default function InsightBody({
 }) {
   return (
     <div>
-      {(headline || dataQualityFlag || timePeriodJudged) && (
+      {(headline || timePeriodJudged) && (
         <div className="mb-3 flex flex-wrap items-center gap-2">
           {headline && (
             <span className="text-sm font-semibold text-white">
               {HEADLINE_ICON[headline] ? `${HEADLINE_ICON[headline]} ${headline}` : headline}
-            </span>
-          )}
-          {dataQualityFlag && (
-            <span
-              className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                QUALITY_STYLE[dataQualityFlag] || QUALITY_STYLE.MEDIUM
-              }`}
-            >
-              {dataQualityFlag} confidence
             </span>
           )}
           {timePeriodJudged && (
@@ -93,7 +77,7 @@ export default function InsightBody({
       )}
 
       {(forwardImplications || inference) && (
-        <p className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 text-sm leading-relaxed text-base-200">
+        <p className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-3 text-sm leading-relaxed text-base-200">
           {forwardImplications || inference}
         </p>
       )}

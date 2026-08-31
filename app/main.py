@@ -61,9 +61,10 @@ app.add_middleware(
 RANGE_YEARS = {"5y": 5, "10y": 10, "full": None}
 
 # GET responses this app serves change at most daily (data syncs are manual /
-# weekly). Letting the browser reuse a response for a short window, and serve a
-# stale copy while revalidating, keeps the UI responsive even while the free-tier
-# host is cold-starting. Not applied to /health (used by the keep-alive ping).
+# weekly). A short reuse window plus a brief serve-stale-while-revalidating grace
+# keeps the UI snappy without letting a stale copy linger. The real cold-start
+# defense is the frontend's localStorage cache (queryPersist.js). Not applied to
+# /health (used by the keep-alive ping).
 _CACHEABLE_MISS = ("/health", "/docs", "/openapi.json", "/redoc")
 
 
@@ -76,7 +77,7 @@ async def cache_headers(request, call_next):
         and not request.url.path.startswith(_CACHEABLE_MISS)
         and "cache-control" not in response.headers
     ):
-        response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=86400"
+        response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=120"
     return response
 
 

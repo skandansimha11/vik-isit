@@ -1,9 +1,9 @@
-"""Ministry of Railways — Tier-A connector.
+"""Ministry of Railways - Tier-A connector.
 
 KPIs:
-  * freight_volume_growth  — YoY growth in originating revenue-earning freight (MT)
-  * rail_market_share      — rail vs road share of freight tonne-km
-  * train_speeds_capacity  — avg freight-train speed, against congested-route share
+  * freight_volume_growth  - YoY growth in originating revenue-earning freight (MT)
+  * rail_market_share      - rail vs road share of freight tonne-km
+  * train_speeds_capacity  - avg freight-train speed, against congested-route share
 """
 
 from __future__ import annotations

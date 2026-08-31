@@ -1,9 +1,9 @@
-"""Ministry of Power — Tier-A connector.
+"""Ministry of Power - Tier-A connector.
 
 KPIs:
-  * industrial_tariffs         — avg industrial tariff ₹/kWh, national + major states
-  * discom_financial_health    — AT&C loss %, against ACS-ARR gap ₹/kWh
-  * power_availability          — energy availability % (supplied ÷ requirement)
+  * industrial_tariffs         - avg industrial tariff ₹/kWh, national + major states
+  * discom_financial_health    - AT&C loss %, against ACS-ARR gap ₹/kWh
+  * power_availability          - energy availability % (supplied ÷ requirement)
 """
 
 from __future__ import annotations

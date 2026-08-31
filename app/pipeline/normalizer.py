@@ -8,7 +8,7 @@ _UNIT_WORDS = re.compile(
 )
 _STRIP_CHARS = re.compile(r"[₹$,%]")
 _NUMBER = re.compile(r"-?\d+(\.\d+)?")
-_BLANK_VALUES = {"", "N/A", "NA", "-", "—", "NIL", "NONE"}
+_BLANK_VALUES = {"", "N/A", "NA", "-", "-", "NIL", "NONE"}
 
 
 def clean_numeric(raw: Any) -> float | None:

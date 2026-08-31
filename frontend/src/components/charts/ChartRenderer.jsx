@@ -51,7 +51,7 @@ function tip(unitMap) {
 
 // ---------------------------------------------------------------- events
 // Multiple events can fall on the same period (2020 has three). Merge them so
-// exactly one dashed marker + one numbered badge renders per period — numbered
+// exactly one dashed marker + one numbered badge renders per period - numbered
 // badges sit far apart on the x-axis and never overlap; the full list is shown
 // as a caption under the chart by ChartCard (see mergeEventsByPeriod export).
 export function mergeEventsByPeriod(events = []) {
@@ -119,9 +119,8 @@ function targetOverlay({ official, aspirational, yAxisId }) {
       />
     );
   }
-  // No on-chart text labels — the band + two line styles read cleanly, and the
-  // card's target readout ("Target X → aspiration Y") carries the numbers.
-  // One short marker on the official line only, at the left edge.
+  // No on-chart text labels - the band + two line styles read cleanly, and the
+  // ChartCard corner tag carries the numbers (Target X / Aspiration Y).
   if (official != null) {
     els.push(
       <ReferenceLine
@@ -131,7 +130,6 @@ function targetOverlay({ official, aspirational, yAxisId }) {
         stroke="#8f8f8f"
         strokeDasharray="6 4"
         ifOverflow="extendDomain"
-        label={{ value: `target ${formatAxisTick(official)}`, position: "insideTopLeft", fill: "#9a9a9a", fontSize: 9 }}
       />
     );
   }
@@ -170,7 +168,7 @@ const legendProps = {
 // A top legend with several series wraps onto multiple rows on narrow screens
 // (and inside the half-width cards of the desktop grid). Recharts does not
 // reserve vertical space for the wrapped rows, so a wrapped row lands on top of
-// the first Y-axis tick. Estimate the row count deliberately conservatively —
+// the first Y-axis tick. Estimate the row count deliberately conservatively -
 // over-reserving just adds a little whitespace above the plot; under-reserving
 // causes the overlap we are trying to prevent. Returns px to reserve.
 const ONE_ROW_LEGEND = 22;
@@ -315,7 +313,6 @@ function StackedAreaChart({ points, visibleKeys, events, height, unit, targets }
             stroke="#8f8f8f"
             strokeDasharray="6 4"
             ifOverflow="extendDomain"
-            label={{ value: `rail target ${formatAxisTick(targets.official)}`, position: "insideRight", fill: "#9a9a9a", fontSize: 9 }}
           />
         )}
         {keys.map((k, i) => (

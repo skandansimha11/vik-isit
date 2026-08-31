@@ -17,7 +17,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl">
         <p className="text-base-500">
           <span className="font-semibold text-base-400">Data provenance.</span> All 30 KPIs across the
-          10 ministries are computed from a curated, provenance-tracked layer of official sources —
+          10 ministries are computed from a curated, provenance-tracked layer of official sources;
           every figure carries a revision status (Actual / Provisional / Revised / Budget Estimate /
           Estimated) and links back to its source document. Where no official series exists (e.g.
           industrial import dependence, defence equipment vintage, exam-integrity incidents) the

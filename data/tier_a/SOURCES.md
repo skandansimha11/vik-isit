@@ -6,51 +6,51 @@ from the cited source, then run `python -m app.tier_a_pipeline`.
 
 | ministry | KPI | data through | expect | source reachable | action |
 |---|---|---|---|---|---|
-| FIN | Fiscal Deficit | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| FIN | Tax Harassment Cases | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| FIN | Tax Collection Growth | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| PETRO | Oil Import Dependence | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| PETRO | Ethanol Blending % | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| PETRO | Refining Efficiency | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| AGRI | Real Farmer Income | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| AGRI | Ethanol Programme | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| AGRI | Food Inflation | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| FIN | Fiscal Deficit | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| FIN | Tax Harassment Cases | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| FIN | Tax Collection Growth | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| PETRO | Oil Import Dependence | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| PETRO | Ethanol Blending % | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| PETRO | Refining Efficiency | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| AGRI | Real Farmer Income | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| AGRI | Ethanol Programme | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| AGRI | Food Inflation | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | RAIL | Freight Volume Growth | FY2025-26 | FY2025-26 | no (err) | ok |
-| RAIL | Rail Market Share | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| RAIL | Train Speeds & Capacity | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| POW | Industrial Tariffs | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| POW | Discom Financial Health | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| POW | Power Availability | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| RAIL | Rail Market Share | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| RAIL | Train Speeds & Capacity | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| POW | Industrial Tariffs | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| POW | Discom Financial Health | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| POW | Power Availability | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 
 ## Source URLs
 
-- **FIN · Fiscal Deficit** — Union Budget (Budget at a Glance) + Economic Survey Statistical Appendix + CGA  
+- **FIN · Fiscal Deficit** - Union Budget (Budget at a Glance) + Economic Survey Statistical Appendix + CGA  
   https://www.indiabudget.gov.in/ (Annual (FY); monthly actuals via CGA)
-- **FIN · Tax Harassment Cases** — CBDT Annual Report + Direct Taxes Time-Series + CAG audit reports + Parliament replies  
+- **FIN · Tax Harassment Cases** - CBDT Annual Report + Direct Taxes Time-Series + CAG audit reports + Parliament replies  
   https://incometaxindia.gov.in/Pages/Direct-Taxes-Data.aspx (Annual (occasional parliamentary updates))
-- **FIN · Tax Collection Growth** — CBDT Direct Taxes Data + Union Budget Receipt Budget + Economic Survey  
+- **FIN · Tax Collection Growth** - CBDT Direct Taxes Data + Union Budget Receipt Budget + Economic Survey  
   https://incometaxindia.gov.in/Pages/Direct-Taxes-Data.aspx (Monthly (provisional) / Annual (final))
-- **PETRO · Oil Import Dependence** — PPAC — Snapshot of India's Oil & Gas Data / Ready Reckoner  
+- **PETRO · Oil Import Dependence** - PPAC - Snapshot of India's Oil & Gas Data / Ready Reckoner  
   https://ppac.gov.in/ (Monthly)
-- **PETRO · Ethanol Blending %** — PPAC — Ethanol Blended Petrol (EBP) Programme / Ready Reckoner  
+- **PETRO · Ethanol Blending %** - PPAC - Ethanol Blended Petrol (EBP) Programme / Ready Reckoner  
   https://ppac.gov.in/ (Monthly (Ethanol Supply Year basis))
-- **PETRO · Refining Efficiency** — PPAC Ready Reckoner (refining) + PPAC refinery performance  
+- **PETRO · Refining Efficiency** - PPAC Ready Reckoner (refining) + PPAC refinery performance  
   https://ppac.gov.in/ (Monthly)
-- **AGRI · Real Farmer Income** — MoSPI National Accounts (agri & allied GVA, constant prices) + PLFS/Census workforce + NSS SAS 2013/2019 + NABARD NAFIS 2016-17/2021-22  
+- **AGRI · Real Farmer Income** - MoSPI National Accounts (agri & allied GVA, constant prices) + PLFS/Census workforce + NSS SAS 2013/2019 + NABARD NAFIS 2016-17/2021-22  
   https://www.mospi.gov.in/ (Annual)
-- **AGRI · Ethanol Programme** — PPAC — EBP Programme + MoP&NG / PIB (forex-saving estimates)  
+- **AGRI · Ethanol Programme** - PPAC - EBP Programme + MoP&NG / PIB (forex-saving estimates)  
   https://ppac.gov.in/ (Monthly / Annual (Ethanol Supply Year))
-- **AGRI · Food Inflation** — MoSPI — CPI (Food & Beverages) press releases; RBI DBIE  
+- **AGRI · Food Inflation** - MoSPI - CPI (Food & Beverages) press releases; RBI DBIE  
   https://www.mospi.gov.in/ (Monthly)
-- **RAIL · Freight Volume Growth** — Indian Railways Year Book / Statistical Statements + PIB monthly freight-loading releases  
+- **RAIL · Freight Volume Growth** - Indian Railways Year Book / Statistical Statements + PIB monthly freight-loading releases  
   https://indianrailways.gov.in/ (Monthly (provisional) / Annual (final))
-- **RAIL · Rail Market Share** — Indian Railways + MoRTH + NITI Aayog / DPIIT-NCAER & NTDPC freight-mode studies  
+- **RAIL · Rail Market Share** - Indian Railways + MoRTH + NITI Aayog / DPIIT-NCAER & NTDPC freight-mode studies  
   https://indianrailways.gov.in/ (Annual)
-- **RAIL · Train Speeds & Capacity** — Indian Railways Year Book / Annual Report + FOIS + PIB  
+- **RAIL · Train Speeds & Capacity** - Indian Railways Year Book / Annual Report + FOIS + PIB  
   https://indianrailways.gov.in/ (Annual)
-- **POW · Industrial Tariffs** — CEA — All-India Electricity Statistics / tariff compilations + PFC + SERC tariff orders  
+- **POW · Industrial Tariffs** - CEA - All-India Electricity Statistics / tariff compilations + PFC + SERC tariff orders  
   https://cea.nic.in/ (Annual (tariff-order cycle))
-- **POW · Discom Financial Health** — Power Finance Corporation — Report on Performance of Power Utilities  
+- **POW · Discom Financial Health** - Power Finance Corporation - Report on Performance of Power Utilities  
   https://www.pfcindia.com/ (Annual)
-- **POW · Power Availability** — CEA — Power Supply Position / Load Generation Balance Report (LGBR)  
+- **POW · Power Availability** - CEA - Power Supply Position / Load Generation Balance Report (LGBR)  
   https://cea.nic.in/ (Monthly / Annual)

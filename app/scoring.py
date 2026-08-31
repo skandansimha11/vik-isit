@@ -10,7 +10,7 @@ down-weights proxy or low-quality KPIs rather than letting them drive the
 verdict.
 
 This module intentionally does not import app.models (avoids a circular
-import with Ministry.score) — it operates on duck-typed KPI/Ministry
+import with Ministry.score) - it operates on duck-typed KPI/Ministry
 objects exposing the same attributes as app.models.KPI / app.models.Ministry.
 
 --- Normalization -----------------------------------------------------------
@@ -31,7 +31,7 @@ see MINISTRY_SCORING below for the specific bound and its rationale.
 Up to +/-8 points, added to a KPI's normalized score before weighting, based
 on how consistently its last up to 5 curated series points moved in the
 "improving" direction (respecting higher_is_better). This is intentionally
-modest — it nudges the score toward multi-year direction without letting a
+modest - it nudges the score toward multi-year direction without letting a
 single recent uptick/downtick swamp the level-based read.
 
 --- Data confidence multiplier -----------------------------------------------
@@ -53,7 +53,7 @@ DATA_CONFIDENCE = {"HIGH": 1.0, "MEDIUM": 0.85, "LOW": 0.6}
 DEFAULT_CONFIDENCE = 0.75  # unknown/missing data_quality
 PROXY_PENALTY = 0.85
 
-# (min_inclusive, max_exclusive, label) — max_exclusive=101 so 100 itself lands in Strong.
+# (min_inclusive, max_exclusive, label) - max_exclusive=101 so 100 itself lands in Strong.
 SCORE_BANDS: tuple[tuple[float, float, str], ...] = (
     (80, 101, "Strong"),
     (65, 80, "Satisfactory"),
@@ -107,7 +107,7 @@ MINISTRY_SCORING: dict[str, list[KPIWeight]] = {
         KPIWeight(
             "Tax Harassment Cases", 0.20, "Tax administration quality (proxy)",
             ceiling=900.0,
-            rationale="Proxy, LOW confidence by design — down-weighted via the confidence multiplier, not just the base weight.",
+            rationale="Proxy, LOW confidence by design - down-weighted via the confidence multiplier, not just the base weight.",
         ),
     ],
     "COMM": [
@@ -170,7 +170,7 @@ MINISTRY_SCORING: dict[str, list[KPIWeight]] = {
         KPIWeight(
             "Domestic MIC Development", 0.30, "True indigenisation / domestic content",
             floor=30.0,
-            rationale="Officially-reported indigenisation is a claim, not an audited figure — floor reflects a low-indigenisation baseline.",
+            rationale="Officially-reported indigenisation is a claim, not an audited figure - floor reflects a low-indigenisation baseline.",
         ),
         KPIWeight(
             "Force Modernisation", 0.20, "Modernisation progress (proxy)",
@@ -216,7 +216,7 @@ MINISTRY_SCORING: dict[str, list[KPIWeight]] = {
         KPIWeight(
             "Real Farmer Income", 0.45, "Real farmer income / productivity",
             floor=100.0,
-            rationale="Index base year 2014=100 — the floor is simply no real growth since the base year.",
+            rationale="Index base year 2014=100 - the floor is simply no real growth since the base year.",
         ),
         KPIWeight(
             "Food Inflation", 0.30, "Food inflation stability",
@@ -291,7 +291,7 @@ class MinistryScoreResult:
 
 
 def _target_for(kpi: Any) -> tuple[float | None, bool]:
-    """(target, is_aspirational) — prefer the aspirational/structural target."""
+    """(target, is_aspirational) - prefer the aspirational/structural target."""
     aspirational = getattr(kpi, "aspirational_target", None)
     if aspirational is not None:
         return aspirational, True

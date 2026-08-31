@@ -147,7 +147,7 @@ class TestRefresh:
 
 
 class TestCheckSources:
-    """Mirrors TestCheckSources in test_tier_a_pipeline.py — same tool, Tier-B slice."""
+    """Mirrors TestCheckSources in test_tier_a_pipeline.py - same tool, Tier-B slice."""
 
     def test_runs_offline(self, monkeypatch):
         import app.check_sources as cs

@@ -23,9 +23,17 @@ class Ministry(Base):
 
     @property
     def _score_result(self):
-        from app.scoring import compute_ministry_score
+        # score / score_label / the summary + insight prompts all hit this; the
+        # result only depends on KPI rows already loaded for this request, so
+        # memoize it on the instance (SQLAlchemy hands out a fresh instance per
+        # session, and get_db() closes the session per request).
+        cached = self.__dict__.get("_score_result_cache")
+        if cached is None:
+            from app.scoring import compute_ministry_score
 
-        return compute_ministry_score(self)
+            cached = compute_ministry_score(self)
+            self.__dict__["_score_result_cache"] = cached
+        return cached
 
     @property
     def score(self) -> float | None:
@@ -134,7 +142,7 @@ class KPI(Base):
         blended = p_official if p_aspirational is None else 0.7 * p_official + 0.3 * p_aspirational
         return round(max(0.0, min(blended, 150.0)), 1)
 
-    # Confidence weighting for Ministry.score — shaky data drives the verdict less.
+    # Confidence weighting for Ministry.score - shaky data drives the verdict less.
     _QUALITY_WEIGHT = {"HIGH": 1.0, "MEDIUM": 0.9, "LOW": 0.6}
 
     @property
@@ -308,7 +316,7 @@ class MinistryInsight(Base):
 
 class KPIHistory(Base):
     """Time series of KPI values, one row per detected value change (live
-    connector change-log — see KPISeriesPoint for the curated analytics
+    connector change-log - see KPISeriesPoint for the curated analytics
     series used by charts)."""
 
     __tablename__ = "kpi_history"

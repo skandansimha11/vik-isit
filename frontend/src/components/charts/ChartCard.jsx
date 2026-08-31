@@ -19,36 +19,124 @@ function yearToPeriodLabel(year) {
   return `FY${String(year + 1).slice(-2)}`;
 }
 
-function TargetReadout({ kpi }) {
+// Target / aspiration numbers, shown as short text near the chart. Replaces the
+// old on-chart SVG line labels and the card-header readout - one quiet source of
+// the numbers, no clutter. Time-series charts get a compact tag tucked into the
+// emptiest plot corner (`targetTagPlacement`); full-bleed shapes (stacked area,
+// category bars) have no empty corner, so they get a right-aligned caption just
+// above the plot instead.
+const TAG_POS = {
+  // `top-9` drops the tag below the event-badge row that pins to the plot top
+  // (badges compress toward the corners on narrow screens); the `bottom` offsets
+  // clear the x-axis ticks (and the range brush, when the chart shows one).
+  "top-right": "top-9 right-2 items-end text-right",
+  "top-left": "top-9 left-[62px] items-start text-left",
+  "bottom-right": "right-2 items-end text-right",
+  "bottom-left": "left-[62px] items-start text-left",
+};
+
+// Keep the numbers genuinely short: collapse any "% of …" unit to just "%", and
+// drop anything longer - the card header + Y axis already carry the full unit.
+function shortUnit(unit) {
+  if (!unit) return "";
+  if (/%/.test(unit)) return "%";
+  return unit.length > 10 ? "" : unit;
+}
+
+function TargetBits({ official, asp, u }) {
+  return (
+    <>
+      {official != null && (
+        <span className="text-base-400">
+          Target <span className="font-medium text-base-300">{formatKpiValue(official, u)}</span>
+        </span>
+      )}
+      {asp != null && asp !== official && (
+        <span className="text-positive/90">
+          Aspiration <span className="font-medium">{formatKpiValue(asp, u)}</span>
+        </span>
+      )}
+    </>
+  );
+}
+
+function ChartTargetTag({ kpi, unit, placement, hasBrush }) {
   const official = kpi.target_value || null;
   const asp = kpi.aspirational_target ?? null;
   if (official == null && asp == null) return null;
-  const cur = kpi.current_value;
-  let distance = null;
-  if (official != null && cur != null) {
-    const gap = kpi.higher_is_better ? official - cur : cur - official;
-    distance =
-      Math.abs(gap) < 0.05
-        ? "on target"
-        : gap > 0
-        ? `${formatKpiValue(Math.abs(gap), "")} ${kpi.higher_is_better ? "below" : "above"} target`
-        : `past target`;
+  const u = shortUnit(unit);
+
+  if (placement === "banner") {
+    return (
+      <div className="mb-1 flex flex-wrap justify-end gap-x-3 gap-y-0.5 px-1 text-[10px] leading-tight">
+        <TargetBits official={official} asp={asp} u={u} />
+      </div>
+    );
   }
+
+  const pos = TAG_POS[placement] || TAG_POS["top-right"];
+  const bottomOffset = placement.startsWith("bottom") ? (hasBrush ? "bottom-[70px]" : "bottom-10") : "";
   return (
-    <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-base-500">
-      {official != null && (
-        <span>
-          <span className="text-base-400">Target</span> {formatKpiValue(official, kpi.unit)}
-        </span>
-      )}
-      {asp != null && (
-        <span>
-          <span className="text-positive/80">Aspiration</span> {formatKpiValue(asp, kpi.unit)}
-        </span>
-      )}
-      {distance && <span className="text-base-600">{distance}</span>}
+    <div
+      className={`pointer-events-none absolute z-10 flex max-w-[46%] flex-col gap-0.5 rounded-md border border-base-700/50 bg-base-900/85 px-2 py-1 text-[10px] leading-tight backdrop-blur-sm ${pos} ${bottomOffset}`}
+    >
+      <TargetBits official={official} asp={asp} u={u} />
     </div>
   );
+}
+
+// Pick the plot corner the data line stays furthest out of. The line is
+// normalised to x 0..1 / y 0..1 (target + aspiration folded into the domain,
+// since their reference lines render with `extendDomain`), then each of the four
+// corner boxes is scored by the smallest gap between the line and the box over
+// that box's x-span. Highest gap wins; ties break top-right → top-left →
+// bottom-right → bottom-left. Series without a scalar `value` (breakdowns,
+// category compares) have no clear corner, so they use the "banner" slot.
+const TAG_CORNERS = [
+  { key: "top-right", xr: [0.58, 0.99], edge: 0.72, top: true },
+  { key: "top-left", xr: [0.03, 0.42], edge: 0.72, top: true },
+  { key: "bottom-right", xr: [0.58, 0.99], edge: 0.3, top: false },
+  { key: "bottom-left", xr: [0.03, 0.42], edge: 0.3, top: false },
+];
+
+function targetTagPlacement(points, kpi) {
+  // Only a plain single line (time_line) reliably leaves an empty corner. Dual
+  // axes, breakdowns and category bars fill the plot or carry a legend - those
+  // get the right-aligned caption above the plot instead.
+  if (kpi.data_shape !== "time_line") return "banner";
+  const vals = points.map((p) => p?.value).filter((v) => v != null);
+  if (vals.length < 3) return "banner";
+  const extra = [kpi.target_value || null, kpi.aspirational_target ?? null].filter((v) => v != null);
+  const min = Math.min(...vals, ...extra);
+  const max = Math.max(...vals, ...extra);
+  const range = max - min || 1;
+  const n = vals.length;
+
+  // Walk the line densely (interpolating between vertices) so a steep segment
+  // that cuts through a corner box is caught, not just the data points.
+  const line = [];
+  for (let i = 0; i < n - 1; i++) {
+    const y0 = (vals[i] - min) / range;
+    const y1 = (vals[i + 1] - min) / range;
+    for (let s = 0; s < 6; s++) {
+      const t = s / 6;
+      line.push({ x: (i + t) / (n - 1), y: y0 + (y1 - y0) * t });
+    }
+  }
+  line.push({ x: 1, y: (vals[n - 1] - min) / range });
+
+  let best = null;
+  for (const c of TAG_CORNERS) {
+    let gap = Infinity;
+    for (const p of line) {
+      if (p.x < c.xr[0] || p.x > c.xr[1]) continue;
+      gap = Math.min(gap, c.top ? c.edge - p.y : p.y - c.edge);
+    }
+    if (gap === Infinity) gap = 1;
+    if (!best || gap > best.gap + 0.001) best = { key: c.key, gap };
+  }
+  // No corner with real breathing room -> use the caption above the plot.
+  return best.gap > 0.06 ? best.key : "banner";
 }
 
 function Toggle({ active, onClick, children, title }) {
@@ -111,6 +199,12 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
 
   const mergedEvents = useMemo(() => (peerCompare ? [] : mergeEventsByPeriod(events)), [events, peerCompare]);
 
+  const targetPlacement = useMemo(() => targetTagPlacement(points, kpi), [points, kpi]);
+  const showChartTargets =
+    !tableView && !peerCompare && !growthMode && showBenchmark &&
+    (kpi.target_value != null || kpi.aspirational_target != null);
+  const hasBrush = points.length > 6;
+
   function handleExportPng() {
     exportChartAsPng(chartRef.current, `${kpi.name.replace(/\s+/g, "_")}.png`);
   }
@@ -157,7 +251,7 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
             <span className={`font-bold text-orange-500 ${hero ? "text-3xl sm:text-4xl" : "text-xl"}`}>
               {formatKpiValue(kpi.current_value, kpi.unit)}
             </span>
-            {/* Which year this value is for — KPIs don't all share a latest year
+            {/* Which year this value is for - KPIs don't all share a latest year
                 (one might be FY2024-25, another FY2025-26), so this is shown
                 unconditionally next to every value, not buried in the source line. */}
             {kpi.period && <span className="text-xs font-medium text-base-500">({kpi.period})</span>}
@@ -165,7 +259,6 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
           {kpi.plain_note && (
             <p className="mt-1.5 max-w-prose text-xs leading-relaxed text-base-400">{kpi.plain_note}</p>
           )}
-          <TargetReadout kpi={kpi} />
         </div>
 
         <select
@@ -268,7 +361,10 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
 
       {!isLoading && !isError && (
         <>
-          <div ref={chartRef} className="rounded-xl bg-base-850">
+          {showChartTargets && targetPlacement === "banner" && (
+            <ChartTargetTag kpi={kpi} unit={unit} placement="banner" />
+          )}
+          <div ref={chartRef} className="relative rounded-xl bg-base-850">
             {tableView ? (
               <DataTable kpi={kpi} points={points} />
             ) : (
@@ -283,6 +379,9 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
                 events={events}
                 height={hero ? 340 : 260}
               />
+            )}
+            {showChartTargets && targetPlacement !== "banner" && (
+              <ChartTargetTag kpi={kpi} unit={unit} placement={targetPlacement} hasBrush={hasBrush} />
             )}
           </div>
 

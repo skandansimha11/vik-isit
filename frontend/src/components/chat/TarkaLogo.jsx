@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-// A diya (oil lamp) — the traditional Indian symbol of knowledge dispelling
+// A diya (oil lamp) - the traditional Indian symbol of knowledge dispelling
 // darkness, standing in for Tarka ("reasoning/logic" in Sanskrit): the flame
 // is the insight, the lamp is the analytical framework that holds it steady.
 export default function TarkaLogo({ className = "h-8 w-8" }) {
@@ -21,7 +21,7 @@ export default function TarkaLogo({ className = "h-8 w-8" }) {
         </linearGradient>
       </defs>
 
-      {/* diya vessel — a shallow boat-shaped lamp with pointed wick ends */}
+      {/* diya vessel - a shallow boat-shaped lamp with pointed wick ends */}
       <path
         d="M4 27 Q24 18.5 44 27 Q24 38 4 27 Z"
         stroke={`url(#${diyaId})`}

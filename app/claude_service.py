@@ -14,11 +14,25 @@ from app.models import KPI, Ministry, MinistryInsight
 MODEL = "claude-opus-5"
 CHAT_MODEL = "claude-sonnet-5"
 
+# Bump when the insight prompt/shape changes in a way that should invalidate every
+# cached briefing (independent of whether the KPI values moved). "2.0" = the
+# condensed "summary"-only Key Insights panel + the no-em-dash rule.
+INSIGHT_FRAMEWORK_VERSION = "2.0"
+
+
+_EM_DASH = "—"
+
+
+def _no_em_dash(text: str) -> str:
+    """Belt-and-suspenders: the prompt forbids em dashes, this guarantees it even
+    if the model slips or a stale cached string is reused."""
+    return text.replace(f" {_EM_DASH} ", ", ").replace(_EM_DASH, "-")
+
 DEMO_DATA_DISCLOSURE = (
     "Data provenance varies by KPI. Tier-A KPIs (Finance, Petroleum, Agriculture, Railways, "
     "Power) are computed from curated official sources (Economic Survey/Budget, PPAC, MoSPI, "
     "Indian Railways, PFC, CEA) and each figure carries a revision status "
-    "(Actual/Provisional/Revised/BudgetEstimate/Estimated) — treat Estimated/BudgetEstimate "
+    "(Actual/Provisional/Revised/BudgetEstimate/Estimated) - treat Estimated/BudgetEstimate "
     "figures as provisional and say so. KPIs for the other five ministries are still "
     "illustrative placeholder data; if the user leans on those, note that they are not yet "
     "wired to a live source."
@@ -57,15 +71,15 @@ def _kpi_caveats_block(kpis: list[KPI], ministry_code: str) -> str:
 
 
 def _score_block(ministry: Ministry) -> str:
-    """Render the deterministic Ministry Performance Score (0-100) — composite
-    value, label, and per-KPI weighted breakdown — for the prompt. This is
+    """Render the deterministic Ministry Performance Score (0-100) - composite
+    value, label, and per-KPI weighted breakdown - for the prompt. This is
     computed by app.scoring, not by Claude; Claude's job is to explain and
     contextualize it, not to invent a competing verdict."""
     result = ministry._score_result
     if result.composite_score is None:
         return "No composite score is configured for this ministry yet."
 
-    lines = [f"Composite score: {result.composite_score}/100 — {result.label}"]
+    lines = [f"Composite score: {result.composite_score}/100 - {result.label}"]
     for c in result.contributions:
         target_kind = "aspirational" if c.target_is_aspirational else "official"
         proxy_note = ", PROXY" if c.is_proxy else ""
@@ -91,6 +105,7 @@ INSIGHT_JSON_CONTRACT = (
     "{\n"
     '  "headline": "Good" | "Mediocre" | "Poor" | "Mixed",\n'
     '  "time_period_judged": "...",\n'
+    '  "summary": ["...", "...", "..."],\n'
     '  "key_evidence": ["...", "...", "..."],\n'
     '  "important_caveats": ["...", "..."],\n'
     '  "proxy_disclosure": "..." or null,\n'
@@ -99,7 +114,16 @@ INSIGHT_JSON_CONTRACT = (
     '  "data_quality_notes": "HIGH" | "MEDIUM" | "LOW"\n'
     "}\n\n"
     "Rules:\n"
-    '- "headline" is informational only — the app computes the authoritative composite score and '
+    '- Do not use em dashes (the "—" character) anywhere in any string. Use commas, colons, '
+    "parentheses, or separate sentences instead.\n"
+    '- "summary" must contain 3 or 4 short plain-language points that a non-expert can read in about '
+    "15 seconds. Together they must convey: the overall verdict and its single main driver; the one "
+    "caveat or data-quality limitation that most affects how much to trust that verdict; and the "
+    "near-term outlook. No jargon, no raw weights or normalized 0-100 sub-scores, each point under "
+    "30 words. This is the ONLY thing shown on the dashboard's Key Insights panel - the other fields "
+    "below feed the deeper Tarka explanations, so keep them detailed as instructed but keep "
+    '"summary" tight.\n'
+    '- "headline" is informational only - the app computes the authoritative composite score and '
     "label itself (given to you below); pick whichever of the four values best matches that label "
     "(Strong/Satisfactory -> Good, Mediocre -> Mediocre, Weak/Poor -> Poor, or Mixed if the KPIs "
     "pull in sharply different directions).\n"
@@ -160,16 +184,16 @@ def _call_claude(ministry: Ministry) -> dict:
         "You are a senior Indian macroeconomic analyst. You evaluate ministry performance using a "
         "transparent, weighted KPI scoring system (0-100) that prioritises structural outcomes over "
         "optics. The composite score and its KPI-by-KPI breakdown are computed deterministically by "
-        "the app and given to you below — treat them as ground truth, do not recompute or contradict "
+        "the app and given to you below - treat them as ground truth, do not recompute or contradict "
         "them; your job is to explain and contextualize them.\n\n"
         "When generating insights:\n"
         "- Always reference the ministry's composite score and label from the breakdown given below.\n"
-        "- Break down the contribution of each KPI — name the largest weighted driver.\n"
+        "- Break down the contribution of each KPI - name the largest weighted driver.\n"
         "- Explicitly state the most important caveats and data-quality limitations.\n"
         "- Distinguish cyclical noise from structural trends.\n"
         "- Compare against both the official target and the aspirational/structural target.\n"
-        "- Never treat equal weights as default — respect the economic-importance weights given.\n"
-        "- If a KPI is proxy-based or incomplete, its effective weight is already reduced below — "
+        "- Never treat equal weights as default - respect the economic-importance weights given.\n"
+        "- If a KPI is proxy-based or incomplete, its effective weight is already reduced below - "
         "say so explicitly rather than treating it as equally reliable.\n"
         "- Maintain analytical independence: judge the data and the framework, not any government.\n\n"
         f"Core analytical principles:\n{_core_principles_block()}\n\n"
@@ -178,7 +202,7 @@ def _call_claude(ministry: Ministry) -> dict:
         f"{INSIGHT_JSON_CONTRACT}"
     )
 
-    # One retry on a malformed/truncated response — LLM structured output is occasionally
+    # One retry on a malformed/truncated response - LLM structured output is occasionally
     # flaky (an unterminated string, a stray delimiter) independent of the token-budget fix
     # below; a single retry clears most of these without the user needing to click "Try again".
     last_error = "Claude returned an unexpected response format."
@@ -187,7 +211,7 @@ def _call_claude(ministry: Ministry) -> dict:
             response = client.messages.create(
                 model=MODEL,
                 # The score-breakdown/cyclical-vs-structural/dual-target instructions in the
-                # system prompt reliably produce responses in the 1600-2400 output-token range —
+                # system prompt reliably produce responses in the 1600-2400 output-token range -
                 # 1536 was cutting them off mid-string (unterminated JSON). Verified against a
                 # live call: response filled 1536/1536 exactly and json.loads failed at char 3706.
                 max_tokens=3000,
@@ -207,16 +231,17 @@ def _call_claude(ministry: Ministry) -> dict:
         try:
             data = json.loads(text)
             headline = str(data["headline"])
-            # MinistryInsight.time_period_judged is String(100) — SQLite silently accepts an
+            # MinistryInsight.time_period_judged is String(100) - SQLite silently accepts an
             # overflow, but a strict DB (Postgres) would reject the insert outright. Claude's
             # instructed to keep this short/concrete, but LLM output isn't guaranteed, so guard it.
-            time_period_judged = str(data["time_period_judged"])[:100]
-            evidence = [str(b) for b in data["key_evidence"]]
-            caveats = [str(c) for c in data["important_caveats"]]
+            time_period_judged = _no_em_dash(str(data["time_period_judged"])[:100])
+            evidence = [_no_em_dash(str(b)) for b in data["key_evidence"]]
+            summary = [_no_em_dash(str(s).strip()) for s in data.get("summary", []) if str(s).strip()]
+            caveats = [_no_em_dash(str(c)) for c in data["important_caveats"]]
             proxy_disclosure = data.get("proxy_disclosure")
-            proxy_disclosure = str(proxy_disclosure) if proxy_disclosure else None
-            comparative_context = str(data.get("comparative_context", ""))
-            forward_implications = str(data.get("forward_implications", ""))
+            proxy_disclosure = _no_em_dash(str(proxy_disclosure)) if proxy_disclosure else None
+            comparative_context = _no_em_dash(str(data.get("comparative_context", "")))
+            forward_implications = _no_em_dash(str(data.get("forward_implications", "")))
             data_quality_notes = str(data.get("data_quality_notes", "MEDIUM"))
         except (json.JSONDecodeError, KeyError, TypeError):
             last_error = "Claude returned an unexpected response format."
@@ -233,7 +258,12 @@ def _call_claude(ministry: Ministry) -> dict:
     else:
         raise HTTPException(status_code=502, detail=f"{last_error} (retried once)")
 
-    # The deterministic Ministry Performance Score label (app.scoring) is authoritative —
+    # Key Insights shows only "summary" (see INSIGHT_JSON_CONTRACT). Fall back to a
+    # trimmed evidence list if the model under-delivered rather than failing the panel.
+    if not 2 <= len(summary) <= 4:
+        summary = (summary or evidence)[:4] or evidence[:3]
+
+    # The deterministic Ministry Performance Score label (app.scoring) is authoritative -
     # it always wins over whatever Claude picked for "headline", so the badge shown here
     # never disagrees with the score shown elsewhere in the dashboard.
     score_result = ministry._score_result
@@ -254,8 +284,8 @@ def _call_claude(ministry: Ministry) -> dict:
         )
 
     return {
-        "bullets": evidence,
-        "inference": f"{headline} — {forward_implications}".strip(" —"),
+        "bullets": summary,
+        "inference": _no_em_dash(f"{headline}. {forward_implications}".strip(". ")),
         "headline": headline,
         "time_period_judged": time_period_judged,
         "caveats": caveats,
@@ -312,6 +342,7 @@ def chat_reply(
         "plainly and suggest what the user could check instead. Keep replies concise (2-5 "
         "sentences unless the user asks for detail), factual, and analytical in tone. When a KPI "
         "is marked [PROXY METRIC] in the context, say so if you cite it. "
+        'Never use em dashes (the "—" character); use commas, colons, or separate sentences. '
         f"{DEMO_DATA_DISCLOSURE}\n\n"
         f"Context:\n{context}"
     )
@@ -334,7 +365,7 @@ def chat_reply(
     except anthropic.APIStatusError as e:
         raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
 
-    return "".join(block.text for block in response.content if block.type == "text").strip()
+    return _no_em_dash("".join(block.text for block in response.content if block.type == "text").strip())
 
 
 def get_or_generate_insights(
@@ -346,7 +377,12 @@ def get_or_generate_insights(
     current_hash = _kpi_snapshot_hash(ministry.kpis)
     cached = ministry.insight
 
-    if cached is not None and not force and cached.kpi_snapshot_hash == current_hash:
+    fresh_enough = (
+        cached is not None
+        and cached.kpi_snapshot_hash == current_hash
+        and cached.framework_version == INSIGHT_FRAMEWORK_VERSION
+    )
+    if fresh_enough and not force:
         return cached, True
 
     result = _call_claude(ministry)
@@ -366,7 +402,7 @@ def get_or_generate_insights(
     cached.data_quality_flag = result["data_quality_flag"]
     cached.comparative_context = result["comparative_context"]
     cached.forward_implications = result["forward_implications"]
-    cached.framework_version = "1.0"
+    cached.framework_version = INSIGHT_FRAMEWORK_VERSION
     db.commit()
     db.refresh(cached)
     return cached, False

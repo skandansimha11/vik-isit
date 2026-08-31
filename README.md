@@ -6,7 +6,7 @@ weighted 0–100 framework (see [`app/scoring.py`](app/scoring.py)), and layers
 on Claude-generated insights plus the Tarka analytical chatbot.
 
 **Data status:** all 30 KPIs across the 10 ministries run on a curated,
-provenance-tracked layer of official data — Tier-A (Finance, Petroleum,
+provenance-tracked layer of official data - Tier-A (Finance, Petroleum,
 Agriculture, Railways, Power) under [`data/tier_a/`](data/tier_a/README.md), and
 Tier-B (Commerce & Industry, Defence, Education, Skill Development & Labour, Road
 Transport & Highways) under [`data/tier_b/`](data/tier_b/README.md). See
@@ -44,7 +44,7 @@ python -m app.tier_b_pipeline    # recompute Tier-B  (both also run on "Sync Liv
 ```
 
 A [scheduled GitHub Actions workflow](.github/workflows/check-data-freshness.yml)
-runs `check_sources` weekly and opens an issue when something needs attention —
+runs `check_sources` weekly and opens an issue when something needs attention -
 nothing here auto-writes a KPI value; see [`data/tier_a/README.md`](data/tier_a/README.md#automation---whats-real-vs-best-effort)
 for why. Full workflow, revision codes and per-KPI sources:
 [`docs/DATA_PIPELINE.md`](docs/DATA_PIPELINE.md) and [`data/tier_a/README.md`](data/tier_a/README.md).
@@ -68,7 +68,7 @@ venv/Scripts/python -m pytest -q
 | `app/connectors/provenance.py` | curated-data loader (`data/tier_a/`, `data/tier_b/`) |
 | `app/tier_a_pipeline.py` · `tier_b_pipeline.py` | recompute → DB (series, current value, audited history, GAPS.md) |
 | `app/check_sources.py` | freshness report + best-effort auto-fetchers |
-| `app/pipeline/sync_service.py` | `POST /sync` — routes tier_a sources to the pipeline |
+| `app/pipeline/sync_service.py` | `POST /sync` - routes tier_a sources to the pipeline |
 | `app/kpi_specifications.py` / `app/analysis_frameworks.py` | KPI definitions + the analyst rubric |
 | `frontend/src/components/charts/` | chart rendering (Recharts) |
 | `frontend/src/components/KpiProvenance.jsx` | per-KPI source / quality / caveats panel |

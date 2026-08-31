@@ -8,7 +8,7 @@ const BLOCKS = [
     title: "Live Ministry KPIs",
     icon: "📊",
     accent: "orange",
-    body: "All 10 ministries are tracked against 3 headline KPIs each, computed from a curated, provenance-tracked layer of official filings, budget documents and surveys — refreshed on demand via the connector pipeline.",
+    body: "All 10 ministries are tracked against 3 headline KPIs each, computed from a curated, provenance-tracked layer of official filings, budget documents and surveys, refreshed on demand via the connector pipeline.",
   },
   {
     title: "10-Year Trend Analysis",
@@ -26,7 +26,7 @@ const BLOCKS = [
     title: "Ask Tarka AI",
     icon: null,
     accent: "cyan",
-    body: "Tarka, the analytical policy chatbot, answers questions about any ministry's numbers, trends, or comparisons — framework-grounded, with evidence and caveats every time.",
+    body: "Tarka, the analytical policy chatbot, answers questions about any ministry's numbers, trends, or comparisons, framework-grounded, with evidence and caveats every time.",
   },
 ];
 
@@ -57,13 +57,13 @@ export default function LandingPage() {
         <div className="mt-6 flex justify-center">
           <img
             src={logo}
-            alt="vik-isit — Ministry Performance Analysis"
+            alt="vik-isit Ministry Performance Analysis"
             className="h-32 w-auto rounded-3xl shadow-glow sm:h-40 [filter:saturate(1.35)_contrast(1.08)_brightness(1.04)]"
           />
         </div>
         <p className="mt-4 text-base leading-relaxed text-base-400 sm:text-lg">
-          A single place to analyze how India&rsquo;s ministries are performing — fiscal discipline, industrial output,
-          infrastructure, welfare and energy — with key insights on every page.
+          A single place to analyze how India&rsquo;s ministries are performing: fiscal discipline, industrial output,
+          infrastructure, welfare and energy, with key insights on every page.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
@@ -112,7 +112,7 @@ export default function LandingPage() {
               className="flex items-center justify-between gap-2 rounded-xl border border-base-800 bg-base-850 px-3 py-2.5 text-xs font-medium text-base-300 transition hover:border-orange-500/40 hover:text-orange-400"
             >
               <span>{m.code}</span>
-              <span className="text-base-600">{m.score != null ? m.score.toFixed(0) : "—"}</span>
+              <span className="text-base-600">{m.score != null ? m.score.toFixed(0) : "-"}</span>
             </Link>
           ))}
         </div>

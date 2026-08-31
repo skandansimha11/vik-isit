@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     database_url: str = "sqlite:///./ministry_dashboard.db"
     # Comma-separated extra CORS origins (e.g. your deployed Vercel URL) on top of
-    # the local-dev defaults baked into app.main — set on the backend host, not here.
+    # the local-dev defaults baked into app.main - set on the backend host, not here.
     cors_origins: str = ""
 
     @property

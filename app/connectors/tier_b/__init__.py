@@ -1,4 +1,4 @@
-"""Tier-B KPI connectors — provenance-tracked data for the 15 KPIs of the
+"""Tier-B KPI connectors - provenance-tracked data for the 15 KPIs of the
 Commerce & Industry, Defence, Education, Skill Development & Labour, and Road
 Transport & Highways ministries.
 
@@ -19,7 +19,7 @@ from app.connectors.tier_b.spec import (
 
 
 def get_tier_b_connector(ministry_code: str):
-    """Always returns a FRESH connector instance (see the Tier-A note — a
+    """Always returns a FRESH connector instance (see the Tier-A note - a
     long-running server otherwise serves stale CSV contents on /sync)."""
     code = ministry_code.upper()
 

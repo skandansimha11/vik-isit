@@ -1,4 +1,4 @@
-"""Backwards-compatible shim — real connector is ``app.connectors.tier_a.railways``."""
+"""Backwards-compatible shim - real connector is ``app.connectors.tier_a.railways``."""
 
 from app.connectors.tier_a.railways import RailwaysConnector, get_railways_connector
 

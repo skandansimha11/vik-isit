@@ -1,4 +1,4 @@
-# Ministry Performance Dashboard — Frontend
+# Ministry Performance Dashboard - Frontend
 
 React + Vite dashboard for the Ministry Performance API.
 
@@ -12,7 +12,7 @@ React + Vite dashboard for the Ministry Performance API.
 
 ## Setup
 
-Requires Node.js 18+ (not installed in the environment this was scaffolded in — install it first: https://nodejs.org).
+Requires Node.js 18+ (not installed in the environment this was scaffolded in - install it first: https://nodejs.org).
 
 ```bash
 cd frontend
@@ -22,13 +22,13 @@ npm run dev
 
 The app runs at `http://localhost:5173` and expects the API at `http://localhost:8000` (see `.env`, `VITE_API_BASE_URL`).
 
-The backend (`app/main.py`) now has CORS enabled for `http://localhost:5173` — restart the backend after pulling this change.
+The backend (`app/main.py`) now has CORS enabled for `http://localhost:5173` - restart the backend after pulling this change.
 
 ## Structure
 
-- `src/api/` — axios client + endpoint functions
-- `src/hooks/` — React Query hooks wrapping each endpoint
-- `src/components/` — UI: `Header`/`SyncButton`, `MinistryGrid`/`MinistryCard`, KPI stats and charts, `InsightsPanel`, `ErrorBoundary`/`ErrorBanner`, loading skeletons
+- `src/api/` - axios client + endpoint functions
+- `src/hooks/` - React Query hooks wrapping each endpoint
+- `src/components/` - UI: `Header`/`SyncButton`, `MinistryGrid`/`MinistryCard`, KPI stats and charts, `InsightsPanel`, `ErrorBoundary`/`ErrorBanner`, loading skeletons
 - Each `MinistryCard` is wrapped in its own `ErrorBoundary` so one bad card can't take down the whole grid; a top-level boundary covers the rest of the app.
 
 ## Notes

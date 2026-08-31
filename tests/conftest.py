@@ -11,7 +11,7 @@ from app import models  # noqa: F401
 
 @pytest.fixture()
 def db_session():
-    """An isolated in-memory SQLite DB per test — never touches the real
+    """An isolated in-memory SQLite DB per test - never touches the real
     ministry_dashboard.db file."""
     engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False})
     Base.metadata.create_all(bind=engine)

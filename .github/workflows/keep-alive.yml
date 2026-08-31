@@ -1,0 +1,42 @@
+name: keep-alive
+
+# The API is on Render's free tier, which sleeps a web service after 15 minutes
+# of inactivity and then takes ~30-60s to cold-start on the next request. A cheap
+# periodic ping keeps it warm so real visitors don't hit that delay.
+#
+# Notes:
+#  - GitHub disables scheduled workflows after 60 days with no repo commits;
+#    push anything (or hit "Run workflow") to re-enable.
+#  - Scheduled runs are best-effort and can be delayed several minutes under load.
+#  - Override the target once by running the workflow manually with a different URL.
+
+on:
+  schedule:
+    - cron: "*/12 * * * *"
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Health endpoint to ping"
+        required: false
+        default: "https://vik-isit-api.onrender.com/health"
+
+concurrency:
+  group: keep-alive
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the API health endpoint
+        run: |
+          URL="${{ github.event.inputs.url || 'https://vik-isit-api.onrender.com/health' }}"
+          echo "Pinging $URL"
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" -m 90 "$URL" || echo "000")
+            echo "attempt $i -> HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 20
+          done
+          echo "API did not return 200 after 3 attempts (it may still be waking up)."
+          exit 0

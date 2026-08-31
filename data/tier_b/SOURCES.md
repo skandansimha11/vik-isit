@@ -6,51 +6,51 @@ from the cited source, then run `python -m app.tier_b_pipeline`.
 
 | ministry | KPI | data through | expect | source reachable | action |
 |---|---|---|---|---|---|
-| COMM | Industrial Imports % | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| COMM | Manufacturing Growth | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| COMM | PLI Effectiveness | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| DEF | Defence CapEx | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| DEF | Domestic MIC Development | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| DEF | Force Modernisation | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| EDU | Learning Outcomes | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| EDU | Exam Integrity | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| EDU | Enrollment Quality | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| SKILL | Youth NEET Rate | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| SKILL | Apprenticeship Utilisation | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| SKILL | Job Creation | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| ROAD | Logistics Cost % | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| ROAD | Highway Construction | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| ROAD | Modal Share | FY2025-26 | FY2025-26 | no (err) | confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| COMM | Industrial Imports % | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| COMM | Manufacturing Growth | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| COMM | PLI Effectiveness | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| DEF | Defence CapEx | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| DEF | Domestic MIC Development | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| DEF | Force Modernisation | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| EDU | Learning Outcomes | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| EDU | Exam Integrity | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| EDU | Enrollment Quality | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| SKILL | Youth NEET Rate | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| SKILL | Apprenticeship Utilisation | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| SKILL | Job Creation | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| ROAD | Logistics Cost % | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| ROAD | Highway Construction | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| ROAD | Modal Share | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 
 ## Source URLs
 
-- **COMM · Industrial Imports %** — DGCI&S trade data + MoSPI National Accounts / IIP (domestic production); import-intensity studies (RBI, NITI Aayog)  
+- **COMM · Industrial Imports %** - DGCI&S trade data + MoSPI National Accounts / IIP (domestic production); import-intensity studies (RBI, NITI Aayog)  
   https://www.commerce.gov.in/ (Annual (manual cross-referencing of trade vs production))
-- **COMM · Manufacturing Growth** — MoSPI National Accounts Statistics (manufacturing GVA, current prices) + Index of Industrial Production  
+- **COMM · Manufacturing Growth** - MoSPI National Accounts Statistics (manufacturing GVA, current prices) + Index of Industrial Production  
   https://www.mospi.gov.in/ (Annual (GVA share) / Monthly (IIP))
-- **COMM · PLI Effectiveness** — DPIIT + sectoral ministry PLI progress reviews; PIB releases  
+- **COMM · PLI Effectiveness** - DPIIT + sectoral ministry PLI progress reviews; PIB releases  
   https://dpiit.gov.in/ (Annual / Quarterly)
-- **DEF · Defence CapEx** — Union Budget — Defence Services Estimates (Capital Outlay) + MoSPI Nominal GDP; PRS Legislative Research  
+- **DEF · Defence CapEx** - Union Budget - Defence Services Estimates (Capital Outlay) + MoSPI Nominal GDP; PRS Legislative Research  
   https://www.indiabudget.gov.in/ (Annual)
-- **DEF · Domestic MIC Development** — Ministry of Defence / DDP annual reports + PIB; Standing Committee on Defence reports  
+- **DEF · Domestic MIC Development** - Ministry of Defence / DDP annual reports + PIB; Standing Committee on Defence reports  
   https://www.mod.gov.in/ (Annual)
-- **DEF · Force Modernisation** — Standing Committee on Defence reports + service-headquarters disclosures (vintage / current / state-of-the-art mix)  
+- **DEF · Force Modernisation** - Standing Committee on Defence reports + service-headquarters disclosures (vintage / current / state-of-the-art mix)  
   https://www.mod.gov.in/ (Annual)
-- **EDU · Learning Outcomes** — ASER (Pratham) annual rural survey — 'can read Std II text'; National Achievement Survey (NAS) for the table figure  
+- **EDU · Learning Outcomes** - ASER (Pratham) annual rural survey - 'can read Std II text'; National Achievement Survey (NAS) for the table figure  
   https://asercentre.org/ (ASER roughly biennial; NAS periodic)
-- **EDU · Exam Integrity** — Compiled from national press reporting (paper leaks / cancellations in board, entrance and recruitment exams); Parliament replies where available  
+- **EDU · Exam Integrity** - Compiled from national press reporting (paper leaks / cancellations in board, entrance and recruitment exams); Parliament replies where available  
   https://www.education.gov.in/ (Annual (best-effort compilation))
-- **EDU · Enrollment Quality** — UDISE+ (Unified District Information System for Education Plus), Ministry of Education  
+- **EDU · Enrollment Quality** - UDISE+ (Unified District Information System for Education Plus), Ministry of Education  
   https://udiseplus.gov.in/ (Annual)
-- **SKILL · Youth NEET Rate** — MoSPI Periodic Labour Force Survey (PLFS) Annual Reports; ILO / IHD India Employment Report 2024  
+- **SKILL · Youth NEET Rate** - MoSPI Periodic Labour Force Survey (PLFS) Annual Reports; ILO / IHD India Employment Report 2024  
   https://www.mospi.gov.in/ (Annual (with quarterly bulletins))
-- **SKILL · Apprenticeship Utilisation** — Union Budget / Outcome Budget (MSDE) — apprenticeship scheme allocation vs actual expenditure; Standing Committee on Labour reports  
+- **SKILL · Apprenticeship Utilisation** - Union Budget / Outcome Budget (MSDE) - apprenticeship scheme allocation vs actual expenditure; Standing Committee on Labour reports  
   https://www.msde.gov.in/ (Annual)
-- **SKILL · Job Creation** — EPFO payroll estimates (net subscriber additions), released monthly; MoSPI  
+- **SKILL · Job Creation** - EPFO payroll estimates (net subscriber additions), released monthly; MoSPI  
   https://www.epfindia.gov.in/ (Monthly / Annual)
-- **ROAD · Logistics Cost %** — NCAER–DPIIT 'Assessment of Logistics Cost in India' (FY2021-22 onwards); earlier points are legacy estimates (Economic Survey / industry bodies)  
+- **ROAD · Logistics Cost %** - NCAER–DPIIT 'Assessment of Logistics Cost in India' (FY2021-22 onwards); earlier points are legacy estimates (Economic Survey / industry bodies)  
   https://dpiit.gov.in/ (Periodic)
-- **ROAD · Highway Construction** — Ministry of Road Transport & Highways / NHAI — annual physical progress; PIB  
+- **ROAD · Highway Construction** - Ministry of Road Transport & Highways / NHAI - annual physical progress; PIB  
   https://morth.nic.in/ (Monthly (running km/day) / Annual)
-- **ROAD · Modal Share** — NITI Aayog freight-mode studies + MoRTH + Indian Railways (rail comparison); not one reconciled national freight survey  
+- **ROAD · Modal Share** - NITI Aayog freight-mode studies + MoRTH + Indian Railways (rail comparison); not one reconciled national freight survey  
   https://morth.nic.in/ (Annual)

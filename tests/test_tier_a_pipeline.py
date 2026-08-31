@@ -152,7 +152,7 @@ class TestSeriesAssembly:
 
     def test_charts_are_kept_simple(self):
         # after the layman-friendliness pass, every Tier-A chart is a single
-        # primary series (line) or a small stacked/multi-line breakdown — no dual axes.
+        # primary series (line) or a small stacked/multi-line breakdown - no dual axes.
         for spec in TIER_A_KPIS:
             assert spec.data_shape in ("time_line", "time_breakdown"), spec.key
             assert spec.chart_type in ("line", "stacked_area"), spec.key

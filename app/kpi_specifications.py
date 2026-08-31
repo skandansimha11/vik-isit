@@ -2,8 +2,8 @@
 
 Each entry documents what the KPI measures, where it would come from in the
 real world, how reliable that data is, and what caveats must accompany any
-AI-generated commentary about it. This module is metadata only — it does not
-fetch or store values (see app/connectors/ for that) — but every value shown
+AI-generated commentary about it. This module is metadata only - it does not
+fetch or store values (see app/connectors/ for that) - but every value shown
 in the dashboard should be traceable back to one of these specs.
 
 KPI `name` fields are matched exactly to the KPI names seeded by
@@ -78,7 +78,7 @@ _FINANCE = [
             "GDP series revisions affect this ratio retroactively.",
             "Use a consistent GDP base year (currently 2011-12 or the latest revision).",
             "Show Actual / Revised Estimate / Budget Estimate separately where available "
-            "— they are not interchangeable.",
+            "- they are not interchangeable.",
         ),
         calculation="Straightforward division; no derived/composite steps.",
         data_points=("Total Expenditure (Rs)", "Revenue Receipts (Rs)", "Non-debt Capital Receipts (Rs)", "Nominal GDP (Rs)"),
@@ -102,7 +102,7 @@ _FINANCE = [
         time_period="FY 2014-15 onwards",
         units="'000 cases",
         caveats=(
-            "No official 'harassment index' exists — this is an assembled proxy, not a "
+            "No official 'harassment index' exists - this is an assembled proxy, not a "
             "published series.",
             "Requires manual aggregation across CBDT, CAG and parliamentary sources.",
             "Parliamentary answer data is incomplete and inconsistent across sessions.",
@@ -130,7 +130,7 @@ _FINANCE = [
         time_period="FY 2014-15 onwards (monthly from FY 2020-21 where available)",
         units="% YoY",
         caveats=(
-            "Distinguish Gross Tax Revenue from Net Tax Revenue to Centre — they diverge "
+            "Distinguish Gross Tax Revenue from Net Tax Revenue to Centre - they diverge "
             "materially due to devolution.",
             "High nominal growth can be a pure inflation effect; compare against the paired "
             "Nominal GDP Growth series before crediting policy.",
@@ -147,7 +147,7 @@ _FINANCE = [
 ]
 
 # ---------------------------------------------------------------------------
-# MINISTRY 2: PETROLEUM & NATURAL GAS (PETRO) — Tier A, excellent data quality
+# MINISTRY 2: PETROLEUM & NATURAL GAS (PETRO) - Tier A, excellent data quality
 # ---------------------------------------------------------------------------
 
 _PETROLEUM = [
@@ -164,7 +164,7 @@ _PETROLEUM = [
         units="% of consumption",
         caveats=(
             "Import dependence is driven mostly by global crude prices and domestic demand "
-            "growth, not policy alone — don't read short-term moves as a domestic production story.",
+            "growth, not policy alone - don't read short-term moves as a domestic production story.",
             "Strategic reserve drawdowns can temporarily distort the ratio in a single month.",
         ),
         calculation="net_crude_imports / total_crude_consumption * 100",
@@ -186,7 +186,7 @@ _PETROLEUM = [
         time_period="FY 2014-15 onwards (programme accelerated from FY2018-19)",
         units="% blend",
         caveats=(
-            "Blending % is a national average — state-level achievement varies widely and can "
+            "Blending % is a national average - state-level achievement varies widely and can "
             "mask supply bottlenecks in specific regions.",
             "Feedstock diversion (foodgrain vs. molasses vs. damaged grain) has its own food-security "
             "debate that this metric does not capture.",
@@ -211,7 +211,7 @@ _PETROLEUM = [
         units="MMT throughput",
         caveats=(
             "Throughput growth can reflect new refining capacity coming online rather than "
-            "existing-asset efficiency gains — check capacity-utilisation %, not just raw MMT.",
+            "existing-asset efficiency gains - check capacity-utilisation %, not just raw MMT.",
             "Refining cost ($/bbl) is sensitive to global crude price swings unrelated to domestic "
             "operational efficiency.",
         ),
@@ -224,7 +224,7 @@ _PETROLEUM = [
 ]
 
 # ---------------------------------------------------------------------------
-# MINISTRY 3: AGRICULTURE & FARMERS WELFARE (AGRI) — Tier A, mixed quality
+# MINISTRY 3: AGRICULTURE & FARMERS WELFARE (AGRI) - Tier A, mixed quality
 # ---------------------------------------------------------------------------
 
 _AGRICULTURE = [
@@ -241,7 +241,7 @@ _AGRICULTURE = [
         units="index (2014=100)",
         caveats=(
             "Official household-level farmer income surveys (Situation Assessment Survey) are "
-            "infrequent (roughly once a decade) — annual figures are model-based estimates, not "
+            "infrequent (roughly once a decade) - annual figures are model-based estimates, not "
             "direct measurement.",
             "Aggregate agricultural GVA growth is not the same as median farmer household income growth; "
             "large-holding bias can inflate the aggregate picture.",
@@ -265,7 +265,7 @@ _AGRICULTURE = [
         time_period="FY 2018-19 onwards (programme acceleration)",
         units="Cr litres blended",
         caveats=(
-            "Overlaps with the Petroleum ministry's Ethanol Blending % KPI — treat as the same "
+            "Overlaps with the Petroleum ministry's Ethanol Blending % KPI - treat as the same "
             "underlying data source viewed from the agricultural-supply side, not an independent confirmation.",
             "Forex savings figures are estimated from an assumed crude-oil substitution price, "
             "which itself fluctuates.",
@@ -288,7 +288,7 @@ _AGRICULTURE = [
         time_period="FY 2014-15 onwards",
         units="% CPI Food YoY",
         caveats=(
-            "Food inflation is heavily weather- and monsoon-driven in the short run — a single bad "
+            "Food inflation is heavily weather- and monsoon-driven in the short run - a single bad "
             "month should not be read as a policy failure or success signal.",
             "CPI weight revisions (base-year updates) break strict comparability across the full window.",
         ),
@@ -318,7 +318,7 @@ _RAILWAYS = [
         units="% YoY",
         caveats=(
             "Freight mix shifts (e.g. more coal vs. more containerised cargo) change average haul "
-            "length, so tonnage growth and NTKM growth can diverge — check both where available.",
+            "length, so tonnage growth and NTKM growth can diverge - check both where available.",
             "COVID-year (FY2020-21) comparisons need a base-effect caveat.",
         ),
         calculation="pct_change(freight_loaded_mt) YoY",
@@ -340,7 +340,7 @@ _RAILWAYS = [
         units="% of freight",
         caveats=(
             "Rail and road freight are measured by different agencies with different methodologies "
-            "— the two shares in this chart are not from a single reconciled national freight survey.",
+            "- the two shares in this chart are not from a single reconciled national freight survey.",
             "Rail's freight modal share has structurally declined since the 1990s; a single year's "
             "uptick should not be read as a reversal without a multi-year trend.",
         ),
@@ -366,7 +366,7 @@ _RAILWAYS = [
         time_period="FY 2014-15 onwards, benchmarked against a pre-2014 baseline",
         units="index",
         caveats=(
-            "This is a composite of four different metrics on different scales — treat the 'index' "
+            "This is a composite of four different metrics on different scales - treat the 'index' "
             "as illustrative, not a single official published statistic.",
             "Line capacity utilisation above 100% indicates congestion, not necessarily good "
             "performance; don't treat 'higher is always better' uncritically for that sub-metric.",
@@ -396,7 +396,7 @@ _POWER = [
         time_period="FY 2014-15 onwards",
         units="Rs/kWh",
         caveats=(
-            "State tariff orders bundle different cross-subsidy structures — a raw Rs/kWh figure "
+            "State tariff orders bundle different cross-subsidy structures - a raw Rs/kWh figure "
             "isn't fully comparable across states without normalising for slab structure.",
         ),
         calculation="Weighted average tariff per state, as published in the tariff order.",
@@ -417,7 +417,7 @@ _POWER = [
         time_period="FY 2014-15 onwards",
         units="Rs '000 Cr losses",
         caveats=(
-            "There are methodological breaks in the AT&C definition across report editions — "
+            "There are methodological breaks in the AT&C definition across report editions - "
             "don't treat the full series as strictly comparable without noting the break years.",
             "National average masks very large state-level dispersion; always show a state range, "
             "not just the headline number.",
@@ -441,7 +441,7 @@ _POWER = [
         time_period="FY 2014-15 onwards",
         units="% availability",
         caveats=(
-            "National averages hide rural/urban and state-level gaps in actual reliability — a high "
+            "National averages hide rural/urban and state-level gaps in actual reliability - a high "
             "national figure can coexist with persistent rural load-shedding.",
         ),
         calculation="hours_supplied / hours_demanded * 100, aggregated nationally.",
@@ -461,7 +461,7 @@ _COMMERCE = [
         ministry_code="COMM",
         key="industrial_import_dependence",
         name="Industrial Imports %",
-        definition="Net imports of manufactured / capital / intermediate goods (excluding oil and gold) as a % of domestic consumption of those goods. An assembled estimate — there is no single official series.",
+        definition="Net imports of manufactured / capital / intermediate goods (excluding oil and gold) as a % of domestic consumption of those goods. An assembled estimate - there is no single official series.",
         data_quality="LOW",
         source_name="DGCI&S trade data cross-referenced with MoSPI National Accounts / IIP domestic production; RBI & NITI Aayog import-intensity studies",
         source_url="https://www.commerce.gov.in/",
@@ -470,7 +470,7 @@ _COMMERCE = [
         units="% of demand",
         caveats=(
             "Requires matching HS trade codes to IIP production categories, which is not a 1:1 "
-            "mapping — treat any single-number result as an estimate range, not a precise figure.",
+            "mapping - treat any single-number result as an estimate range, not a precise figure.",
             "'Industrial goods' spans a very heterogeneous basket (electronics, capital machinery, "
             "chemicals); a single blended % can mask sharply different import-dependence by sub-sector.",
         ),
@@ -492,7 +492,7 @@ _COMMERCE = [
         time_period="FY 2014-15 onwards",
         units="% of GVA",
         caveats=(
-            "The GVA share has been broadly flat near 17% for a decade despite 'Make in India' — "
+            "The GVA share has been broadly flat near 17% for a decade despite 'Make in India' - "
             "check whether any single-year move is a real structural shift or a base-price artefact.",
             "IIP is a volume index with a base-year weighting that periodically changes, which can "
             "break strict comparability of the secondary growth series across the full window.",
@@ -517,7 +517,7 @@ _COMMERCE = [
         caveats=(
             "Realisation figures are largely self-reported by participating companies, not "
             "independently audited investment/output figures.",
-            "Investment realised is not the real test — genuine domestic value-addition (vs "
+            "Investment realised is not the real test - genuine domestic value-addition (vs "
             "imported-kit assembly) and net forex impact matter more, and are weaker in "
             "assembly-heavy sectors like electronics.",
         ),
@@ -540,14 +540,14 @@ _DEFENCE = [
         name="Defence CapEx",
         definition="Capital outlay on the Defence Services (spend on new equipment and platforms) as a % of nominal GDP.",
         data_quality="HIGH",
-        source_name="Union Budget — Defence Services Estimates (Capital Outlay); MoSPI Nominal GDP; PRS Legislative Research",
+        source_name="Union Budget - Defence Services Estimates (Capital Outlay); MoSPI Nominal GDP; PRS Legislative Research",
         source_url="https://www.indiabudget.gov.in/",
         update_frequency="Annual",
         time_period="FY 2014-15 onwards",
         units="% of GDP",
         caveats=(
             "Capital expenditure share can rise simply because revenue expenditure (pensions, "
-            "salaries) is held flat — check the absolute capex trend, not just the ratio.",
+            "salaries) is held flat - check the absolute capex trend, not just the ratio.",
             "Multi-year procurement contracts create lumpy year-to-year capex figures.",
         ),
         calculation="defence_capital_expenditure / nominal_gdp * 100",
@@ -569,7 +569,7 @@ _DEFENCE = [
         units="% of procurement",
         caveats=(
             "Official 'indigenisation' figures count domestic assembly / licensed production of "
-            "foreign-designed platforms as indigenous — this materially overstates true design/IP "
+            "foreign-designed platforms as indigenous - this materially overstates true design/IP "
             "self-reliance. Any AI commentary MUST flag this measurement gap explicitly.",
             "The procurement-budget share is not independently audited and can be met by re-timing "
             "which contracts fall in a given year.",
@@ -593,9 +593,9 @@ _DEFENCE = [
         units="% of fleet modern",
         caveats=(
             "The vintage/current/state-of-the-art split is self-reported by the services and not "
-            "independently audited — treat as a claim rather than a verified fact.",
+            "independently audited - treat as a claim rather than a verified fact.",
             "Fleet composition (numbers of each platform) is not disclosed alongside the percentages, "
-            "so a stable % can mask an ageing or shrinking absolute fleet — e.g. IAF fighter "
+            "so a stable % can mask an ageing or shrinking absolute fleet - e.g. IAF fighter "
             "squadron strength remains below the sanctioned 42.",
         ),
         calculation="100 - vintage_share_pct (as disclosed to Parliament); no single official formula exists",
@@ -623,11 +623,11 @@ _EDUCATION = [
         time_period="2014 onwards",
         units="% of Class 3 children",
         caveats=(
-            "ASER covers rural India only — do not generalise to urban outcomes.",
+            "ASER covers rural India only - do not generalise to urban outcomes.",
             "ASER field reading rounds were not run every year (and ASER 2021 was phone-based and "
             "not comparable); interpolated years are flagged 'Estimated'.",
             "Recovery must be judged against both the pre-COVID level (27.2% in 2018) and the "
-            "absolute level — 23% of Class 3 children reading at Class 2 level is still low.",
+            "absolute level - 23% of Class 3 children reading at Class 2 level is still low.",
         ),
         calculation="children_in_Std_III_reading_Std_II_text / children_in_Std_III_assessed * 100",
         data_points=("aser_std3_can_read_std2_pct", "nas_grade3_language_pct"),
@@ -647,7 +647,7 @@ _EDUCATION = [
         time_period="FY 2014-15 onwards",
         units="incidents / year",
         caveats=(
-            "There is no official register of exam-integrity incidents — the counts are compiled "
+            "There is no official register of exam-integrity incidents - the counts are compiled "
             "from press reporting and are indicative of the trend, not exact.",
             "'Major' is a judgement call; a year with one huge leak (e.g. NEET-UG 2024) affecting "
             "millions is not equivalent to a year with several small state-exam leaks.",
@@ -664,7 +664,7 @@ _EDUCATION = [
         ministry_code="EDU",
         key="enrollment_quality",
         name="Enrollment Quality",
-        definition="Gross Enrolment Ratio for senior secondary (Classes 11-12) from UDISE+ — enrolment in Classes 11-12 as a % of the 16-17 age group. Elementary pupil-teacher ratio is carried as the secondary series.",
+        definition="Gross Enrolment Ratio for senior secondary (Classes 11-12) from UDISE+ - enrolment in Classes 11-12 as a % of the 16-17 age group. Elementary pupil-teacher ratio is carried as the secondary series.",
         data_quality="MEDIUM",
         source_name="UDISE+ (Unified District Information System for Education Plus), Ministry of Education",
         source_url="https://udiseplus.gov.in/",
@@ -675,7 +675,7 @@ _EDUCATION = [
             "GER can exceed 100 where over- or under-age children are enrolled; senior-secondary "
             "GER well below 100 mainly reflects drop-out before Class 11.",
             "UDISE+ moved to an individual student-record (headcount) method from 2021-22, which "
-            "lowered reported totals — the pre- and post-2021-22 points are not strictly comparable.",
+            "lowered reported totals - the pre- and post-2021-22 points are not strictly comparable.",
         ),
         calculation="enrolment_classes_11_12 / population_aged_16_17 * 100",
         data_points=("ger_senior_secondary_pct", "pupil_teacher_ratio_elementary"),
@@ -703,7 +703,7 @@ _SKILL_DEVELOPMENT = [
         units="%",
         caveats=(
             "Pre-PLFS unemployment/NEET series (older NSSO rounds) use a different survey design and "
-            "are not strictly comparable — treat FY2017-18 as a methodology break.",
+            "are not strictly comparable - treat FY2017-18 as a methodology break.",
             "NEET rate conflates genuinely idle youth with those in unpaid family work or informal "
             "learning not captured by the survey's education/training categories.",
         ),
@@ -719,13 +719,13 @@ _SKILL_DEVELOPMENT = [
         name="Apprenticeship Utilisation",
         definition="Actual apprenticeship-scheme expenditure (NAPS + NATS) as a % of the year's budget allocation. Rupee allocation is carried as the secondary series.",
         data_quality="MEDIUM",
-        source_name="Union Budget / Outcome Budget (MSDE) — apprenticeship allocation vs actual expenditure; Standing Committee on Labour reports",
+        source_name="Union Budget / Outcome Budget (MSDE) - apprenticeship allocation vs actual expenditure; Standing Committee on Labour reports",
         source_url="https://www.msde.gov.in/",
         update_frequency="Annual",
         time_period="FY 2016-17 onwards (scheme scale-up)",
         units="% of budget used",
         caveats=(
-            "Budget utilisation measures spend, not outcomes — pair with placement / certification "
+            "Budget utilisation measures spend, not outcomes - pair with placement / certification "
             "rates before calling high utilisation a success.",
             "Apprenticeship budgets have historically been under-spent by large margins; the Standing "
             "Committee on Labour has repeatedly flagged this.",
@@ -748,7 +748,7 @@ _SKILL_DEVELOPMENT = [
         time_period="FY 2017-18 onwards (EPFO payroll series start)",
         units="Lakh formal jobs/yr",
         caveats=(
-            "EPFO net additions is a PROXY for formal job creation — it also captures formalisation "
+            "EPFO net additions is a PROXY for formal job creation - it also captures formalisation "
             "of existing jobs (employers newly complying) and job switching (re-registration), not "
             "only genuinely new jobs. State this explicitly whenever cited.",
         ),
@@ -779,7 +779,7 @@ _ROAD_TRANSPORT = [
         caveats=(
             "There is no single official, continuously-published logistics-cost-to-GDP series; "
             "published figures vary by estimation methodology across studies (NITI Aayog, World "
-            "Bank, industry bodies) — cite the specific source and don't blend series.",
+            "Bank, industry bodies) - cite the specific source and don't blend series.",
         ),
         calculation="total_logistics_cost / nominal_gdp * 100 (methodology varies by source)",
         data_points=("total_logistics_cost_rs_cr", "nominal_gdp_rs_cr"),
@@ -800,7 +800,7 @@ _ROAD_TRANSPORT = [
         units="km/day",
         caveats=(
             "'Constructed' figures sometimes mix new construction with widening/upgrade of existing "
-            "roads — check the MoRTH footnote definition for the year before comparing across years.",
+            "roads - check the MoRTH footnote definition for the year before comparing across years.",
         ),
         calculation="total_km_constructed_in_year / days_in_year",
         data_points=("total_km_constructed", "reporting_period_days"),
@@ -821,8 +821,8 @@ _ROAD_TRANSPORT = [
         units="% of freight tonne-km",
         caveats=(
             "Road and rail freight are measured by different agencies with different methodologies "
-            "— these shares are not from a single reconciled national freight survey.",
-            "A high road share is not a road-sector 'failure' per se — national policy wants freight "
+            "- these shares are not from a single reconciled national freight survey.",
+            "A high road share is not a road-sector 'failure' per se - national policy wants freight "
             "rebalanced toward cheaper, cleaner rail and waterways, which is why higher_is_better is "
             "False for this KPI.",
         ),

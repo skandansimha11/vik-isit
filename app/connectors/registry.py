@@ -8,7 +8,7 @@ from app.connectors.web_connector import WebConnector
 
 # Generic document connectors. The five Tier-A ministry KPIs are computed by
 # app.connectors.tier_a (source_type "tier_a"), handled directly in
-# app.pipeline.sync_service — they do not go through this registry.
+# app.pipeline.sync_service - they do not go through this registry.
 _CONNECTORS: dict[str, BaseConnector] = {
     "csv": CSVConnector(),
     "excel": ExcelConnector(),

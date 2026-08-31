@@ -1,9 +1,9 @@
-"""Ministry of Defence — Tier-B connector.
+"""Ministry of Defence - Tier-B connector.
 
 KPIs:
-  * defence_capex             — defence capital outlay as % of GDP
-  * domestic_mic_development  — % of procurement spent with Indian industry (proxy)
-  * force_modernisation       — modern / current share of major equipment (proxy)
+  * defence_capex             - defence capital outlay as % of GDP
+  * domestic_mic_development  - % of procurement spent with Indian industry (proxy)
+  * force_modernisation       - modern / current share of major equipment (proxy)
 """
 
 from __future__ import annotations

@@ -1,9 +1,9 @@
 """Tarka: the analytical policy chatbot for the ministry dashboard.
 
 Tarka answers questions using the same rubric as the cached per-ministry
-insights (app/claude_service.py) — the analysis frameworks in
+insights (app/claude_service.py) - the analysis frameworks in
 app/analysis_frameworks.py and the KPI safeguards in
-app/kpi_specifications.py — but conversationally, and across ministries.
+app/kpi_specifications.py - but conversationally, and across ministries.
 
 Behavior rules (enforced via the system prompt below):
   - "Is X good?" is answered through the framework, never a bare yes/no.
@@ -23,7 +23,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from app.analysis_frameworks import CORE_ANALYTICAL_PRINCIPLES, format_framework_for_prompt, get_framework
-from app.claude_service import DEMO_DATA_DISCLOSURE, _format_kpi_block, _score_block
+from app.claude_service import DEMO_DATA_DISCLOSURE, _format_kpi_block, _no_em_dash, _score_block
 from app.config import settings
 from app.kpi_specifications import get_kpi_spec, get_specs_for_ministry
 from app.models import Ministry
@@ -34,13 +34,13 @@ TARKA_SYSTEM_PREAMBLE = (
     "You are Tarka, a senior Indian macroeconomic analyst and analytical policy chatbot. You "
     "evaluate ministry performance using a transparent, weighted KPI scoring system (0-100) that "
     "prioritises structural outcomes over optics. Where a ministry's composite score and KPI "
-    "breakdown are given to you in context, they are computed deterministically by the app — "
+    "breakdown are given to you in context, they are computed deterministically by the app - "
     "treat them as ground truth, do not recompute or contradict them.\n\n"
     "You embody rigorous macroeconomic analysis and these principles:\n\n"
     f"{chr(10).join(f'{i}. {p}' for i, p in enumerate(CORE_ANALYTICAL_PRINCIPLES, 1))}\n\n"
     "Behavior rules:\n"
     "- When asked 'How is Ministry X performing?' or 'Is X good?', FIRST give the composite score "
-    "and label (Strong / Satisfactory / Mediocre / Weak / Poor), THEN the KPI-by-KPI breakdown — "
+    "and label (Strong / Satisfactory / Mediocre / Weak / Poor), THEN the KPI-by-KPI breakdown - "
     "never a bare yes/no.\n"
     "- Break down the contribution of each KPI: name, weight, and how its data quality affected "
     "its effective weight.\n"
@@ -49,14 +49,16 @@ TARKA_SYSTEM_PREAMBLE = (
     "- Distinguish cyclical noise (commodity swings, base effects, one-off receipts) from structural "
     "trends (genuine capacity/productivity/institutional change).\n"
     "- Compare against both the official target and the aspirational/structural target.\n"
-    "- Never treat equal weights as default — respect the economic-importance weights given in context.\n"
+    "- Never treat equal weights as default - respect the economic-importance weights given in context.\n"
     "- Offer to show the exact formula and assumptions behind a score if it would help the user.\n"
-    "- If the user challenges a weight or target, explain the economic rationale transparently — "
+    "- If the user challenges a weight or target, explain the economic rationale transparently - "
     "don't just defer or restate the number.\n"
     "- Encourage looking at multiple years and related ministries together.\n"
     "- Encourage multi-KPI thinking generally.\n"
     "- Maintain analytical independence (don't defend/attack any government).\n"
-    "- Always state the time period you are judging.\n\n"
+    "- Always state the time period you are judging.\n"
+    '- Never use em dashes (the "—" character). Use commas, colons, parentheses, or separate '
+    "sentences instead.\n\n"
     f"{DEMO_DATA_DISCLOSURE}"
 )
 
@@ -77,6 +79,16 @@ _ANSWER_JSON_CONTRACT = (
 )
 
 
+def _scrub_em_dashes(data: dict) -> dict:
+    """Guarantee no em dash reaches the UI even if the model ignores the rule."""
+    for k, v in data.items():
+        if isinstance(v, str):
+            data[k] = _no_em_dash(v)
+        elif isinstance(v, list):
+            data[k] = [_no_em_dash(x) if isinstance(x, str) else x for x in v]
+    return data
+
+
 def _client() -> anthropic.Anthropic:
     if not settings.anthropic_api_key:
         raise HTTPException(status_code=503, detail="ANTHROPIC_API_KEY is not configured on the server.")
@@ -86,7 +98,7 @@ def _client() -> anthropic.Anthropic:
 def _ask_structured(system_prompt: str, user_prompt: str) -> dict:
     client = _client()
 
-    # One retry on a malformed/truncated response — LLM structured output is occasionally
+    # One retry on a malformed/truncated response - LLM structured output is occasionally
     # flaky independent of the token-budget fix below; a single retry clears most of these
     # without the user needing to click "Ask" again.
     last_error = "Tarka returned an unexpected response format."
@@ -94,7 +106,7 @@ def _ask_structured(system_prompt: str, user_prompt: str) -> dict:
         try:
             response = client.messages.create(
                 model=MODEL,
-                # Same headroom fix as claude_service._call_claude — the score-breakdown /
+                # Same headroom fix as claude_service._call_claude - the score-breakdown /
                 # cyclical-vs-structural / dual-target instructions produce longer responses
                 # than 1024 tokens reliably covers, causing truncated (unterminated) JSON.
                 max_tokens=2200,
@@ -128,7 +140,7 @@ def _ask_structured(system_prompt: str, user_prompt: str) -> dict:
             last_error = "Tarka did not return any caveats."
             continue
 
-        return data
+        return _scrub_em_dashes(data)
 
     raise HTTPException(status_code=502, detail=f"{last_error} (retried once)")
 
@@ -179,14 +191,14 @@ def compare_ministries(ministry_1: Ministry, ministry_2: Ministry, aspect: str =
         f"{aspect_line}"
         f"Compare these two ministries' performance using their composite scores above as the "
         "primary basis. 'headline' should name which one comes out ahead (or 'Mixed' if genuinely "
-        "not comparable — e.g. very different mandates), citing both composite scores; 'evidence' "
+        "not comparable - e.g. very different mandates), citing both composite scores; 'evidence' "
         "should cite specific KPIs from both sides, not just the top-line scores."
     )
     return _ask_structured(system_prompt, user_prompt)
 
 
 def explain_kpi(kpi_name: str, ministry: Ministry) -> dict:
-    """What this metric means, why it matters, and its caveats — grounded in
+    """What this metric means, why it matters, and its caveats - grounded in
     the KPI's spec from app.kpi_specifications, not freeform."""
     spec = get_kpi_spec(ministry.code, kpi_name)
     if spec is None:
@@ -205,11 +217,11 @@ def explain_kpi(kpi_name: str, ministry: Ministry) -> dict:
     if spec.proxy_based:
         proxy_disclosure = (
             f"'{spec.name}' is a best available proxy for {spec.definition.split(':')[0].strip()} "
-            f"because no single official, directly-measured series exists — it is assembled from: "
+            f"because no single official, directly-measured series exists - it is assembled from: "
             f"{', '.join(spec.data_points)}."
         )
 
-    return {
+    return _scrub_em_dashes({
         "headline": spec.name,
         "evidence": [
             f"Definition: {spec.definition}",
@@ -223,7 +235,7 @@ def explain_kpi(kpi_name: str, ministry: Ministry) -> dict:
         "time_period_judged": spec.time_period,
         "data_quality_flag": spec.data_quality,
         "proxy_disclosure": proxy_disclosure,
-    }
+    })
 
 
 def generate_trend_analysis(ministry: Ministry, time_period: str = "") -> dict:

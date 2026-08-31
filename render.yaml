@@ -1,4 +1,4 @@
-# Render Blueprint — deploys the FastAPI backend + a free Postgres in one go.
+# Render Blueprint - deploys the FastAPI backend + a free Postgres in one go.
 # On render.com: New > Blueprint > pick this repo. Render reads this file,
 # provisions both resources, and wires DATABASE_URL automatically. You'll
 # only be prompted for ANTHROPIC_API_KEY (kept out of the repo on purpose).

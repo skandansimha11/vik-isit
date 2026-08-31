@@ -1,9 +1,9 @@
-"""Ministry of Commerce & Industry — Tier-B connector.
+"""Ministry of Commerce & Industry - Tier-B connector.
 
 KPIs:
-  * industrial_import_dependence — net industrial-goods imports as % of demand (proxy)
-  * manufacturing_growth         — manufacturing GVA as % of total GVA
-  * pli_effectiveness            — investment realised as % of PLI commitments (proxy)
+  * industrial_import_dependence - net industrial-goods imports as % of demand (proxy)
+  * manufacturing_growth         - manufacturing GVA as % of total GVA
+  * pli_effectiveness            - investment realised as % of PLI commitments (proxy)
 """
 
 from __future__ import annotations

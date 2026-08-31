@@ -45,7 +45,7 @@ def extract_raw_value(records: list[dict[str, Any]], config: dict[str, Any]) -> 
         return records[0].get("value") if records else None
 
     # Pre-shaped records (e.g. from a computed connector): a single row already
-    # carrying the value — take it rather than demanding tabular lookup keys.
+    # carrying the value - take it rather than demanding tabular lookup keys.
     if not {"key_column", "value_column", "key_match"} <= set(config):
         if records and isinstance(records[0], dict) and "value" in records[0]:
             return records[0].get("value")

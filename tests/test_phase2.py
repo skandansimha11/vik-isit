@@ -221,7 +221,7 @@ class TestPowerConnector:
 
 
 # ---------------------------------------------------------------------------
-# 3. Insight generation (mocked Claude) — safeguard enforcement
+# 3. Insight generation (mocked Claude) - safeguard enforcement
 # ---------------------------------------------------------------------------
 
 
@@ -307,7 +307,7 @@ class TestInsightGeneration:
         assert cached is False
         assert len(insight.bullets) == 3
         # headline is the deterministic Ministry Performance Score label (app.scoring),
-        # not whatever Claude returned — it always wins so the badge never disagrees
+        # not whatever Claude returned - it always wins so the badge never disagrees
         # with the score shown elsewhere in the dashboard.
         assert insight.headline == ministry.score_label
         assert insight.time_period_judged == "FY2015-16 to FY2024-25"
@@ -397,7 +397,7 @@ class TestInsightGeneration:
 
 class TestTarkaChatbot:
     def test_explain_kpi_uses_documented_spec_no_api_call(self, db_session):
-        """explain_kpi is pure spec lookup — must work with no API key at all."""
+        """explain_kpi is pure spec lookup - must work with no API key at all."""
         from app.tarka_chatbot import explain_kpi
 
         ministry = _finance_ministry(db_session)

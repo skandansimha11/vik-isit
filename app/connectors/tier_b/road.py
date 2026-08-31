@@ -1,9 +1,9 @@
-"""Ministry of Road Transport & Highways (Logistics) — Tier-B connector.
+"""Ministry of Road Transport & Highways (Logistics) - Tier-B connector.
 
 KPIs:
-  * logistics_cost_pct    — total logistics cost as % of GDP (proxy; methodology break)
-  * highway_construction  — national highway km constructed per day
-  * modal_share           — road's share of freight tonne-km (proxy)
+  * logistics_cost_pct    - total logistics cost as % of GDP (proxy; methodology break)
+  * highway_construction  - national highway km constructed per day
+  * modal_share           - road's share of freight tonne-km (proxy)
 """
 
 from __future__ import annotations

@@ -1,9 +1,9 @@
-"""Ministry of Agriculture & Farmers Welfare — Tier-A connector.
+"""Ministry of Agriculture & Farmers Welfare - Tier-A connector.
 
 KPIs:
-  * real_farmer_income      — agri GVA/worker at constant prices, indexed 2014=100 (proxy)
-  * ethanol_programme_agri  — ethanol volume supplied, against forex savings
-  * food_inflation          — YoY % change in CPI Food & Beverages
+  * real_farmer_income      - agri GVA/worker at constant prices, indexed 2014=100 (proxy)
+  * ethanol_programme_agri  - ethanol volume supplied, against forex savings
+  * food_inflation          - YoY % change in CPI Food & Beverages
 """
 
 from __future__ import annotations

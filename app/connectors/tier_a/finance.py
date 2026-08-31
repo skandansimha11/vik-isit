@@ -1,9 +1,9 @@
-"""Ministry of Finance — Tier-A connector.
+"""Ministry of Finance - Tier-A connector.
 
 KPIs:
-  * fiscal_deficit_pct_gdp   — GFD ÷ Nominal GDP × 100
-  * tax_administration_intensity — composite proxy (scrutiny / notices / appeals)
-  * tax_collection_growth    — GTR YoY growth %, shown against Tax-to-GDP %
+  * fiscal_deficit_pct_gdp   - GFD ÷ Nominal GDP × 100
+  * tax_administration_intensity - composite proxy (scrutiny / notices / appeals)
+  * tax_collection_growth    - GTR YoY growth %, shown against Tax-to-GDP %
 """
 
 from __future__ import annotations
@@ -165,7 +165,7 @@ class FinanceConnector(TierAConnector):
             if dp is None:
                 points.append(SeriesPoint(year, fy_label(year)))
                 continue
-            # headline = pending appeals (CIT-A + ITAT + HC) — the citizen-facing backlog
+            # headline = pending appeals (CIT-A + ITAT + HC) - the citizen-facing backlog
             headline = dp.get("appeals_pending_000")
             scrutiny = dp.get("scrutiny_assessments_000")
             notices = dp.get("notices_143_2_148_000")
@@ -178,7 +178,7 @@ class FinanceConnector(TierAConnector):
             audit.append(
                 AuditEntry(
                     period=dp.period,
-                    formula="COMPOSITE PROXY — headline = appeals pending (CIT-A + ITAT + HC); context = scrutiny assessments + 143(2)/148 notices; recovery% = recovered / disputed-demand-raised * 100",
+                    formula="COMPOSITE PROXY - headline = appeals pending (CIT-A + ITAT + HC); context = scrutiny assessments + 143(2)/148 notices; recovery% = recovered / disputed-demand-raised * 100",
                     inputs={
                         "appeals_pending_000": headline,
                         "scrutiny_assessments_000": scrutiny,

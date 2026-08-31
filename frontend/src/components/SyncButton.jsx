@@ -54,7 +54,7 @@ export default function SyncButton() {
               <li key={i} className="flex items-center justify-between gap-2">
                 <span className="truncate text-base-300">{r.kpi_name}</span>
                 <span className={STATUS_STYLE[r.status] || "text-base-500"}>
-                  {r.status === "updated" ? `${r.old_value ?? "—"} → ${r.new_value ?? "—"}` : r.status.replace("_", " ")}
+                  {r.status === "updated" ? `${r.old_value ?? "-"} → ${r.new_value ?? "-"}` : r.status.replace("_", " ")}
                 </span>
               </li>
             ))}

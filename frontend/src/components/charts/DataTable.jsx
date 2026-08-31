@@ -93,10 +93,10 @@ export default function DataTable({ kpi, points }) {
           {points.map((p) => (
             <tr key={p.period_label} className="border-b border-base-800 text-base-200">
               <td className="py-2 pr-4">{p.period_label}</td>
-              <td className="py-2 pr-4">{p.value ?? "—"}</td>
-              {hasSecondary && <td className="py-2 pr-4 text-base-400">{p.secondary_value ?? "—"}</td>}
-              <td className="py-2 pr-4 text-base-400">{p.target_value ?? "—"}</td>
-              <td className="py-2 pr-4 text-xs text-base-500">{p.revision || "—"}</td>
+              <td className="py-2 pr-4">{p.value ?? "-"}</td>
+              {hasSecondary && <td className="py-2 pr-4 text-base-400">{p.secondary_value ?? "-"}</td>}
+              <td className="py-2 pr-4 text-base-400">{p.target_value ?? "-"}</td>
+              <td className="py-2 pr-4 text-xs text-base-500">{p.revision || "-"}</td>
             </tr>
           ))}
         </tbody>

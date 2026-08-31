@@ -12,13 +12,13 @@ from __future__ import annotations
 
 CORE_ANALYTICAL_PRINCIPLES = [
     "Judge by outcomes affecting productivity, competitiveness, employment, fiscal "
-    "sustainability, and strategic capacity — not by activity or spending alone.",
+    "sustainability, and strategic capacity - not by activity or spending alone.",
     "Distinguish cyclical movements (global commodity swings, base effects, one-off "
     "receipts) from structural ones (genuine capacity, productivity, or institutional change).",
     "Explicitly flag data limitations and proxy status; never present a proxy as a "
     "definitive official metric.",
     "Prefer multi-year trends over single-year snapshots.",
-    "Be willing to call performance Good, Mediocre, or Poor with clear justification — "
+    "Be willing to call performance Good, Mediocre, or Poor with clear justification - "
     "don't default to noncommittal hedging.",
     "Never oversimplify; surface trade-offs and second-order effects.",
     "Always state the time period being judged.",
@@ -44,7 +44,7 @@ FINANCE_FRAMEWORK = {
         "Tax administration becomes more extractive and unpredictable.",
     ],
     "caveats": [
-        "High nominal GDP growth mechanically lowers deficit ratios — check real consolidation.",
+        "High nominal GDP growth mechanically lowers deficit ratios - check real consolidation.",
         "Off-budget items and state-level deficits can mask true fiscal stress.",
         "One-off spectrum/disinvestment receipts inflate temporary performance.",
         "Tax harassment is hard to quantify precisely; use available proxies and say so.",
@@ -72,7 +72,7 @@ PETROLEUM_FRAMEWORK = {
         "LPG connections issued but refill rates stagnant (indicating non-adoption).",
     ],
     "caveats": [
-        "Global crude price swings dominate short-run import-dependence numbers — separate "
+        "Global crude price swings dominate short-run import-dependence numbers - separate "
         "price effect from volume effect.",
         "Ethanol feedstock sourcing has a food-security trade-off not captured by the blending % alone.",
     ],
@@ -98,7 +98,7 @@ AGRICULTURE_FRAMEWORK = {
         "Food inflation persistently high, eroding urban and rural real wages alike.",
     ],
     "caveats": [
-        "Direct farmer income surveys are infrequent — most annual estimates are model-based, "
+        "Direct farmer income surveys are infrequent - most annual estimates are model-based, "
         "not measured.",
         "Aggregate income/GVA figures mask large disparities between smallholders and large farms.",
         "Weather/monsoon shocks dominate single-year food-inflation readings.",
@@ -124,7 +124,7 @@ RAILWAYS_FRAMEWORK = {
         "Passenger or safety metrics deteriorating.",
     ],
     "caveats": [
-        "COVID-year figures (FY2020-21 especially) are structural outliers — always compare "
+        "COVID-year figures (FY2020-21 especially) are structural outliers - always compare "
         "against a pre-COVID baseline, not the COVID trough.",
         "On-time performance methodology has changed across report years.",
     ],
@@ -178,7 +178,7 @@ COMMERCE_FRAMEWORK = {
         "USD-denominated trade figures conflate volume, price, and exchange-rate effects.",
         "Gross FDI figures don't net out repatriation; treaty round-tripping can inflate the headline.",
         "Ease-of-Doing-Business index was discontinued by the World Bank in 2021 due to data "
-        "integrity issues — any pre/post comparison using it is unreliable.",
+        "integrity issues - any pre/post comparison using it is unreliable.",
     ],
     "comparative_context": {},
 }
@@ -199,7 +199,7 @@ DEFENCE_FRAMEWORK = {
         "Border infrastructure completion figures include roads not usable year-round.",
     ],
     "caveats": [
-        "Official indigenisation percentages are self-reported and not independently audited — "
+        "Official indigenisation percentages are self-reported and not independently audited - "
         "treat as a claim, not a verified fact, and say so explicitly.",
         "Export growth off a very low base can produce large but not meaningful % figures.",
     ],
@@ -222,7 +222,7 @@ EDUCATION_FRAMEWORK = {
         "Enrolment growth not matched by teacher hiring, worsening effective classroom ratios.",
     ],
     "caveats": [
-        "ASER covers rural India only — do not generalise to national/urban outcomes.",
+        "ASER covers rural India only - do not generalise to national/urban outcomes.",
         "GER measures access, not completion or learning quality.",
         "COVID-era school closures created a multi-year learning-loss disruption that needs its "
         "own caveat when comparing pre/post periods.",
@@ -246,7 +246,7 @@ SKILL_DEVELOPMENT_FRAMEWORK = {
         "Training program throughput high but disconnected from actual labour-market demand.",
     ],
     "caveats": [
-        "Pre-FY2017-18 unemployment data uses a different survey methodology (NSSO) — not "
+        "Pre-FY2017-18 unemployment data uses a different survey methodology (NSSO) - not "
         "comparable to PLFS-era figures.",
         "EPFO net subscriber additions are a PROXY for job creation, not a direct count of new jobs.",
     ],

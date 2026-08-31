@@ -1,7 +1,7 @@
 """The 15 Tier-B KPIs: Commerce & Industry, Defence, Education, Skill
 Development & Labour, and Road Transport & Highways.
 
-Same contract as ``app/connectors/tier_a/spec.py`` — this module reuses the
+Same contract as ``app/connectors/tier_a/spec.py`` - this module reuses the
 ``TierAKpi`` / ``TierAkpiTarget`` dataclasses so the pipeline, the frontend and
 the provenance API treat Tier-A and Tier-B KPIs identically.
 
@@ -11,7 +11,7 @@ Design rules carried over from Tier-A:
   each; Highway Construction renders as bars). Secondary metrics (IIP growth,
   domestic-production value, NAS proficiency, budget vs spend, rail share, …)
   are computed and shown in the data table / provenance panel, never as a
-  second axis — this is what keeps text off the plot.
+  second axis - this is what keeps text off the plot.
 * ``display_title`` is the layman heading on the card; ``name`` (matched to
   ``app/seed_dashboard.py`` and ``app/kpi_specifications.py``) becomes the grey
   technical subtitle.
@@ -33,7 +33,7 @@ _COMMERCE = [
         key="industrial_import_dependence",
         name="Industrial Imports %",
         display_title="Reliance on Imported Industrial Goods",
-        plain_note="Net imports of manufactured / capital goods (excluding oil and gold) as a share of what India consumes. Rising means domestic industry is losing ground to imports. This is an assembled estimate — trade codes do not map cleanly onto production categories.",
+        plain_note="Net imports of manufactured / capital goods (excluding oil and gold) as a share of what India consumes. Rising means domestic industry is losing ground to imports. This is an assembled estimate - trade codes do not map cleanly onto production categories.",
         unit="% of demand",
         data_shape="time_line",
         chart_type="line",
@@ -100,7 +100,7 @@ _DEFENCE = [
         key="defence_capex",
         name="Defence CapEx",
         display_title="Defence Modernisation Budget (Share of Economy)",
-        plain_note="Money spent on new military equipment and platforms (capital outlay), measured against the size of the economy. Pensions and salaries crowd this out — a flat or falling share means modernisation is being squeezed. Absolute rupee outlay is in the table.",
+        plain_note="Money spent on new military equipment and platforms (capital outlay), measured against the size of the economy. Pensions and salaries crowd this out - a flat or falling share means modernisation is being squeezed. Absolute rupee outlay is in the table.",
         unit="% of GDP",
         data_shape="time_line",
         chart_type="line",
@@ -108,7 +108,7 @@ _DEFENCE = [
         valid_range=(0.2, 2.0),
         data_quality="HIGH",
         is_proxy=False,
-        source_name="Union Budget — Defence Services Estimates (Capital Outlay) + MoSPI Nominal GDP; PRS Legislative Research",
+        source_name="Union Budget - Defence Services Estimates (Capital Outlay) + MoSPI Nominal GDP; PRS Legislative Research",
         source_url="https://www.indiabudget.gov.in/",
         cadence="Annual",
         datasets=("capex",),
@@ -142,7 +142,7 @@ _DEFENCE = [
         key="force_modernisation",
         name="Force Modernisation",
         display_title="Share of Equipment That Is Modern",
-        plain_note="Rough share of major platforms rated 'current' or 'state-of-the-art' rather than vintage — against the armed forces' own doctrine of roughly one-third each. Self-reported and not independently audited; fleet numbers are not disclosed alongside. Capital-budget utilisation is in the table.",
+        plain_note="Rough share of major platforms rated 'current' or 'state-of-the-art' rather than vintage - against the armed forces' own doctrine of roughly one-third each. Self-reported and not independently audited; fleet numbers are not disclosed alongside. Capital-budget utilisation is in the table.",
         unit="% of fleet modern",
         data_shape="time_line",
         chart_type="line",
@@ -174,7 +174,7 @@ _EDUCATION = [
         valid_range=(0.0, 100.0),
         data_quality="HIGH",
         is_proxy=False,
-        source_name="ASER (Pratham) annual rural survey — 'can read Std II text'; National Achievement Survey (NAS) for the table figure",
+        source_name="ASER (Pratham) annual rural survey - 'can read Std II text'; National Achievement Survey (NAS) for the table figure",
         source_url="https://asercentre.org/",
         cadence="ASER roughly biennial; NAS periodic",
         datasets=("learning",),
@@ -187,7 +187,7 @@ _EDUCATION = [
         key="exam_integrity",
         name="Exam Integrity",
         display_title="Major Exam Paper Leaks & Cancellations",
-        plain_note="Count of major documented paper leaks or exam cancellations in national and state board / recruitment exams each year. Compiled from press reporting — there is no official register — so treat the level as indicative, not exact. Lower is better.",
+        plain_note="Count of major documented paper leaks or exam cancellations in national and state board / recruitment exams each year. Compiled from press reporting - there is no official register - so treat the level as indicative, not exact. Lower is better.",
         unit="incidents / year",
         data_shape="time_line",
         chart_type="line",
@@ -208,7 +208,7 @@ _EDUCATION = [
         key="enrollment_quality",
         name="Enrollment Quality",
         display_title="Students Staying in School to Class 12",
-        plain_note="Gross Enrolment Ratio for senior secondary (Classes 11-12) — how many young people are still in school at that stage, as a share of the age group. Near-universal at the primary level, India still loses many students before Class 12. Pupil-teacher ratio is in the table.",
+        plain_note="Gross Enrolment Ratio for senior secondary (Classes 11-12) - how many young people are still in school at that stage, as a share of the age group. Near-universal at the primary level, India still loses many students before Class 12. Pupil-teacher ratio is in the table.",
         unit="% GER (Class 11-12)",
         data_shape="time_line",
         chart_type="line",
@@ -261,7 +261,7 @@ _SKILL = [
         valid_range=(0.0, 110.0),
         data_quality="MEDIUM",
         is_proxy=False,
-        source_name="Union Budget / Outcome Budget (MSDE) — apprenticeship scheme allocation vs actual expenditure; Standing Committee on Labour reports",
+        source_name="Union Budget / Outcome Budget (MSDE) - apprenticeship scheme allocation vs actual expenditure; Standing Committee on Labour reports",
         source_url="https://www.msde.gov.in/",
         cadence="Annual",
         datasets=("apprenticeship",),
@@ -274,7 +274,7 @@ _SKILL = [
         key="job_creation",
         name="Job Creation",
         display_title="New Formal Jobs Added (EPFO)",
-        plain_note="Net new subscribers to the EPFO retirement fund each year — the standard proxy for formal job creation. It also captures existing jobs being formalised and workers re-registering, so it overstates genuinely new jobs. Youth (18-28) share is in the table.",
+        plain_note="Net new subscribers to the EPFO retirement fund each year - the standard proxy for formal job creation. It also captures existing jobs being formalised and workers re-registering, so it overstates genuinely new jobs. Youth (18-28) share is in the table.",
         unit="lakh / year",
         data_shape="time_line",
         chart_type="line",
@@ -298,7 +298,7 @@ _ROAD = [
         key="logistics_cost_pct",
         name="Logistics Cost %",
         display_title="Cost of Moving Goods (Share of Economy)",
-        plain_note="Total national logistics cost (transport + warehousing + handling) as a share of GDP. Lower means a more competitive economy. The often-quoted '13-14%' legacy figure had no rigorous basis; the NCAER-DPIIT study puts it near 8%. The pre-2022 points here are rough estimates — see the caveat.",
+        plain_note="Total national logistics cost (transport + warehousing + handling) as a share of GDP. Lower means a more competitive economy. The often-quoted '13-14%' legacy figure had no rigorous basis; the NCAER-DPIIT study puts it near 8%. The pre-2022 points here are rough estimates - see the caveat.",
         unit="% of GDP",
         data_shape="time_line",
         chart_type="line",
@@ -317,7 +317,7 @@ _ROAD = [
         key="highway_construction",
         name="Highway Construction",
         display_title="National Highway Built per Day",
-        plain_note="Average kilometres of national highway constructed per day over the year. A headline delivery metric — note that some years mix new construction with widening / upgrade of existing roads. Total km built is in the table.",
+        plain_note="Average kilometres of national highway constructed per day over the year. A headline delivery metric - note that some years mix new construction with widening / upgrade of existing roads. Total km built is in the table.",
         unit="km / day",
         data_shape="time_line",
         chart_type="bar",
@@ -325,7 +325,7 @@ _ROAD = [
         valid_range=(0.0, 60.0),
         data_quality="HIGH",
         is_proxy=False,
-        source_name="Ministry of Road Transport & Highways / NHAI — annual physical progress; PIB",
+        source_name="Ministry of Road Transport & Highways / NHAI - annual physical progress; PIB",
         source_url="https://morth.nic.in/",
         cadence="Monthly (running km/day) / Annual",
         datasets=("highway_pace",),

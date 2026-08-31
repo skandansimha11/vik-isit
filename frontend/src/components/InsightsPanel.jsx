@@ -35,14 +35,13 @@ export default function InsightsPanel({ ministryId }) {
 
       {!isLoading && !isError && data && (
         <div>
+          {/* Deliberately condensed: headline + 3-4 plain points only. The full
+              KPI-by-KPI reasoning, weights and caveats live under Tarka AI's
+              "Explain a KPI" / "Trend analysis". */}
           <InsightBody
             headline={data.headline}
             timePeriodJudged={data.time_period_judged}
             bullets={data.bullets}
-            caveats={data.caveats}
-            proxyDisclosure={data.proxy_disclosure}
-            comparativeContext={data.comparative_context}
-            inference={data.inference}
           />
           <p className="mt-3 text-[11px] text-base-600">
             Generated {new Date(data.generated_at).toLocaleString()}

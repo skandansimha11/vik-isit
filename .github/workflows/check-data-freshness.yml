@@ -2,7 +2,7 @@ name: Check data freshness
 
 # Runs app.check_sources against all 30 KPIs (Tier-A + Tier-B) on a schedule.
 # This only ever DETECTS staleness and writes the human-readable SOURCES.md
-# reports — it never writes a KPI value into the curated CSVs itself (see
+# reports - it never writes a KPI value into the curated CSVs itself (see
 # data/tier_a/README.md and data/tier_b/README.md for why: most sources here
 # are PDF/HTML bulletins with layouts that break scrapers silently, so
 # auto-writing risks a wrong number landing on the dashboard unflagged).
@@ -14,7 +14,7 @@ name: Check data freshness
 on:
   schedule:
     # Every Monday 03:00 UTC. Cheap to run weekly even though most KPIs
-    # publish monthly/annually — this just checks, it doesn't fetch data.
+    # publish monthly/annually - this just checks, it doesn't fetch data.
     - cron: "0 3 * * 1"
   workflow_dispatch: {}
 
@@ -110,7 +110,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: issue.number,
-                body: "All curated KPI sources are up to date again — closing.",
+                body: "All curated KPI sources are up to date again - closing.",
               });
               await github.rest.issues.update({
                 owner: context.repo.owner,

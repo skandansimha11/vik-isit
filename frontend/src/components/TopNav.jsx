@@ -96,7 +96,7 @@ export default function TopNav() {
                     className="flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm text-base-200 hover:bg-base-800"
                   >
                     <span className="truncate">{m.name}</span>
-                    <span className="shrink-0 text-xs text-base-500">{m.score != null ? `${m.score}` : "—"}</span>
+                    <span className="shrink-0 text-xs text-base-500">{m.score != null ? `${m.score}` : "-"}</span>
                   </button>
                 ))}
                 {!ministries?.length && (
@@ -104,7 +104,7 @@ export default function TopNav() {
                     {isLoading
                       ? "Loading ministries…"
                       : isError
-                      ? "Couldn't reach the API — is the backend running on :8000?"
+                      ? "Couldn't reach the API. Is the backend running on :8000?"
                       : "No ministries loaded yet."}
                   </p>
                 )}
@@ -118,7 +118,7 @@ export default function TopNav() {
         </nav>
 
         {/* Dev-only: recomputes KPIs from the curated CSVs. Hidden in production builds
-            (Vite's import.meta.env.DEV is false once `vite build` runs, e.g. on Vercel) —
+            (Vite's import.meta.env.DEV is false once `vite build` runs, e.g. on Vercel) -
             a public showcase shouldn't invite visitors to poke at the sync pipeline. */}
         {import.meta.env.DEV && <SyncButton />}
       </div>

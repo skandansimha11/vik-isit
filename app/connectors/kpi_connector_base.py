@@ -37,7 +37,7 @@ class ValidationError(ValueError):
 class KPIConnector:
     """Base class for a ministry's Tier-A/B connector. `valid_ranges` maps a
     KPISource's KPI name (or a fuzzy substring of it) to an inclusive
-    (min, max) bound used by validate_data as a sanity check — not a
+    (min, max) bound used by validate_data as a sanity check - not a
     business-logic assertion, just a guard against obviously-corrupt parses
     (e.g. a percentage of 950%)."""
 

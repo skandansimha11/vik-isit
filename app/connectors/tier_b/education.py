@@ -1,9 +1,9 @@
-"""Ministry of Education — Tier-B connector.
+"""Ministry of Education - Tier-B connector.
 
 KPIs:
-  * learning_outcomes    — % of Class 3 children who can read a Class 2 text (ASER)
-  * exam_integrity       — major paper leaks / cancellations per year (proxy)
-  * enrollment_quality   — senior-secondary Gross Enrolment Ratio (UDISE+)
+  * learning_outcomes    - % of Class 3 children who can read a Class 2 text (ASER)
+  * exam_integrity       - major paper leaks / cancellations per year (proxy)
+  * enrollment_quality   - senior-secondary Gross Enrolment Ratio (UDISE+)
 """
 
 from __future__ import annotations

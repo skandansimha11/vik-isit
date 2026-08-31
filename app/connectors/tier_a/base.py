@@ -1,7 +1,7 @@
 """Base class + result types shared by the five Tier-A ministry connectors.
 
 A connector turns one or more curated :class:`~app.connectors.provenance.Dataset`
-objects into a :class:`KPISeries` — the full FY2014-15 → latest analytics series
+objects into a :class:`KPISeries` - the full FY2014-15 → latest analytics series
 for one KPI, shaped to match the KPI's ``data_shape`` (see the frontend
 ``ChartRenderer``), fully validated, with a per-period audit trail.
 """
@@ -231,7 +231,7 @@ class TierAConnector(KPIConnector):
         }
 
     def _target_series(self, spec, per_year: dict[int, float] | None = None) -> dict[int, float | None]:
-        """Target value for each FY — a flat line at ``spec.target_value`` unless
+        """Target value for each FY - a flat line at ``spec.target_value`` unless
         the connector supplies a per-year glide path."""
         if per_year:
             return {y: per_year.get(y, spec.target_value) for y in FY_YEARS}

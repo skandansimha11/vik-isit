@@ -4,7 +4,7 @@ How all 30 KPIs across the 10 ministries get their numbers, and how to keep them
 current. **Tier-A** = Finance, Petroleum, Agriculture, Railways, Power
 (`data/tier_a/`, `app/tier_a_pipeline.py`). **Tier-B** = Commerce & Industry,
 Defence, Education, Skill Development & Labour, Road Transport & Highways
-(`data/tier_b/`, `app/tier_b_pipeline.py`). The two are structurally identical —
+(`data/tier_b/`, `app/tier_b_pipeline.py`). The two are structurally identical -
 Tier-B reuses every connector base class, helper and pipeline behaviour from
 Tier-A; only the curated-data root differs. Everything below describes Tier-A;
 substitute `tier_b` throughout for the other five ministries.
@@ -13,7 +13,7 @@ substitute `tier_b` throughout for the other five ministries.
 
 ```
 data/tier_a/*.csv                     curated official figures + provenance (source of truth)
-  └─ app/connectors/provenance.py     ProvenanceDataset — load, type-coerce, de-dup
+  └─ app/connectors/provenance.py     ProvenanceDataset - load, type-coerce, de-dup
        └─ app/connectors/tier_a/*.py  one connector per ministry: formula + validation + series
             ├─ app/tier_a_pipeline.py  refresh_tier_a() -> writes KPISeriesPoint / KPI / KPISource / KPIHistory
             ├─ app/pipeline/sync_service.py  POST /sync routes "tier_a"/"tier_b" sources here
@@ -21,7 +21,7 @@ data/tier_a/*.csv                     curated official figures + provenance (sou
 ```
 
 `app/connectors/tier_b/` mirrors this exactly for the other five ministries, off
-`data/tier_b/`. `app/seed_dashboard.py` now only creates the KPI rows — all 30
+`data/tier_b/`. `app/seed_dashboard.py` now only creates the KPI rows - all 30
 KPIs' presentation + series are owned by the two pipelines (no synthetic data).
 
 ## First-time / rebuild
@@ -46,7 +46,7 @@ python -m app.tier_a_pipeline               # recompute; appends audited history
 `python -m app.check_sources --fetch` additionally runs best-effort auto-fetchers
 for the few sources that allow it (PPAC, MoSPI CPI, PIB rail freight). They never
 overwrite `Actual`/`Revised` rows and degrade to a "update manually" message on
-any failure — the curated CSVs stay authoritative.
+any failure - the curated CSVs stay authoritative.
 
 ### Suggested cadence by source
 
@@ -66,7 +66,7 @@ editing `data/tier_b/*.csv` from the cited source and re-running
 
 ### Tier-B data notes
 
-Several Tier-B KPIs have **no single official published series** — industrial
+Several Tier-B KPIs have **no single official published series** - industrial
 import dependence, PLI domestic value-addition, defence equipment vintage,
 exam-integrity incident counts, pre-FY2021-22 logistics cost. Those are assembled
 from the cited documents, flagged `Estimated`, listed in `data/tier_b/GAPS.md`,
@@ -77,13 +77,13 @@ Tier-B specs live in `app/connectors/tier_b/spec.py`.
 
 Each Tier-A KPI carries, in `app/connectors/tier_a/spec.py`:
 
-* `display_title` — the layman heading shown on the card (e.g. "Government Budget
+* `display_title` - the layman heading shown on the card (e.g. "Government Budget
   Gap"); the technical `name` becomes a grey subtitle.
-* `plain_note` — one sentence explaining what the metric means.
-* `target` — `TierAkpiTarget(official, aspirational, official_label, aspirational_label)`.
+* `plain_note` - one sentence explaining what the metric means.
+* `target` - `TierAkpiTarget(official, aspirational, official_label, aspirational_label)`.
   The chart draws the official line (grey dashed), the aspirational line (green
   dotted) and a faint band between them; the card prints "Target X → aspiration Y".
-* Charts are single-series by design — secondary metrics go to the data table.
+* Charts are single-series by design - secondary metrics go to the data table.
 
 To change a target or heading, edit `spec.py` and re-run `python -m app.tier_a_pipeline`.
 

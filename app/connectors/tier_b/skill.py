@@ -1,9 +1,9 @@
-"""Ministry of Skill Development & Labour — Tier-B connector.
+"""Ministry of Skill Development & Labour - Tier-B connector.
 
 KPIs:
-  * youth_neet_rate            — % of 15-29s not in employment, education or training
-  * apprenticeship_utilisation — apprenticeship budget spent / allocated * 100
-  * job_creation               — EPFO net new subscribers, lakh/year (proxy)
+  * youth_neet_rate            - % of 15-29s not in employment, education or training
+  * apprenticeship_utilisation - apprenticeship budget spent / allocated * 100
+  * job_creation               - EPFO net new subscribers, lakh/year (proxy)
 """
 
 from __future__ import annotations

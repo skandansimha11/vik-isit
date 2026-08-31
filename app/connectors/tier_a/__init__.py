@@ -1,4 +1,4 @@
-"""Tier-A KPI connectors — real, provenance-tracked data for the 15 KPIs of
+"""Tier-A KPI connectors - real, provenance-tracked data for the 15 KPIs of
 the Finance, Petroleum, Agriculture, Railways and Power ministries.
 
 Public surface:
@@ -16,7 +16,7 @@ from app.connectors.tier_a.base import KPISeries, SeriesPoint
 from app.connectors.tier_a.spec import TIER_A_KPIS, TIER_A_BY_KEY, TIER_A_BY_NAME, TierAKpi
 
 def get_tier_a_connector(ministry_code: str):
-    """Always returns a FRESH connector instance — its curated datasets are
+    """Always returns a FRESH connector instance - its curated datasets are
     loaded lazily and cached per-instance, so a fresh instance guarantees the
     latest CSV contents (important for a long-running server handling /sync)."""
     code = ministry_code.upper()

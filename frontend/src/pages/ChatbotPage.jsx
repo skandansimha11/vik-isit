@@ -6,7 +6,7 @@ export default function ChatbotPage() {
       <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold text-white">Ask Tarka AI</h1>
         <p className="mt-1 text-sm text-base-400">
-          Tarka is the dashboard&rsquo;s analytical policy assistant — ask about any ministry&rsquo;s KPIs, trends, or how they
+          Tarka is the dashboard&rsquo;s analytical policy assistant. Ask about any ministry&rsquo;s KPIs, trends, or how they
           compare, and get framework-grounded answers with evidence and caveats.
         </p>
       </div>

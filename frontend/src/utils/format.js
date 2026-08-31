@@ -1,12 +1,12 @@
 export function formatKpiValue(value, unit = "") {
-  if (value == null || Number.isNaN(value)) return "—";
+  if (value == null || Number.isNaN(value)) return "-";
   const abs = Math.abs(value);
   const rounded = abs >= 100 ? Math.round(value) : Math.round(value * 10) / 10;
   return `${rounded.toLocaleString("en-IN")}${unit ? ` ${unit}` : ""}`.trim();
 }
 
 export function formatCompact(value) {
-  if (value == null || Number.isNaN(value)) return "—";
+  if (value == null || Number.isNaN(value)) return "-";
   return new Intl.NumberFormat("en-IN", { notation: "compact", maximumFractionDigits: 1 }).format(value);
 }
 

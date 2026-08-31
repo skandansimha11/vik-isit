@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.claude_service import chat_reply, get_or_generate_insights
 from app.config import settings
@@ -50,7 +50,7 @@ app.add_middleware(
     CORSMiddleware,
     # Local-dev origins are always allowed; add your deployed frontend's URL
     # (e.g. https://your-app.vercel.app) via the CORS_ORIGINS env var on the
-    # backend host — comma-separated if you have more than one (prod + preview).
+    # backend host - comma-separated if you have more than one (prod + preview).
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", *settings.cors_origin_list],
     allow_credentials=True,
     allow_methods=["*"],
@@ -59,20 +59,49 @@ app.add_middleware(
 
 RANGE_YEARS = {"5y": 5, "10y": 10, "full": None}
 
+# GET responses this app serves change at most daily (data syncs are manual /
+# weekly). Letting the browser reuse a response for a short window, and serve a
+# stale copy while revalidating, keeps the UI responsive even while the free-tier
+# host is cold-starting. Not applied to /health (used by the keep-alive ping).
+_CACHEABLE_MISS = ("/health", "/docs", "/openapi.json", "/redoc")
+
+
+@app.middleware("http")
+async def cache_headers(request, call_next):
+    response = await call_next(request)
+    if (
+        request.method == "GET"
+        and response.status_code == 200
+        and not request.url.path.startswith(_CACHEABLE_MISS)
+        and "cache-control" not in response.headers
+    ):
+        response.headers["Cache-Control"] = "public, max-age=60, stale-while-revalidate=86400"
+    return response
+
 
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
 
 
+# Ministry.score / .status / .trend all walk every KPI and its series, so any
+# endpoint that touches them for a whole list would otherwise fire dozens of
+# lazy-load queries (N+1). Pull the graph in one shot instead.
+def _ministry_graph(db: Session):
+    return db.query(Ministry).options(
+        selectinload(Ministry.kpis).selectinload(KPI.series),
+        selectinload(Ministry.kpis).selectinload(KPI.source),
+    )
+
+
 @app.get("/ministries", response_model=list[MinistryOut])
 def list_ministries(db: Session = Depends(get_db)):
-    return db.query(Ministry).order_by(Ministry.name).all()
+    return _ministry_graph(db).order_by(Ministry.name).all()
 
 
 @app.get("/ministries/{ministry_id}", response_model=MinistryDetailOut)
 def get_ministry(ministry_id: int, db: Session = Depends(get_db)):
-    ministry = db.query(Ministry).filter(Ministry.id == ministry_id).first()
+    ministry = _ministry_graph(db).filter(Ministry.id == ministry_id).first()
     if not ministry:
         raise HTTPException(status_code=404, detail="Ministry not found.")
     return ministry
@@ -80,7 +109,7 @@ def get_ministry(ministry_id: int, db: Session = Depends(get_db)):
 
 @app.get("/summary", response_model=SummaryOut)
 def get_summary(db: Session = Depends(get_db)):
-    ministries = db.query(Ministry).all()
+    ministries = _ministry_graph(db).all()
     scored = [m for m in ministries if m.score is not None]
     overall = round(sum(m.score for m in scored) / len(scored), 1) if scored else None
 
@@ -141,7 +170,7 @@ def get_ministry_insights(ministry_id: int, force: bool = False, db: Session = D
 def get_ministry_score_breakdown(ministry_id: int, db: Session = Depends(get_db)):
     """The exact formula and assumptions behind a ministry's composite score:
     per-KPI weight, normalization, trend adjustment, and confidence
-    multiplier — see app.scoring for the full methodology."""
+    multiplier - see app.scoring for the full methodology."""
     ministry = db.query(Ministry).filter(Ministry.id == ministry_id).first()
     if not ministry:
         raise HTTPException(status_code=404, detail="Ministry not found.")
@@ -303,7 +332,7 @@ def get_kpi_provenance(kpi_id: int, db: Session = Depends(get_db)):
                 ]
                 if series.audit:
                     out.formula = out.formula or series.audit[-1].formula
-        except Exception:  # noqa: BLE001 — provenance view is best-effort
+        except Exception:  # noqa: BLE001 - provenance view is best-effort
             pass
 
     return out

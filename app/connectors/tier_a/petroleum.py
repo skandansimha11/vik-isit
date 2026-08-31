@@ -1,9 +1,9 @@
-"""Ministry of Petroleum & Natural Gas — Tier-A connector.
+"""Ministry of Petroleum & Natural Gas - Tier-A connector.
 
 KPIs:
-  * oil_import_dependence  — net oil imports as % of consumption (PPAC headline)
-  * ethanol_blending       — blending %, shown against ethanol volume blended
-  * refining_efficiency    — refinery capacity utilisation %, against GRM $/bbl
+  * oil_import_dependence  - net oil imports as % of consumption (PPAC headline)
+  * ethanol_blending       - blending %, shown against ethanol volume blended
+  * refining_efficiency    - refinery capacity utilisation %, against GRM $/bbl
 """
 
 from __future__ import annotations

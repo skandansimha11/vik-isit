@@ -1,4 +1,4 @@
-"""DEPRECATED — do not run.
+"""DEPRECATED - do not run.
 
 This script used to overwrite KPISource.parse_config for the Tier-A KPIs and, in
 doing so, stripped the tabular lookup keys the extraction pipeline needed. The

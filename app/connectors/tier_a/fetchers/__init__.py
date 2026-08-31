@@ -2,11 +2,11 @@
 something machine-approachable. Invoked only by ``python -m app.check_sources --fetch``.
 
 Contract for each fetcher ``fn() -> dict``:
-  * MUST NOT raise for a network / parse failure — return ``{"ok": False, "summary": ...}``
+  * MUST NOT raise for a network / parse failure - return ``{"ok": False, "summary": ...}``
   * On a confident parse, append/update rows in the relevant ``data/tier_a/*.csv``
     with ``revision = "Provisional"`` (never overwrite ``Actual`` / ``Revised`` rows)
     and return ``{"ok": True, "summary": ..., "wrote": [...]}``
-  * Government PDFs change layout frequently — when in doubt, DO NOT write; report
+  * Government PDFs change layout frequently - when in doubt, DO NOT write; report
     what was found so a human can update the CSV.
 
 These are a convenience, not the backbone. The curated CSVs remain the source of truth.
@@ -34,7 +34,7 @@ def ppac_snapshot() -> dict:
         if hits:
             return {
                 "ok": False,
-                "summary": f"PPAC page mentions import-dependency ~{hits[0]}% — confirm the FY and update data/tier_a/petroleum/crude.csv manually",
+                "summary": f"PPAC page mentions import-dependency ~{hits[0]}% - confirm the FY and update data/tier_a/petroleum/crude.csv manually",
                 "found": hits,
             }
         return {
@@ -53,7 +53,7 @@ def mospi_cpi() -> dict:
     if not key:
         return {
             "ok": False,
-            "summary": "no DATA_GOV_IN_API_KEY set — update data/tier_a/agriculture/cpi_food.csv from the monthly MoSPI CPI press release",
+            "summary": "no DATA_GOV_IN_API_KEY set - update data/tier_a/agriculture/cpi_food.csv from the monthly MoSPI CPI press release",
         }
     try:
         # Resource id for CPI is not stable across catalog revisions; treat any failure as 'manual'.

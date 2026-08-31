@@ -11,7 +11,7 @@ fixed set of trailing provenance columns so the number is always traceable:
     published_on  YYYY-MM or YYYY-MM-DD the figure was published
     note          free text (methodology, cross-check source, caveats)
 
-This module does *not* know any KPI formulas — it only turns a CSV into a
+This module does *not* know any KPI formulas - it only turns a CSV into a
 sorted, de-duplicated list of :class:`DataPoint` objects. The per-ministry
 connectors in ``app/connectors/tier_a/`` consume that.
 """
@@ -54,7 +54,7 @@ class ProvenanceError(ValueError):
 class DataPoint:
     """One period of one curated dataset."""
 
-    period: str  # "FY2019-20", "2024-07", "ESY2023-24" — connector-defined
+    period: str  # "FY2019-20", "2024-07", "ESY2023-24" - connector-defined
     values: dict[str, float | None]
     revision: str
     source_doc: str

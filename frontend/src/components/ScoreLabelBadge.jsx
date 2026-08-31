@@ -1,5 +1,5 @@
 // Maps app.scoring.SCORE_BANDS labels to theme-consistent badge styling.
-// Strong/Satisfactory/Mediocre/Weak/Poor — see app/scoring.py for the thresholds.
+// Strong/Satisfactory/Mediocre/Weak/Poor - see app/scoring.py for the thresholds.
 const STYLES = {
   Strong: "border-positive/30 bg-positive/10 text-positive",
   Satisfactory: "border-cyan-500/30 bg-cyan-500/10 text-cyan-400",

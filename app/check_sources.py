@@ -1,4 +1,4 @@
-"""Tell me what curated KPI data needs refreshing — all 30 KPIs, both tiers.
+"""Tell me what curated KPI data needs refreshing - all 30 KPIs, both tiers.
 
     python -m app.check_sources           # report only (offline-tolerant)
     python -m app.check_sources --fetch    # + run Tier-A's best-effort auto-fetchers
@@ -13,7 +13,7 @@ For each KPI it reports:
 
 State (URL fingerprints) is cached per tier in ``data/tier_a/.source_state.json``
 / ``data/tier_b/.source_state.json`` so "changed since last check" is
-meaningful across runs. Network failures never fail the command — they just
+meaningful across runs. Network failures never fail the command - they just
 show as ``unreachable``.
 
 Exit code is non-zero when at least one KPI needs attention, so this can gate
@@ -155,15 +155,15 @@ def run_tier(tier: str, today: date | None = None) -> list[dict]:
         stale = latest is not None and latest < expected
         has_soft = _has_soft_rows(files, root)
         if latest is None:
-            action = "NO DATA — populate the curated CSV"
+            action = "NO DATA - populate the curated CSV"
         elif stale and probe["ok"]:
-            action = f"UPDATE — data ends FY{latest}-{str(latest+1)[2:]}, expect FY{expected}-{str(expected+1)[2:]}; source reachable"
+            action = f"UPDATE - data ends FY{latest}-{str(latest+1)[2:]}, expect FY{expected}-{str(expected+1)[2:]}; source reachable"
         elif stale:
-            action = f"UPDATE — data ends FY{latest}-{str(latest+1)[2:]}, expect FY{expected}-{str(expected+1)[2:]} (source unreachable now)"
+            action = f"UPDATE - data ends FY{latest}-{str(latest+1)[2:]}, expect FY{expected}-{str(expected+1)[2:]} (source unreachable now)"
         elif has_soft:
-            action = "confirm — latest rows are Estimated/BudgetEstimate (see GAPS.md)"
+            action = "confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md)"
         elif changed:
-            action = "note — source page changed since last check"
+            action = "note - source page changed since last check"
         else:
             action = "ok"
 
@@ -203,13 +203,13 @@ def _write_sources_md(tier: str, rows: list[dict]) -> None:
         "|---|---|---|---|---|---|",
     ]
     for r in rows:
-        dt = f"FY{r['data_through_fy']}-{str(r['data_through_fy']+1)[2:]}" if r["data_through_fy"] else "—"
+        dt = f"FY{r['data_through_fy']}-{str(r['data_through_fy']+1)[2:]}" if r["data_through_fy"] else "-"
         ex = f"FY{r['expected_fy']}-{str(r['expected_fy']+1)[2:]}"
         reach = "yes" if r["source_reachable"] else f"no ({r['source_status'] or 'err'})"
         lines.append(f"| {r['ministry']} | {r['kpi']} | {dt} | {ex} | {reach} | {r['action']} |")
     lines += ["", "## Source URLs", ""]
     for r in rows:
-        lines.append(f"- **{r['ministry']} · {r['kpi']}** — {r['source_name']}  \n  {r['source_url']} ({r['cadence']})")
+        lines.append(f"- **{r['ministry']} · {r['kpi']}** - {r['source_name']}  \n  {r['source_url']} ({r['cadence']})")
     cfg["sources_md"].write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -226,7 +226,7 @@ def run(fetch: bool = False, tiers: str = "ab", today: date | None = None) -> li
 
 
 def _run_fetchers(rows: list[dict]) -> None:
-    """Best-effort auto-fetchers (Tier-A only — see app.connectors.tier_a.fetchers).
+    """Best-effort auto-fetchers (Tier-A only - see app.connectors.tier_a.fetchers).
     Import lazily; any failure is logged, not raised."""
     try:
         from app.connectors.tier_a import fetchers
@@ -242,7 +242,7 @@ def _run_fetchers(rows: list[dict]) -> None:
                 print(f"  fetch[{name}]: {result.get('summary', 'done')}")
             except Exception as exc:  # noqa: BLE001
                 log.write(json.dumps({"fetcher": name, "ok": False, "error": str(exc)[:200]}) + "\n")
-                print(f"  fetch[{name}]: FAILED — {exc} (curated data left unchanged)")
+                print(f"  fetch[{name}]: FAILED - {exc} (curated data left unchanged)")
 
 
 def main() -> None:
@@ -257,7 +257,7 @@ def main() -> None:
     print(f"\nCurated-data source check ({date.today().isoformat()}):\n")
     print(f"  {'tier':<7} {'ministry':<9} {'KPI':<26} {'through':<10} {'expect':<10} {'reach':<7} action")
     for r in rows:
-        dt = f"FY{r['data_through_fy']}-{str(r['data_through_fy']+1)[2:]}" if r["data_through_fy"] else "—"
+        dt = f"FY{r['data_through_fy']}-{str(r['data_through_fy']+1)[2:]}" if r["data_through_fy"] else "-"
         ex = f"FY{r['expected_fy']}-{str(r['expected_fy']+1)[2:]}"
         reach = "yes" if r["source_reachable"] else "NO"
         print(f"  {r['tier']:<7} {r['ministry']:<9} {r['kpi']:<26} {dt:<10} {ex:<10} {reach:<7} {r['action']}")
@@ -266,7 +266,7 @@ def main() -> None:
     sources_paths = ", ".join(str(TIERS[t]["sources_md"].relative_to(Path.cwd())) for t in tiers)
     print(f"\n{len(need)} of {len(rows)} KPI source(s) need attention. See {sources_paths}.")
 
-    # Non-zero exit when something needs attention — lets a scheduled CI job
+    # Non-zero exit when something needs attention - lets a scheduled CI job
     # flag it (e.g. annotate the run / open an issue) without extra plumbing.
     sys.exit(1 if need else 0)
 

@@ -30,7 +30,7 @@ function MinistryRankRow({ ministry, rank }) {
       </div>
       <div className="flex items-center gap-2">
         <ScoreLabelBadge label={ministry.score_label} />
-        <span className="text-sm font-bold text-orange-500">{ministry.score?.toFixed(1) ?? "—"}</span>
+        <span className="text-sm font-bold text-orange-500">{ministry.score?.toFixed(1) ?? "-"}</span>
       </div>
     </Link>
   );
@@ -56,7 +56,7 @@ export default function SummaryPage() {
           <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <StatCard
               label="Overall Performance Score"
-              value={summary.overall_score != null ? summary.overall_score.toFixed(1) : "—"}
+              value={summary.overall_score != null ? summary.overall_score.toFixed(1) : "-"}
               accent="text-orange-500"
               sub={`Across ${summary.total_ministries} ministries`}
               badgeLabel={summary.overall_label}
@@ -114,7 +114,7 @@ export default function SummaryPage() {
                 <h3 className="mt-3 text-sm font-semibold text-white">{m.name}</h3>
                 <p className="mt-1 line-clamp-2 text-xs text-base-500">{m.description}</p>
                 <div className="mt-3 flex items-center gap-2">
-                  <p className="text-2xl font-bold text-orange-500">{m.score?.toFixed(1) ?? "—"}</p>
+                  <p className="text-2xl font-bold text-orange-500">{m.score?.toFixed(1) ?? "-"}</p>
                   <ScoreLabelBadge label={m.score_label} />
                 </div>
               </Link>

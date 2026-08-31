@@ -29,12 +29,6 @@ export function progressColor(pct) {
   return "bg-negative";
 }
 
-export function trendColor(trend) {
-  if (trend === "up") return "text-positive";
-  if (trend === "down") return "text-negative";
-  return "text-base-400";
-}
-
 export function formatDateTime(isoString) {
   if (!isoString) return "";
   try {

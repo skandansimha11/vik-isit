@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { useKpiHistory } from "../../hooks/useKpiHistory";
 import { useEvents } from "../../hooks/useEvents";
-import { downloadCsv, formatKpiValue, trendColor } from "../../utils/format";
+import { downloadCsv, formatKpiValue } from "../../utils/format";
 import { exportChartAsPng } from "../../utils/exportChart";
 import { ChartSkeleton } from "../Skeletons";
 import ErrorBanner from "../ErrorBanner";
@@ -70,7 +70,6 @@ function Toggle({ active, onClick, children, title }) {
 export default function ChartCard({ kpi, ministryCode, hero = false }) {
   const [range, setRange] = useState("full");
   const [growthMode, setGrowthMode] = useState(false);
-  const [percentMode, setPercentMode] = useState(false);
   const [showBenchmark, setShowBenchmark] = useState(true);
   const [peerCompare, setPeerCompare] = useState(false);
   const [tableView, setTableView] = useState(false);
@@ -81,7 +80,6 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
   const { data: allEvents } = useEvents(ministryCode);
 
   const canGrowth = kpi.data_shape === "time_line";
-  const canPercent = !!kpi.target_value && ["time_line", "time_dual"].includes(kpi.data_shape);
   const canPeer = ["time_line", "time_dual", "time_breakdown"].includes(kpi.data_shape);
   const canBreakdownFilter = kpi.data_shape === "time_breakdown";
 
@@ -97,24 +95,8 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
       return { points: transformed, unit: "% YoY change", secondaryUnit: kpi.secondary_unit };
     }
 
-    if (percentMode && canPercent) {
-      // Direction-aware, mirroring the backend's KPI.progress_pct (app/models.py):
-      // higher-is-better -> value/target (100% = at target, >100% = beating it).
-      // lower-is-better  -> target/value (100% = at target, >100% = beating it too —
-      // e.g. Fiscal Deficit at 4.0 vs a 4.3 target is "108% of target", not "93%").
-      // A naive value/target for a lower-is-better KPI would show >100% while the
-      // metric is actually WORSE than target, which reads backwards next to every
-      // other chart where >100% means better.
-      const transformed = rawPoints.map((p) => {
-        if (p.value == null) return { ...p, value: null, target_value: 100 };
-        const ratio = kpi.higher_is_better ? p.value / kpi.target_value : kpi.target_value / p.value;
-        return { ...p, value: Math.round(ratio * 1000) / 10, target_value: 100 };
-      });
-      return { points: transformed, unit: "% of target", secondaryUnit: kpi.secondary_unit };
-    }
-
     return { points: rawPoints, unit: kpi.unit, secondaryUnit: kpi.secondary_unit };
-  }, [rawPoints, growthMode, percentMode, canGrowth, canPercent, kpi.target_value, kpi.unit, kpi.secondary_unit]);
+  }, [rawPoints, growthMode, canGrowth, kpi.unit, kpi.secondary_unit]);
 
   const breakdownKeys = useMemo(() => Object.keys(points[0]?.breakdown || {}), [points]);
   const visibleKeys = useMemo(
@@ -175,9 +157,10 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
             <span className={`font-bold text-orange-500 ${hero ? "text-3xl sm:text-4xl" : "text-xl"}`}>
               {formatKpiValue(kpi.current_value, kpi.unit)}
             </span>
-            <span className={`text-xs font-medium ${trendColor(kpi.trend)}`}>
-              {kpi.trend === "up" ? "▲ improving" : kpi.trend === "down" ? "▼ worsening" : "– flat"}
-            </span>
+            {/* Which year this value is for — KPIs don't all share a latest year
+                (one might be FY2024-25, another FY2025-26), so this is shown
+                unconditionally next to every value, not buried in the source line. */}
+            {kpi.period && <span className="text-xs font-medium text-base-500">({kpi.period})</span>}
           </p>
           {kpi.plain_note && (
             <p className="mt-1.5 max-w-prose text-xs leading-relaxed text-base-400">{kpi.plain_note}</p>
@@ -211,11 +194,6 @@ export default function ChartCard({ kpi, ministryCode, hero = false }) {
             title="Toggle absolute value vs YoY % change"
           >
             YoY Growth
-          </Toggle>
-        )}
-        {canPercent && (
-          <Toggle active={percentMode} onClick={() => setPercentMode((p) => !p)} title="Toggle absolute vs % of target">
-            % of Target
           </Toggle>
         )}
         <Toggle

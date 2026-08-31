@@ -85,38 +85,52 @@ def _client() -> anthropic.Anthropic:
 
 def _ask_structured(system_prompt: str, user_prompt: str) -> dict:
     client = _client()
-    try:
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=1024,
-            output_config={"effort": "medium"},
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_prompt}],
-        )
-    except anthropic.AuthenticationError:
-        raise HTTPException(status_code=502, detail="Invalid Anthropic API key.")
-    except anthropic.RateLimitError:
-        raise HTTPException(status_code=429, detail="Claude API rate limit hit, try again shortly.")
-    except anthropic.APIStatusError as e:
-        raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
 
-    text = "".join(block.text for block in response.content if block.type == "text").strip()
-    try:
-        data = json.loads(text)
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=502, detail="Tarka returned an unexpected response format.")
+    # One retry on a malformed/truncated response — LLM structured output is occasionally
+    # flaky independent of the token-budget fix below; a single retry clears most of these
+    # without the user needing to click "Ask" again.
+    last_error = "Tarka returned an unexpected response format."
+    for attempt in range(2):
+        try:
+            response = client.messages.create(
+                model=MODEL,
+                # Same headroom fix as claude_service._call_claude — the score-breakdown /
+                # cyclical-vs-structural / dual-target instructions produce longer responses
+                # than 1024 tokens reliably covers, causing truncated (unterminated) JSON.
+                max_tokens=2200,
+                output_config={"effort": "medium"},
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_prompt}],
+            )
+        except anthropic.AuthenticationError:
+            raise HTTPException(status_code=502, detail="Invalid Anthropic API key.")
+        except anthropic.RateLimitError:
+            raise HTTPException(status_code=429, detail="Claude API rate limit hit, try again shortly.")
+        except anthropic.APIStatusError as e:
+            raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
 
-    data.setdefault("evidence", [])
-    data.setdefault("caveats", [])
-    data.setdefault("comparative_context", "")
-    data.setdefault("forward_implications", "")
-    data.setdefault("time_period_judged", "")
-    data.setdefault("data_quality_flag", "MEDIUM")
-    data.setdefault("proxy_disclosure", None)
-    data.setdefault("headline", "")
-    if not data["caveats"]:
-        raise HTTPException(status_code=502, detail="Tarka did not return any caveats.")
-    return data
+        text = "".join(block.text for block in response.content if block.type == "text").strip()
+        try:
+            data = json.loads(text)
+        except json.JSONDecodeError:
+            last_error = "Tarka returned an unexpected response format."
+            continue
+
+        data.setdefault("evidence", [])
+        data.setdefault("caveats", [])
+        data.setdefault("comparative_context", "")
+        data.setdefault("forward_implications", "")
+        data.setdefault("time_period_judged", "")
+        data.setdefault("data_quality_flag", "MEDIUM")
+        data.setdefault("proxy_disclosure", None)
+        data.setdefault("headline", "")
+        if not data["caveats"]:
+            last_error = "Tarka did not return any caveats."
+            continue
+
+        return data
+
+    raise HTTPException(status_code=502, detail=f"{last_error} (retried once)")
 
 
 def _ministry_context_block(ministry: Ministry) -> str:

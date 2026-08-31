@@ -178,44 +178,60 @@ def _call_claude(ministry: Ministry) -> dict:
         f"{INSIGHT_JSON_CONTRACT}"
     )
 
-    try:
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=1536,
-            output_config={"effort": "medium"},
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_prompt}],
-        )
-    except anthropic.AuthenticationError:
-        raise HTTPException(status_code=502, detail="Invalid Anthropic API key.")
-    except anthropic.RateLimitError:
-        raise HTTPException(status_code=429, detail="Claude API rate limit hit, try again shortly.")
-    except anthropic.APIStatusError as e:
-        raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
+    # One retry on a malformed/truncated response — LLM structured output is occasionally
+    # flaky (an unterminated string, a stray delimiter) independent of the token-budget fix
+    # below; a single retry clears most of these without the user needing to click "Try again".
+    last_error = "Claude returned an unexpected response format."
+    for attempt in range(2):
+        try:
+            response = client.messages.create(
+                model=MODEL,
+                # The score-breakdown/cyclical-vs-structural/dual-target instructions in the
+                # system prompt reliably produce responses in the 1600-2400 output-token range —
+                # 1536 was cutting them off mid-string (unterminated JSON). Verified against a
+                # live call: response filled 1536/1536 exactly and json.loads failed at char 3706.
+                max_tokens=3000,
+                output_config={"effort": "medium"},
+                system=system_prompt,
+                messages=[{"role": "user", "content": user_prompt}],
+            )
+        except anthropic.AuthenticationError:
+            raise HTTPException(status_code=502, detail="Invalid Anthropic API key.")
+        except anthropic.RateLimitError:
+            raise HTTPException(status_code=429, detail="Claude API rate limit hit, try again shortly.")
+        except anthropic.APIStatusError as e:
+            raise HTTPException(status_code=502, detail=f"Claude API error: {e.message}")
 
-    text = "".join(block.text for block in response.content if block.type == "text").strip()
+        text = "".join(block.text for block in response.content if block.type == "text").strip()
 
-    try:
-        data = json.loads(text)
-        headline = str(data["headline"])
-        # MinistryInsight.time_period_judged is String(100) — SQLite silently accepts an
-        # overflow, but a strict DB (Postgres) would reject the insert outright. Claude's
-        # instructed to keep this short/concrete, but LLM output isn't guaranteed, so guard it.
-        time_period_judged = str(data["time_period_judged"])[:100]
-        evidence = [str(b) for b in data["key_evidence"]]
-        caveats = [str(c) for c in data["important_caveats"]]
-        proxy_disclosure = data.get("proxy_disclosure")
-        proxy_disclosure = str(proxy_disclosure) if proxy_disclosure else None
-        comparative_context = str(data.get("comparative_context", ""))
-        forward_implications = str(data.get("forward_implications", ""))
-        data_quality_notes = str(data.get("data_quality_notes", "MEDIUM"))
-    except (json.JSONDecodeError, KeyError, TypeError):
-        raise HTTPException(status_code=502, detail="Claude returned an unexpected response format.")
+        try:
+            data = json.loads(text)
+            headline = str(data["headline"])
+            # MinistryInsight.time_period_judged is String(100) — SQLite silently accepts an
+            # overflow, but a strict DB (Postgres) would reject the insert outright. Claude's
+            # instructed to keep this short/concrete, but LLM output isn't guaranteed, so guard it.
+            time_period_judged = str(data["time_period_judged"])[:100]
+            evidence = [str(b) for b in data["key_evidence"]]
+            caveats = [str(c) for c in data["important_caveats"]]
+            proxy_disclosure = data.get("proxy_disclosure")
+            proxy_disclosure = str(proxy_disclosure) if proxy_disclosure else None
+            comparative_context = str(data.get("comparative_context", ""))
+            forward_implications = str(data.get("forward_implications", ""))
+            data_quality_notes = str(data.get("data_quality_notes", "MEDIUM"))
+        except (json.JSONDecodeError, KeyError, TypeError):
+            last_error = "Claude returned an unexpected response format."
+            continue
 
-    if len(evidence) != 3:
-        raise HTTPException(status_code=502, detail="Claude did not return exactly 3 evidence points.")
-    if not caveats:
-        raise HTTPException(status_code=502, detail="Claude did not return any caveats.")
+        if len(evidence) != 3:
+            last_error = "Claude did not return exactly 3 evidence points."
+            continue
+        if not caveats:
+            last_error = "Claude did not return any caveats."
+            continue
+
+        break
+    else:
+        raise HTTPException(status_code=502, detail=f"{last_error} (retried once)")
 
     # The deterministic Ministry Performance Score label (app.scoring) is authoritative —
     # it always wins over whatever Claude picked for "headline", so the badge shown here

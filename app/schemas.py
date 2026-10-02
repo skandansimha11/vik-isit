@@ -204,6 +204,7 @@ class TarkaAnswerOut(BaseModel):
     """Structured Headline | Evidence | Caveats | Context | Implications answer."""
 
     headline: str
+    summary: list[str] = []
     evidence: list[str] = []
     caveats: list[str] = []
     comparative_context: str = ""

@@ -276,7 +276,7 @@ def tarka_focus(ministry_id: int, db: Session = Depends(get_db)):
     result = suggest_focus_areas(ministry)
     return TarkaFocusOut(
         ministry=ministry.name,
-        focus_areas=result.get("evidence", []),
+        focus_areas=result.get("summary") or result.get("evidence", []),
         rationale=result.get("forward_implications") or result.get("comparative_context", ""),
     )
 

@@ -6,6 +6,17 @@
 # After the frontend is deployed to Vercel, come back and set CORS_ORIGINS
 # on the vik-isit-api service to its URL (Render dashboard -> service ->
 # Environment), e.g. https://your-app.vercel.app
+#
+# IMPORTANT - free Postgres expires: Render deletes a free-plan database 90
+# days after creation (or sooner if inactive) - there is no warning email
+# before data loss, only after the backend starts failing to connect. When
+# that happens the fix is: create a new free Postgres (or upgrade to a paid
+# plan to stop this recurring), copy its new "External Database URL" into
+# DATABASE_URL on vik-isit-api, then re-seed: `DATABASE_URL="<url>" python -m
+# app.seed_dashboard && python -m app.tier_a_pipeline && python -m
+# app.tier_b_pipeline`. app/database.py now fails fast (10s) and app/main.py
+# never lets a DB outage stop the API itself from starting, so this shows up
+# as a clear 503 / log line instead of the whole service going unreachable.
 
 databases:
   - name: vik-isit-db
@@ -20,6 +31,7 @@ services:
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false

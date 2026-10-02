@@ -12,9 +12,9 @@ export default function ChatbotPage() {
       </div>
       <ChatWidget
         suggestions={[
+          "How is this ministry performing overall?",
           "Which ministry is improving the fastest?",
-          "Compare Finance and Railways performance.",
-          "What's driving the Ethanol Programme numbers?",
+          "What's the biggest risk to watch next?",
         ]}
       />
     </div>

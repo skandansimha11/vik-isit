@@ -66,6 +66,7 @@ _ANSWER_JSON_CONTRACT = (
     'Respond with ONLY a JSON object (no markdown fences) with exactly this shape:\n'
     "{\n"
     '  "headline": "...",\n'
+    '  "summary": ["...", "...", "..."],\n'
     '  "evidence": ["...", "...", "..."],\n'
     '  "caveats": ["...", "..."],\n'
     '  "comparative_context": "...",\n'
@@ -74,8 +75,17 @@ _ANSWER_JSON_CONTRACT = (
     '  "data_quality_flag": "HIGH" | "MEDIUM" | "LOW",\n'
     '  "proxy_disclosure": "..." or null\n'
     "}\n"
-    "evidence must have 2-4 items grounded in the data given; caveats must have at least 1 item; "
-    "time_period_judged must be a concrete period, never bare 'recent'/'current'."
+    "Rules:\n"
+    '- "summary" is what the user actually sees in the chat: 2-4 short, conversational points '
+    "that directly answer their question in plain language - talk to them like a sharp colleague "
+    "explaining this over coffee, not a report. No jargon, no raw weights or normalized sub-scores, "
+    "each point under 30 words. It must still be grounded in the real numbers (cite a figure where "
+    "it matters) and fold in the single most important caveat naturally rather than listing it "
+    'separately. Never use bullet-speak fragments - full short sentences.\n'
+    '- "evidence", "caveats", "comparative_context", and "forward_implications" are the detailed '
+    "backing record (not shown in the main chat bubble for every answer type) - keep these as "
+    "thorough as before: evidence 2-4 items grounded in the data given, caveats at least 1 item.\n"
+    "- time_period_judged must be a concrete period, never bare 'recent'/'current'."
 )
 
 
@@ -136,6 +146,10 @@ def _ask_structured(system_prompt: str, user_prompt: str) -> dict:
         data.setdefault("data_quality_flag", "MEDIUM")
         data.setdefault("proxy_disclosure", None)
         data.setdefault("headline", "")
+        summary = [str(s).strip() for s in data.get("summary", []) if str(s).strip()]
+        # Soft fallback, not a retry trigger: an under-delivering summary degrades to a
+        # trimmed evidence list rather than failing the whole answer.
+        data["summary"] = summary[:4] if 1 <= len(summary) <= 4 else (summary or data["evidence"])[:4]
         if not data["caveats"]:
             last_error = "Tarka did not return any caveats."
             continue

@@ -1,0 +1,106 @@
+name: Auto data sync
+
+# The layer that actually closes the loop check-data-freshness.yml only
+# detects: runs the auto-fetchers for real (python -m app.auto_sync), commits
+# any high-confidence Provisional values they could validate, regenerates
+# data/PENDING_UPDATES.md with exactly what's left for a human (file, columns,
+# source - no rediscovery needed), and then calls the LIVE API's POST /sync so
+# the production database - and every score/verdict computed from it - picks
+# up whatever is currently on `main`, with no local command ever required.
+#
+# This runs whether or not anything changed today: syncing unchanged data is a
+# safe no-op, and it's what makes a manually-merged PENDING_UPDATES.md fix (or
+# any other CSV edit on main) reach the live site on its own within a day,
+# instead of sitting there until someone remembers to redeploy.
+
+on:
+  schedule:
+    - cron: "30 4 * * *" # once a day; these sources publish monthly/annually at the fastest
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run auto-fetchers and regenerate the pending-updates worksheet
+        id: autosync
+        env:
+          DATA_GOV_IN_API_KEY: ${{ secrets.DATA_GOV_IN_API_KEY }}
+          DATA_GOV_IN_CPI_RESOURCE_ID: ${{ vars.DATA_GOV_IN_CPI_RESOURCE_ID }}
+        run: set -o pipefail; python -m app.auto_sync | tee auto_sync_output.txt
+
+      - name: Commit any auto-fetched data + the refreshed worksheet
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-sync KPI data [skip ci]"
+          file_pattern: "data/tier_a/**/*.csv data/tier_b/**/*.csv data/tier_a/SOURCES.md data/tier_b/SOURCES.md data/tier_a/.source_state.json data/tier_b/.source_state.json data/PENDING_UPDATES.md"
+
+      - name: Open, update, or close the tracking issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const output = fs.readFileSync("auto_sync_output.txt", "utf8");
+            const match = output.match(/::auto-sync-json::(\{.*\})/);
+            const summary = match ? JSON.parse(match[1]) : null;
+            const title = "Data sync: KPIs waiting on a human";
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: "open", labels: ["data-sync"],
+            });
+            const existing = issues.find((i) => i.title === title);
+
+            if (!summary || summary.pending === 0) {
+              if (existing) {
+                await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body: "Nothing pending anymore - closing." });
+                await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, state: "closed" });
+              }
+              return;
+            }
+
+            const body = [
+              `Automated daily sync checked ${summary.checked} KPIs: ${summary.auto_written.length} auto-updated, ${summary.pending} still need a figure pasted in.`,
+              "",
+              summary.auto_written.length
+                ? "**Auto-updated:**\n" + summary.auto_written.map((w) => `- ${w}`).join("\n")
+                : "",
+              "",
+              "See `data/PENDING_UPDATES.md` on `main` for the exact file, columns and source for each - it's regenerated every run, so this list shrinks on its own as entries get filled in and merged.",
+            ].join("\n");
+
+            if (existing) {
+              await github.rest.issues.update({ owner: context.repo.owner, repo: context.repo.repo, issue_number: existing.number, body });
+            } else {
+              await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ["data-sync"] });
+            }
+
+      - name: Wait for Render to redeploy if this run changed data
+        if: steps.commit.outputs.changes_detected == 'true'
+        run: sleep 180
+
+      - name: Refresh the live database from whatever is on main now
+        # Runs every day regardless of steps.commit - this is what makes a
+        # manually-merged CSV fix (or last run's auto-write, if Render's deploy
+        # was still finishing) actually reach the live scores, with no one
+        # needing to remember to click anything.
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" -m 120 -X POST https://vik-isit-api.onrender.com/sync || echo "000")
+          echo "POST /sync -> HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "::warning::Live /sync did not return 200 (got $code) - the API may be cold-starting or down; tomorrow's run will retry."
+          fi

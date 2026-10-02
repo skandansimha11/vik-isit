@@ -3,9 +3,23 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 from app.config import settings
 
-connect_args = {"check_same_thread": False} if settings.database_url.startswith("sqlite") else {}
+is_sqlite = settings.database_url.startswith("sqlite")
+# connect_timeout=10: a managed Postgres that's gone (expired free instance, host
+# down, credentials revoked) should fail in seconds, not hang on the OS TCP timeout
+# (which can run 60-130s+) - a hang here previously meant the whole app never
+# finished starting, so Render could not route traffic to *any* route, not just
+# DB-backed ones. pool_pre_ping catches a connection that went stale mid-session
+# (the managed DB recycled it, a network blip) before it causes a confusing
+# mid-request error; pool_recycle avoids handing out a connection a proxy/host
+# has quietly dropped after sitting idle.
+connect_args = {"check_same_thread": False} if is_sqlite else {"connect_timeout": 10}
 
-engine = create_engine(settings.database_url, connect_args=connect_args)
+engine = create_engine(
+    settings.database_url,
+    connect_args=connect_args,
+    pool_pre_ping=True,
+    **({} if is_sqlite else {"pool_recycle": 300}),
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 

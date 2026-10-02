@@ -1,10 +1,13 @@
+import logging
+
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 from sqlalchemy.orm import Session, selectinload
 
 from app.claude_service import chat_reply, get_or_generate_insights
 from app.config import settings
-from app.database import Base, engine, get_db, scrub_stored_em_dashes, sync_schema
+from app.database import Base, SessionLocal, engine, get_db, scrub_stored_em_dashes, sync_schema
 from app.models import KPI, Event, KPISeriesPoint, Ministry
 from app.pipeline.sync_service import sync_all, sync_ministry
 from app.schemas import (
@@ -37,9 +40,31 @@ from app.tarka_chatbot import (
     suggest_focus_areas,
 )
 
-Base.metadata.create_all(bind=engine)
-sync_schema()
-scrub_stored_em_dashes()
+logger = logging.getLogger("vik_isit.boot")
+
+# These three only ever ALTER/scrub what's already there - never required for the
+# ASGI app itself to exist. If the database is unreachable (expired free instance,
+# host down, credentials rotated) none of them must be allowed to block app
+# creation: a bare `create_engine()` doesn't connect, but the first real query
+# inside create_all() does, and on a dead host that can hang far longer than any
+# platform health-check timeout. Previously that meant the whole process never
+# finished importing, so uvicorn never bound the port and *every* route - not
+# just DB-backed ones - was unreachable from the outside, which is what a
+# platform reports as "server failure" rather than a clear error. Catching here
+# means the app always starts, /health always answers fast, and DB-dependent
+# routes fail individually with a real error instead of the whole service
+# vanishing. See /health/db below for an explicit, on-demand DB check.
+try:
+    Base.metadata.create_all(bind=engine)
+    sync_schema()
+    scrub_stored_em_dashes()
+except Exception:  # noqa: BLE001 - must never prevent the app from starting
+    logger.exception(
+        "Startup DB initialization failed - the API will still start, but routes that "
+        "touch the database will fail until this is fixed. Check DATABASE_URL and that "
+        "the database itself is reachable (a free-tier Postgres instance that expired "
+        "or was deleted is the most common cause)."
+    )
 
 app = FastAPI(
     title="vik-isit API",
@@ -83,7 +108,20 @@ async def cache_headers(request, call_next):
 
 @app.get("/health")
 def health_check():
+    # Deliberately DB-free: this is what the keep-alive ping and the platform's
+    # own health check hit, and it must answer fast even while the database is
+    # down - see /health/db for the version that actually checks the database.
     return {"status": "ok"}
+
+
+@app.get("/health/db")
+def health_check_db():
+    try:
+        with SessionLocal() as db:
+            db.execute(text("SELECT 1"))
+        return {"status": "ok", "database": "reachable"}
+    except Exception as exc:  # noqa: BLE001 - this route's entire job is to report the failure
+        raise HTTPException(status_code=503, detail=f"database unreachable: {exc}") from exc
 
 
 # Ministry.score / .status / .trend all walk every KPI and its series, so any

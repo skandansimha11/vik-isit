@@ -9,6 +9,7 @@ function toTarkaMessage(answer, label) {
     type: "tarka",
     label,
     headline: answer.headline,
+    summary: answer.summary,
     bullets: answer.evidence,
     caveats: answer.caveats,
     timePeriodJudged: answer.time_period_judged,
@@ -89,9 +90,7 @@ export default function ChatWidget({ ministryId = null, ministryName = null, kpi
             type: "tarka",
             label: "Focus areas",
             headline: `Focus areas for ${data.ministry}`,
-            bullets: data.focus_areas,
-            caveats: [],
-            forwardImplications: data.rationale,
+            summary: data.focus_areas,
           },
         ]),
       onError: pushError,
@@ -199,16 +198,16 @@ export default function ChatWidget({ ministryId = null, ministryName = null, kpi
             )}
 
             {m.type === "tarka" && (
-              <div className="max-w-[90%] rounded-2xl border border-cyan-500/20 bg-base-800 px-4 py-3.5 text-sm">
-                {m.label && <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-cyan-400">{m.label}</p>}
+              <div className="max-w-[90%]">
+                {m.label && (
+                  <p className="mb-1 ml-1 text-[11px] font-semibold uppercase tracking-wide text-cyan-400/80">{m.label}</p>
+                )}
                 <InsightBody
                   headline={m.headline}
                   timePeriodJudged={m.timePeriodJudged}
+                  summary={m.summary}
                   bullets={m.bullets}
-                  caveats={m.caveats}
-                  proxyDisclosure={m.proxyDisclosure}
-                  comparativeContext={m.comparativeContext}
-                  forwardImplications={m.forwardImplications}
+                  boxed
                 />
               </div>
             )}
@@ -217,10 +216,18 @@ export default function ChatWidget({ ministryId = null, ministryName = null, kpi
 
         {isPending && (
           <div className="flex justify-start">
-            <div className="flex items-center gap-1.5 rounded-2xl border border-base-700 bg-base-800 px-4 py-2.5">
-              {[0, 1, 2].map((i) => (
-                <span key={i} className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-400" style={{ animationDelay: `${i * 0.12}s` }} />
-              ))}
+            <div className="flex items-center gap-2.5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 px-4 py-3">
+              <TarkaLogo className="h-5 w-5 shrink-0 animate-pulse" />
+              <span className="text-sm font-medium text-cyan-300">Tarka is thinking…</span>
+              <span className="flex items-center gap-1">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-cyan-400"
+                    style={{ animationDelay: `${i * 0.15}s` }}
+                  />
+                ))}
+              </span>
             </div>
           </div>
         )}

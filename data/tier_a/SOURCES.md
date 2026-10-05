@@ -12,9 +12,9 @@ from the cited source, then run `python -m app.tier_a_pipeline`.
 | PETRO | Oil Import Dependence | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | PETRO | Ethanol Blending % | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | PETRO | Refining Efficiency | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| AGRI | Real Farmer Income | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| AGRI | Real Farmer Income | FY2025-26 | FY2025-26 | no (502) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | AGRI | Ethanol Programme | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| AGRI | Food Inflation | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| AGRI | Food Inflation | FY2025-26 | FY2025-26 | no (502) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | RAIL | Freight Volume Growth | FY2025-26 | FY2025-26 | no (err) | ok |
 | RAIL | Rail Market Share | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | RAIL | Train Speeds & Capacity | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |

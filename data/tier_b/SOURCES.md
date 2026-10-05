@@ -7,7 +7,7 @@ from the cited source, then run `python -m app.tier_b_pipeline`.
 | ministry | KPI | data through | expect | source reachable | action |
 |---|---|---|---|---|---|
 | COMM | Industrial Imports % | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| COMM | Manufacturing Growth | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| COMM | Manufacturing Growth | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | COMM | PLI Effectiveness | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | DEF | Defence CapEx | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | DEF | Domestic MIC Development | FY2025-26 | FY2025-26 | no (err) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
@@ -15,7 +15,7 @@ from the cited source, then run `python -m app.tier_b_pipeline`.
 | EDU | Learning Outcomes | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | EDU | Exam Integrity | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | EDU | Enrollment Quality | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
-| SKILL | Youth NEET Rate | FY2025-26 | FY2025-26 | yes | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
+| SKILL | Youth NEET Rate | FY2025-26 | FY2025-26 | no (502) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | SKILL | Apprenticeship Utilisation | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | SKILL | Job Creation | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
 | ROAD | Logistics Cost % | FY2025-26 | FY2025-26 | no (403) | confirm - latest rows are Estimated/BudgetEstimate (see GAPS.md) |
